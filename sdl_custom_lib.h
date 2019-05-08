@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 
-int init(SDL_Window**, SDL_Surface**, SDL_Renderer**, int, int);
-
 int loadMedia(SDL_Surface**, char*);
 
 void SDL_RectPrint(SDL_Rect*);

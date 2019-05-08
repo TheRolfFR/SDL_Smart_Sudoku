@@ -7,55 +7,55 @@
 #include "sdl_sudoku.h"
 
 // dessine une bodure de la couleur choisie sur la case choisie
-void printRect(sudokuGrid *grille, cell* cellule, SDL_Color *color) {
+void printRect(sudokuGrid *grid, cell* selectedCell, SDL_Color *color) {
     // x et y égalent à la marge + le nombre de cellules précédant cette cellule + les bordures
     SDL_Rect rect;
-    rect.x = GRID_MARGIN + cellule->column/3*GRID_THICK_BORDER + cellule->column * GRID_CELL_SIZE + GRID_THIN_BORDER * (cellule->column - cellule->column/3);
-    rect.y = GRID_MARGIN + cellule->line/3*GRID_THICK_BORDER + cellule->line * GRID_CELL_SIZE + GRID_THIN_BORDER * (cellule->line - cellule->line/3);
+    rect.x = GRID_MARGIN + selectedCell->column/3*GRID_THICK_BORDER + selectedCell->column * GRID_CELL_SIZE + GRID_THIN_BORDER * (selectedCell->column - selectedCell->column/3);
+    rect.y = GRID_MARGIN + selectedCell->line/3*GRID_THICK_BORDER + selectedCell->line * GRID_CELL_SIZE + GRID_THIN_BORDER * (selectedCell->line - selectedCell->line/3);
     // la largeur et hauteur c'est la taille de la cellule
     rect.w = GRID_CELL_SIZE;
     rect.h = GRID_CELL_SIZE;
 
     // on change la couleur de rendu
-    SDL_SetRenderDrawColorStruct(grille->renderer, color);
+    SDL_SetRenderDrawColorStruct(grid->renderer, color);
 }
 
 //affiche une bordure bleu sur la case passée en paramètre
-void printHover(sudokuGrid *grille, cell* cellule){
+void printHover(sudokuGrid *grid, cell* selectedCell){
     SDL_Color bleu = {0x4D, 0xD0, 0xE1};
-    printRect(grille, cellule, &bleu);
+    printRect(grid, selectedCell, &bleu);
 }
 
 //affiche une bordure blanche sur la case passée en paramètre
-void removeHover(sudokuGrid *grille, cell* cellule){
+void removeHover(sudokuGrid *grid, cell* selectedCell){
     SDL_Color blanc = {0xFF, 0xFF, 0xFF};
-    printRect(grille, cellule, &blanc);
+    printRect(grid, selectedCell, &blanc);
 }
 
-void updateHover(sudokuGrid *grille, cell* position){
+void updateHover(sudokuGrid *grid, cell* position){
 
-    if (grille->lastHovered==NULL){ //la souris était précédemment hors de la grille
+    if (grid->lastHovered==NULL){ //la souris était précédemment hors de la grid
 
-        if (position!=NULL){ //la souris est entrée dans la grille
-            printHover(grille, position);
+        if (position!=NULL){ //la souris est entrée dans la grid
+            printHover(grid, position);
             position->isHovered=1;
-            grille->lastHovered=position;
+            grid->lastHovered=position;
         }
     }
-    else{ //la souris était précédemment dans la grille
+    else{ //la souris était précédemment dans la grid
 
-        if (!grille->lastHovered->isClicked){ //aucune case n'est séléctionnée
-            if (position==NULL){ //la souris est sortis de la grille
-                removeHover(grille, grille->lastHovered);
-                grille->lastHovered->isHovered=0;
-                grille->lastHovered=position;
+        if (!grid->lastHovered->isClicked){ //aucune case n'est séléctionnée
+            if (position==NULL){ //la souris est sortis de la grid
+                removeHover(grid, grid->lastHovered);
+                grid->lastHovered->isHovered=0;
+                grid->lastHovered=position;
             }
-            else{ //la souris est tjr dans la grille
-                removeHover(grille, grille->lastHovered);
-                grille->lastHovered->isHovered=0;
-                printHover(grille, position);
+            else{ //la souris est tjr dans la grid
+                removeHover(grid, grid->lastHovered);
+                grid->lastHovered->isHovered=0;
+                printHover(grid, position);
                 position->isHovered=1;
-                grille->lastHovered=position;
+                grid->lastHovered=position;
             }
         }
     }

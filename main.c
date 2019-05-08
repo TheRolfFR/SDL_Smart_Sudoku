@@ -2,7 +2,6 @@
 #include <SDL2/SDL.h>
 #include "sdl_custom_lib.h"
 #include "sudoku_lib/sdl_sudoku.h"
-#include "sudoku_lib/gameController.h"
 #ifndef CONST_MAIN
 #define CONST_MAIN
 #define FPS 60
@@ -11,47 +10,41 @@
 
 int main(int argc, char **argv)
 {
-    // cette fonction n existe pas encore
-    // initializeSudoku(); //afficher la grille mais pas les nombres (ça se fera lors du choix de difficulté)
+    sudokuGrid g;
+    sudokuGrid *grid = &g;
 
-    SDL_Window *window = NULL;
-    SDL_Surface *windowSurface = NULL;
-    SDL_Renderer *renderer = NULL;
-
-    int windowSide = 600;
-
-    if(!init(&window, &windowSurface, &renderer, windowSide, windowSide)) {
-        printf("Failed to initialize!");
+    // on initialise la grille
+    if(!initializeSudoku(grid))
         return -1;
-    }
 
-    // first draw
-    sudokuGrid* grid = initGrid(&window, &windowSurface, &renderer);
+    // on charge une grille random
+    if(loadGrid(grid->cells, "../grids/", 2))
+        return -1;
 
-    int result = loadGrid(grid->cells, "../grids/", 2);
-    if(result != 0)
-        return result;
-
+    //ton game controller j'ai pas compris
     gameController(grid);
 
+    // on dessine la grille
     drawSudokuGrid(grid);
+
+    // on dessine tous les chiffres de la grille
     int a, b;
     for(a = 0; a < 9; a++) {
         for(b = 0; b < 9; b++) {
             cell *c = grid->cells[a][b];
-
-            if(c != NULL) {
-                updateNumberAtPosition(grid, c, 0, 0);
-            }
+            updateNumberAtPosition(grid, c, 0, 0);
         }
     }
+
+    // on dessine le fon des nombres?
     drawNumbersBackground(grid);
 
-    SDL_RenderPresent(renderer);
+    // on affiche le rendu
+    SDL_RenderPresent(grid->renderer);
 
+    // le while sui tourne tout le temps
     int continuer = 1;
     SDL_Event event;
-
     while (continuer)
     {
         SDL_WaitEvent(&event);
@@ -61,13 +54,13 @@ int main(int argc, char **argv)
 
         switch(event.type)
         {
-            case SDL_QUIT:
+            case SDL_QUIT: // on quitte
                 continuer = 0;
                 break;
-            case SDL_MOUSEMOTION:
+            case SDL_MOUSEMOTION: // la souris bouge
                 calculatePositionAndUpdate();
                 break;
-            case SDL_MOUSEBUTTONUP:
+            case SDL_MOUSEBUTTONUP: // on "clique"
                 // lol
                 break;
         }
@@ -86,9 +79,11 @@ int main(int argc, char **argv)
         }
     }
 
-    SDL_DestroyRenderer(renderer);
+    // on détruit le rendu
+    SDL_DestroyRenderer(grid->renderer);
 
-    destroyAndQuit(&window);
+    // on détruit la fenêtre etc bla bla bla
+    destroyAndQuit(&grid->window);
 
     return 0;
 }

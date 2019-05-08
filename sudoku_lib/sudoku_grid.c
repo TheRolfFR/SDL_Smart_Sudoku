@@ -12,7 +12,7 @@ void tryInitGridFont(sudokuGrid *grid) {
     grid->font = Sans;
 }
 
-int loadGrid(cell* tab[][9], char *path, int numberOfFiles) {
+int loadGrid(cell* tab[9][9], char *path, int numberOfFiles) {
     srand(time(0));
     int index = rand()%numberOfFiles;
 
@@ -70,46 +70,8 @@ int loadGrid(cell* tab[][9], char *path, int numberOfFiles) {
 sudokuGrid *initGrid(SDL_Window **window, SDL_Surface **windowSurface, SDL_Renderer **renderer) {
     // parameters to tweak
     sudokuGrid *grid = malloc(sizeof(sudokuGrid));
-    SDL_Color background, black = {0,0,0}, lightblue = {0x4D, 0xD0, 0xE1}, blue, white = {255, 255, 255};
-    SDL_ColorFromHex(&blue, 0x01579B);
-
-    // colors
-    grid->hoverBackgroundColor = lightblue;
-    grid->clickBackgroundColor = blue;
-    grid->black = black;
-    grid->white = white;
-
-    // window
-    grid->window = *window;
-    grid->windowSurface = *windowSurface;
-    grid->renderer = *renderer;
-
-    int a, b;
-    for(a = 0; a < 9; a++) {
-        for(b = 0; b < 9; b++) {
-            grid->cells[a][b] = NULL;
-        }
-    }
-
-    // intialize font
-    tryInitGridFont(grid);
-
-    // setting window size
-    SDL_SetWindowSize(grid->window, GRID_SIZE + 2*GRID_MARGIN, GRID_SIZE + 3*GRID_MARGIN + GRID_BOTTOMSPACE);
-    SDL_SetWindowTitle(grid->window, "Smart Sudoku");
 
     //setting icon
-    SDL_Surface *bg = SDL_CreateRGBSurface( SDL_SWSURFACE, 32, 32, 32, RED_MASK,GREEN_MASK,BLUE_MASK,ALPHA_MASK);
-    SDL_FillRect(bg, NULL, SDL_MapRGBA(grid->windowSurface->format, 0,0,0, SDL_ALPHA_TRANSPARENT));
-    SDL_Surface *text = SDL_SurfaceText("../Sans.ttf", "S", 38, &black);
-    SDL_Rect rect2;
-    rect2.x = (32 - (text->clip_rect).w)/2;
-    rect2.y = (32 - (text->clip_rect).h)/2;
-    SDL_BlitSurface(text, NULL, bg, &rect2);
-    SDL_SetWindowIcon(grid->window, bg);
-
-    SDL_FreeSurface(bg);
-    SDL_FreeSurface(text);
 
     return grid;
 }

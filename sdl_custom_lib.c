@@ -3,37 +3,6 @@
 #include "sdl_custom_lib.h"
 #include <SDL2/SDL_ttf.h>
 
-int init(SDL_Window **window, SDL_Surface **windowSurface, SDL_Renderer **renderer, int width, int height) {
-    int success = 1;
-
-    //Initialize SDL
-    if( SDL_Init( SDL_INIT_EVERYTHING ) < 0 ) {
-        printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
-        success = 0;
-    }
-    else {
-        //Create window
-        *window = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN );
-        if( *window == NULL ) {
-            printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
-            success = 0;
-        }
-        else {
-            //Get window surface
-            *windowSurface = SDL_GetWindowSurface( *window );
-
-            *renderer = (SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC));
-
-            if(*renderer == NULL) {
-                fprintf(stderr, "%s", SDL_GetError());
-                success = 0;
-            }
-        }
-    }
-
-    return success;
-}
-
 int loadMedia(SDL_Surface **surface, char *location) {
     int success = 1;
 
