@@ -13,7 +13,7 @@ typedef struct cell_struct {
     int column;
     char isHovered;
     char isClicked;
-    char isReadonly;
+    char isReadOnly;
 } cell;
 
 cell *initCell(int, int, int, char, char);

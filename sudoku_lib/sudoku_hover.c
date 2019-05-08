@@ -15,9 +15,34 @@ void removeHover(cell* selectedCell){
     //affiche une bordure blanche sur la case passée en paramètre
 }
 
-void updateHover(cell* newHovered, sudokuGrid* data){
-    printHover(newHovered);
-    removeHover(data->lastHovered);
+void updateHover(cell* position, sudokuGrid* data){
+
+    if (data->lastHovered==NULL){ //la souris était précédemment hors de la grille
+
+        if (position!=NULL){ //la souris est entrée dans la grille
+            printHover(position);
+            position->isHovered=1;
+            data->lastHovered=position;
+        }
+    }
+    else{ //la souris était précédemment dans la grille
+
+        if (!data->lastHovered->isClicked){ //aucune case n'est séléctionnée
+            if (position==NULL){ //la souris est sortis de la grille
+                removeHover(data->lastHovered);
+                data->lastHovered->isHovered=0;
+                data->lastHovered=position;
+            }
+            else{ //la souris est tjr dans la grille
+                removeHover(data->lastHovered);
+                data->lastHovered->isHovered=0;
+                printHover(position);
+                position->isHovered=1;
+                data->lastHovered=position;
+            }
+        }
+    }
+
 }
 
 void updateNumber(cell* currentCell, sudokuGrid* data){
@@ -179,6 +204,18 @@ void calculatePositionAndUpdate(sudokuGrid *grid, cell* numbers[][9]) {
             ycells--;
         }
 
-        updateNumberAtPosition(grid, numbers[ycells][xcells], 1, 0);
     }
+}
+
+cell* getMousePostion(sudokuGrid* data){
+    int x, y;
+    cell* currentCell=NULL;
+    SDL_GetMouseState(&x, &y);
+
+    if(x > GRID_MARGIN && x < GRID_MARGIN + GRID_SIZE && y > GRID_MARGIN && y < GRID_MARGIN + GRID_SIZE){
+        int xcells = (x-(x>=381) - GRID_MARGIN)/(GRID_CELL_SIZE+1);
+        int ycells = (y-(y>=381) - GRID_MARGIN)/(GRID_CELL_SIZE+1);
+        currentCell = data->grid[xcells][ycells];
+    }
+    return currentCell;
 }

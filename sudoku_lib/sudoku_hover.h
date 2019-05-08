@@ -15,4 +15,9 @@ void drawNumberAtPosition(sudokuGrid*, cell*, SDL_Color*);
 void drawHoverBackground(sudokuGrid*);
 void calculatePositionAndUpdate(sudokuGrid*, cell* [][9]);
 
+void updateHover(cell*, sudokuGrid*);
+void printHover(cell*);
+void removeHover(cell*);
+cell* getMousePosition(sudokuGrid*);
+
 #endif //SDL_SUDOKU_SUDOKU_HOVER_H

@@ -14,6 +14,7 @@
 #include "sudoku_grid.h"
 #include "sudoku_cell.h"
 #include "sudoku_hover.h"
+#include "gameController.h"
 
 #ifndef SDL_SUDOKU_H
 #define SDL_SUDOKU_H

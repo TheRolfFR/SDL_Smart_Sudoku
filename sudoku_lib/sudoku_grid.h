@@ -40,6 +40,7 @@ typedef struct sudoku_grid {
     TTF_Font *font;
     cell *lastUpdated;
     cell* lastHovered;
+    cell* grid[9][9];
 } sudokuGrid;
 
 void tryInitGridFont(sudokuGrid*);

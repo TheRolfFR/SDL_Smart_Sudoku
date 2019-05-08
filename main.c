@@ -10,6 +10,11 @@
 
 int main(int argc, char **argv)
 {
+
+    initializeSudoku(); //afficher la grille mais pas les nombres (ça se fera lors du choix de difficulté)
+
+    gameController(sudokuGrid);
+
     SDL_Window *window = NULL;
     SDL_Surface *windowSurface = NULL;
     SDL_Renderer *renderer = NULL;
