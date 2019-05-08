@@ -6,39 +6,56 @@
 #include <stdlib.h>
 #include "sdl_sudoku.h"
 
+// dessine une bodure de la couleur choisie sur la case choisie
+void printRect(sudokuGrid *grille, cell* cellule, SDL_Color *color) {
+    // x et y égalent à la marge + le nombre de cellules précédant cette cellule + les bordures
+    SDL_Rect rect;
+    rect.x = GRID_MARGIN + cellule->column/3*GRID_THICK_BORDER + cellule->column * GRID_CELL_SIZE + GRID_THIN_BORDER * (cellule->column - cellule->column/3);
+    rect.y = GRID_MARGIN + cellule->line/3*GRID_THICK_BORDER + cellule->line * GRID_CELL_SIZE + GRID_THIN_BORDER * (cellule->line - cellule->line/3);
+    // la largeur et hauteur c'est la taille de la cellule
+    rect.w = GRID_CELL_SIZE;
+    rect.h = GRID_CELL_SIZE;
 
-void printHover(cell* selectedCell){
-    //affiche une bordure bleu sur la case passée en paramètre
+    // on change la couleur de rendu
+    SDL_SetRenderDrawColorStruct(grille->renderer, color);
 }
 
-void removeHover(cell* selectedCell){
-    //affiche une bordure blanche sur la case passée en paramètre
+//affiche une bordure bleu sur la case passée en paramètre
+void printHover(sudokuGrid *grille, cell* cellule){
+    SDL_Color bleu = {0x4D, 0xD0, 0xE1};
+    printRect(grille, cellule, &bleu);
 }
 
-void updateHover(cell* position, sudokuGrid* data){
+//affiche une bordure blanche sur la case passée en paramètre
+void removeHover(sudokuGrid *grille, cell* cellule){
+    SDL_Color blanc = {0xFF, 0xFF, 0xFF};
+    printRect(grille, cellule, &blanc);
+}
 
-    if (data->lastHovered==NULL){ //la souris était précédemment hors de la grille
+void updateHover(sudokuGrid *grille, cell* position){
+
+    if (grille->lastHovered==NULL){ //la souris était précédemment hors de la grille
 
         if (position!=NULL){ //la souris est entrée dans la grille
-            printHover(position);
+            printHover(grille, position);
             position->isHovered=1;
-            data->lastHovered=position;
+            grille->lastHovered=position;
         }
     }
     else{ //la souris était précédemment dans la grille
 
-        if (!data->lastHovered->isClicked){ //aucune case n'est séléctionnée
+        if (!grille->lastHovered->isClicked){ //aucune case n'est séléctionnée
             if (position==NULL){ //la souris est sortis de la grille
-                removeHover(data->lastHovered);
-                data->lastHovered->isHovered=0;
-                data->lastHovered=position;
+                removeHover(grille, grille->lastHovered);
+                grille->lastHovered->isHovered=0;
+                grille->lastHovered=position;
             }
             else{ //la souris est tjr dans la grille
-                removeHover(data->lastHovered);
-                data->lastHovered->isHovered=0;
-                printHover(position);
+                removeHover(grille, grille->lastHovered);
+                grille->lastHovered->isHovered=0;
+                printHover(grille, position);
                 position->isHovered=1;
-                data->lastHovered=position;
+                grille->lastHovered=position;
             }
         }
     }
@@ -50,35 +67,6 @@ void updateNumber(cell* currentCell, sudokuGrid* data){
 }
 
 void updateNumberAtPosition(sudokuGrid *grid, cell *newNumber, char isHovered, char isClicked) {
-    if(grid->lastNumberUpdated == NULL || grid->lastNumberUpdated != newNumber || grid->lastNumberUpdated->isHovered != isHovered || grid->lastNumberUpdated->isClicked != isClicked) {
-        // if new position update the last one
-        if(grid->lastNumberUpdated != newNumber && grid->lastNumberUpdated != NULL) {
-            drawNumberAtPosition(grid, grid->lastNumberUpdated, &grid->white);
-        }
-
-        // update the new one
-        SDL_Color *color = NULL;
-        newNumber->isHovered = isHovered;
-        newNumber->isClicked = isClicked;
-
-        printf("rendering as ");
-        if(newNumber->isHovered) {
-            color = &grid->hoverBackgroundColor;
-            printf("hover");
-        } else if(newNumber->isClicked) {
-            color = &grid->clickBackgroundColor;
-            printf("click");
-        } else {
-            color = &grid->white;
-            printf("normal");
-        }
-
-        printf(" at position %d %d\n", newNumber->line, newNumber->column);
-        drawNumberAtPosition(grid, newNumber, color);
-
-        // update the new one
-        grid->lastNumberUpdated = newNumber;
-    }
 }
 
 void drawNumberAtPosition(sudokuGrid *grid, cell *number, SDL_Color *colorPointer) {
@@ -185,7 +173,7 @@ void drawHoverBackground(sudokuGrid *grid) {
     }
 }
 
-void calculatePositionAndUpdate(sudokuGrid *grid, cell* numbers[][9]) {
+void calculatePositionAndUpdate() {
     int x, y;
     SDL_GetMouseState(&x, &y);
 
@@ -215,7 +203,7 @@ cell* getMousePostion(sudokuGrid* data){
     if(x > GRID_MARGIN && x < GRID_MARGIN + GRID_SIZE && y > GRID_MARGIN && y < GRID_MARGIN + GRID_SIZE){
         int xcells = (x-(x>=381) - GRID_MARGIN)/(GRID_CELL_SIZE+1);
         int ycells = (y-(y>=381) - GRID_MARGIN)/(GRID_CELL_SIZE+1);
-        currentCell = data->grid[xcells][ycells];
+        currentCell = data->cells[xcells][ycells];
     }
     return currentCell;
 }

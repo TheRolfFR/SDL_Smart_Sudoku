@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include "sdl_custom_lib.h"
 #include "sudoku_lib/sdl_sudoku.h"
+#include "sudoku_lib/gameController.h"
 #ifndef CONST_MAIN
 #define CONST_MAIN
 #define FPS 60
@@ -10,10 +11,8 @@
 
 int main(int argc, char **argv)
 {
-
-    initializeSudoku(); //afficher la grille mais pas les nombres (ça se fera lors du choix de difficulté)
-
-    gameController(sudokuGrid);
+    // cette fonction n existe pas encore
+    // initializeSudoku(); //afficher la grille mais pas les nombres (ça se fera lors du choix de difficulté)
 
     SDL_Window *window = NULL;
     SDL_Surface *windowSurface = NULL;
@@ -26,18 +25,20 @@ int main(int argc, char **argv)
         return -1;
     }
 
-    cell* numbers[9][9];
-    int result = loadGrid(numbers, "../grids/", 2);
+    // first draw
+    sudokuGrid* grid = initGrid(&window, &windowSurface, &renderer);
+
+    int result = loadGrid(grid->cells, "../grids/", 2);
     if(result != 0)
         return result;
 
-    // first draw
-    sudokuGrid* grid = initGrid(&window, &windowSurface, &renderer);
+    gameController(grid);
+
     drawSudokuGrid(grid);
     int a, b;
     for(a = 0; a < 9; a++) {
         for(b = 0; b < 9; b++) {
-            cell *c = numbers[a][b];
+            cell *c = grid->cells[a][b];
 
             if(c != NULL) {
                 updateNumberAtPosition(grid, c, 0, 0);
@@ -64,7 +65,7 @@ int main(int argc, char **argv)
                 continuer = 0;
                 break;
             case SDL_MOUSEMOTION:
-                calculatePositionAndUpdate(grid, &numbers);
+                calculatePositionAndUpdate();
                 break;
             case SDL_MOUSEBUTTONUP:
                 // lol

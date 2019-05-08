@@ -1,0 +1,6 @@
+"E:\JetBrains\CLion 2019.1.1\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" C:\Users\TheRolf\CLionProjects\untitled
+-- Could NOT find SDL_ttf (missing: SDL_TTF_LIBRARIES) 
+C:/Users/TheRolf/CLionProjects/untitled/sudoku_lib/gameController.cC:/Users/TheRolf/CLionProjects/untitled/sudoku_lib/sdl_sudoku.cC:/Users/TheRolf/CLionProjects/untitled/sudoku_lib/sudoku_cell.cC:/Users/TheRolf/CLionProjects/untitled/sudoku_lib/sudoku_grid.cC:/Users/TheRolf/CLionProjects/untitled/sudoku_lib/sudoku_hover.c
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/Users/TheRolf/CLionProjects/untitled/cmake-build-debug

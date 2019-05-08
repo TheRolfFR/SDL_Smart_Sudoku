@@ -13,11 +13,14 @@ void updateNumberAtPosition(sudokuGrid*, cell*, char, char);
 void drawNumberAtPosition(sudokuGrid*, cell*, SDL_Color*);
 
 void drawHoverBackground(sudokuGrid*);
-void calculatePositionAndUpdate(sudokuGrid*, cell* [][9]);
+void calculatePositionAndUpdate();
 
-void updateHover(cell*, sudokuGrid*);
-void printHover(cell*);
-void removeHover(cell*);
+void updateHover(sudokuGrid*, cell*);
+
+void printRect(sudokuGrid*, cell*, SDL_Color*);
+void printHover(sudokuGrid*, cell*);
+void removeHover(sudokuGrid*, cell*);
+
 cell* getMousePosition(sudokuGrid*);
 
 #endif //SDL_SUDOKU_SUDOKU_HOVER_H

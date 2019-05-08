@@ -84,7 +84,12 @@ sudokuGrid *initGrid(SDL_Window **window, SDL_Surface **windowSurface, SDL_Rende
     grid->windowSurface = *windowSurface;
     grid->renderer = *renderer;
 
-    grid->lastNumberUpdated = NULL;
+    int a, b;
+    for(a = 0; a < 9; a++) {
+        for(b = 0; b < 9; b++) {
+            grid->cells[a][b] = NULL;
+        }
+    }
 
     // intialize font
     tryInitGridFont(grid);
