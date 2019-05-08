@@ -9,6 +9,7 @@
 
 void tryInitGridFont(sudokuGrid *grid) {
     TTF_Font *Sans = TTF_OpenFont("../Sans.ttf", GRID_FONT_SIZE);
+
     grid->font = Sans;
 }
 

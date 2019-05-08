@@ -62,44 +62,10 @@ void updateHover(sudokuGrid *grid, cell* position){
 
 }
 
-void updateNumber(cell* currentCell, sudokuGrid* data){
-    //change la valeur du nombre dans cette case
-}
-
-void updateNumberAtPosition(sudokuGrid *grid, cell *newNumber, char isHovered, char isClicked) {
-}
-
-void drawNumberAtPosition(sudokuGrid *grid, cell *number, SDL_Color *colorPointer) {
-    SDL_Rect rect;
-
-    // background rect
-    rect.x = GRID_MARGIN + number->column/3*GRID_THICK_BORDER + number->column * GRID_CELL_SIZE + GRID_THIN_BORDER * (number->column - number->column/3);  //controls the rect's x coordinate
-    rect.y = GRID_MARGIN + number->line/3*GRID_THICK_BORDER + number->line * GRID_CELL_SIZE + GRID_THIN_BORDER * (number->line - number->line/3); // controls the rect's y coordinte
-    rect.w = GRID_CELL_SIZE;
-    rect.h = GRID_CELL_SIZE;
-
-    // set the background color to white
-    SDL_SetRenderDrawColorStruct(grid->renderer, &grid->white);
-    // fill the background with white
-    SDL_RenderFillRect(grid->renderer, &rect);
-
-    // set the color to draw with
-    SDL_SetRenderDrawColorStruct(grid->renderer, colorPointer);
-    // draw a rect of the color
-    int i;
-    SDL_Rect newRect;
-    for(i = 0; i < GRID_HOVER_BORDER; i++) {
-        newRect.x = rect.x + i;
-        newRect.y = rect.y + i;
-        newRect.w = rect.w - 2*i;
-        newRect.h = rect.h - 2*i;
-        SDL_RenderDrawRect(grid->renderer, &newRect);
-    }
-
-    tryInitGridFont(grid);
-
+void drawNumberAtPosition(sudokuGrid *grid, cell *number) {
     // if there is a number to render
     if(number->number != -1) {
+        SDL_Rect rect;
         // if the font is not defined, define it
         // create a null pointer and try to draw some text
         SDL_Surface *surfaceText = NULL;
@@ -107,7 +73,8 @@ void drawNumberAtPosition(sudokuGrid *grid, cell *number, SDL_Color *colorPointe
         //convert integer to string
         char *string = convertInt(number->number);
 
-        surfaceText = TTF_RenderText_Solid(grid->font, string, grid->black);
+        SDL_Color black = {0, 0, 0};
+        surfaceText = TTF_RenderText_Solid(grid->font, string, black);
 
         // if the text rendered by the surface is not null
         if(surfaceText != NULL) {
@@ -195,7 +162,7 @@ void calculatePositionAndUpdate() {
     }
 }
 
-cell* getMousePostion(sudokuGrid* data){
+cell* getMousePosition(sudokuGrid* data){
     int x, y;
     cell* currentCell=NULL;
     SDL_GetMouseState(&x, &y);

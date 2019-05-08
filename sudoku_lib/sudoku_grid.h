@@ -10,12 +10,6 @@
 #include <SDL2/SDL_ttf.h>
 #include "sudoku_cell.h"
 
-/* Constantes de masque NE PAS TOUCHER */
-#define RED_MASK   0xFF000000
-#define GREEN_MASK 0x00FF0000
-#define BLUE_MASK  0x0000FF00
-#define ALPHA_MASK 0x000000FF
-
 /* Constantes de la grille */
 #define GRID_THICK_BORDER 2
 #define GRID_THIN_BORDER 1
@@ -33,12 +27,7 @@ typedef struct sudoku_grid {
     SDL_Window *window;
     SDL_Surface *windowSurface;
     SDL_Renderer *renderer;
-    SDL_Color hoverBackgroundColor;
-    SDL_Color clickBackgroundColor;
-    SDL_Color black;
-    SDL_Color white;
     TTF_Font *font;
-    cell *lastUpdated;
     cell* lastHovered;
     cell* cells[9][9];
 } sudokuGrid;

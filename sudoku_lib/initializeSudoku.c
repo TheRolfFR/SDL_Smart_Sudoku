@@ -5,7 +5,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "sdl_sudoku.h"
-#include "initializeSudoku.h"
+
+/* Constantes de masque NE PAS TOUCHER */
+#define RED_MASK   0xFF000000
+#define GREEN_MASK 0x00FF0000
+#define BLUE_MASK  0x0000FF00
+#define ALPHA_MASK 0x000000FF
 
 int initializeSudoku(sudokuGrid *grid) {
     int succes = 1;
@@ -29,6 +34,7 @@ int initializeSudoku(sudokuGrid *grid) {
 
             // on initialise la police d'écriture
             tryInitGridFont(grid);
+            grid->font = TTF_OpenFont("../Sans.ttf", GRID_FONT_SIZE);
 
             // on change l'icône
             SDL_Surface *bg = SDL_CreateRGBSurface( SDL_SWSURFACE, 32, 32, 32, RED_MASK,GREEN_MASK,BLUE_MASK,ALPHA_MASK);
@@ -48,6 +54,8 @@ int initializeSudoku(sudokuGrid *grid) {
             //On récupère le renderer
             grid->renderer = NULL;
             grid->renderer = (SDL_CreateRenderer(grid->window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC));
+
+            grid->lastHovered = NULL;
 
             if( grid->renderer == NULL ) {
                 fprintf(stderr, "Le renderer n'a pas pu etre cree ! SDL_eror : %s\n", SDL_GetError());

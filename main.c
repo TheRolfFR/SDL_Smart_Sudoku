@@ -4,8 +4,6 @@
 #include "sudoku_lib/sdl_sudoku.h"
 #ifndef CONST_MAIN
 #define CONST_MAIN
-#define FPS 60
-#define TICKS_FPS 1000/FPS
 #endif
 
 int main(int argc, char **argv)
@@ -21,9 +19,6 @@ int main(int argc, char **argv)
     if(loadGrid(grid->cells, "../grids/", 2))
         return -1;
 
-    //ton game controller j'ai pas compris
-    gameController(grid);
-
     // on dessine la grille
     drawSudokuGrid(grid);
 
@@ -32,7 +27,7 @@ int main(int argc, char **argv)
     for(a = 0; a < 9; a++) {
         for(b = 0; b < 9; b++) {
             cell *c = grid->cells[a][b];
-            updateNumberAtPosition(grid, c, 0, 0);
+            drawNumberAtPosition(grid, c);
         }
     }
 
@@ -42,42 +37,8 @@ int main(int argc, char **argv)
     // on affiche le rendu
     SDL_RenderPresent(grid->renderer);
 
-    // le while sui tourne tout le temps
-    int continuer = 1;
-    SDL_Event event;
-    while (continuer)
-    {
-        SDL_WaitEvent(&event);
-
-        // add a timer here
-        Uint32 tick = SDL_GetTicks();
-
-        switch(event.type)
-        {
-            case SDL_QUIT: // on quitte
-                continuer = 0;
-                break;
-            case SDL_MOUSEMOTION: // la souris bouge
-                calculatePositionAndUpdate();
-                break;
-            case SDL_MOUSEBUTTONUP: // on "clique"
-                // lol
-                break;
-        }
-
-        if(event.type != SDL_QUIT) {
-            SDL_RenderPresent(grid->renderer);
-        }
-
-        // the difference in ms determinating the grid
-        Uint32 difference = SDL_GetTicks() - tick;
-
-        // if time < refresh rate wait for the time
-        printf("%u %u\n", difference, TICKS_FPS);
-        if(difference < TICKS_FPS) {
-            SDL_Delay(difference);
-        }
-    }
+    //le jeu lorsqu'il est lancé
+    gameController(grid);
 
     // on détruit le rendu
     SDL_DestroyRenderer(grid->renderer);

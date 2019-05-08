@@ -9,8 +9,7 @@
 
 void drawNumbersBackground(sudokuGrid*);
 
-void updateNumberAtPosition(sudokuGrid*, cell*, char, char);
-void drawNumberAtPosition(sudokuGrid*, cell*, SDL_Color*);
+void drawNumberAtPosition(sudokuGrid*, cell*);
 
 void drawHoverBackground(sudokuGrid*);
 void calculatePositionAndUpdate();
