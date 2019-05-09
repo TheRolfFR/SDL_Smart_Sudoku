@@ -6,8 +6,6 @@
 
 #define CONST_SDL_SUDOKU
 
-#define BLACK {0, 0, 0}
-
 #endif
 
 #include "../sdl_custom_lib.h"
@@ -16,6 +14,10 @@
 #include "sudoku_hover.h"
 #include "initializeSudoku.h"
 #include "gameController.h"
+#include "selectCell.h"
+#include "keyInterpretor.h"
+#include "updateCellValue.h"
+#include "moveSelected.h"
 
 #ifndef SDL_SUDOKU_H
 #define SDL_SUDOKU_H

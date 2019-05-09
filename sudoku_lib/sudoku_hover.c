@@ -51,17 +51,19 @@ void updateHover(sudokuGrid *grid, cell* position){
     else{ //la souris était précédemment dans la grid
 
         if (!grid->lastHovered->isClicked){ //aucune case n'est séléctionnée
-            if (position==NULL){ //la souris est sortis de la grid
-                removeHover(grid, grid->lastHovered);
-                grid->lastHovered->isHovered = 0;
-                grid->lastHovered = position;
-            }
-            else{ //la souris est tjr dans la grid
-                removeHover(grid, grid->lastHovered);
-                grid->lastHovered->isHovered = 0;
-                printHover(grid, position);
-                position->isHovered = 1;
-                grid->lastHovered = position;
+            if (position!=grid->lastHovered){ // la souris n'a pas changée de case
+                if (position==NULL){ //la souris est sortis de la grid
+                    removeHover(grid, grid->lastHovered);
+                    grid->lastHovered->isHovered=0;
+                    grid->lastHovered=position;
+                }
+                else{ //la souris est tjr dans la grid
+                    removeHover(grid, grid->lastHovered);
+                    grid->lastHovered->isHovered=0;
+                    printHover(grid, position);
+                    position->isHovered=1;
+                    grid->lastHovered=position;
+                }
             }
         }
     }
@@ -107,66 +109,24 @@ void drawNumberAtPosition(sudokuGrid *grid, cell *number) {
     }
 }
 
-void drawNumbersBackground(sudokuGrid *grid) {
+void drawNumberButtonsBackground(sudokuGrid *grid) {
     SDL_Rect rect = {GRID_MARGIN, GRID_SIZE + 2*GRID_MARGIN, GRID_SIZE, GRID_CELL_SIZE};
     SDL_SetRenderDrawColorStruct(grid->renderer, &grid->thinBorderColor);
     SDL_RenderFillRect(grid->renderer, &rect);
 }
 
-void drawHoverBackground(sudokuGrid *grid) {
-    int x, y;
-    SDL_GetMouseState(&x, &y);
-    if(x > GRID_MARGIN && x < GRID_MARGIN + GRID_SIZE && y > GRID_MARGIN && y < GRID_MARGIN + GRID_SIZE) {
-        SDL_Rect rect;
+void drawNumberBackground(sudokuGrid *grid, cell* selectedCell) {
+    // x et y égalent à la marge + le nombre de cellules précédant cette cellule + les bordures
+    SDL_Rect rect;
+    rect.y = GRID_MARGIN + selectedCell->column/3*GRID_THICK_BORDER + selectedCell->column * GRID_CELL_SIZE + GRID_THIN_BORDER * (selectedCell->column - selectedCell->column/3);
+    rect.x = GRID_MARGIN + selectedCell->line/3*GRID_THICK_BORDER + selectedCell->line * GRID_CELL_SIZE + GRID_THIN_BORDER * (selectedCell->line - selectedCell->line/3);
+    // la largeur et hauteur c'est la taille de la cellule
+    rect.w = GRID_CELL_SIZE;
+    rect.h = GRID_CELL_SIZE;
 
-        int xcells = (x - GRID_MARGIN)/GRID_CELL_SIZE, ycells = (y - GRID_MARGIN)/GRID_CELL_SIZE;
-
-        do {
-            rect.x = GRID_MARGIN + ((xcells < 3) ? xcells*(GRID_CELL_SIZE + GRID_THIN_BORDER) : xcells * GRID_CELL_SIZE + (xcells - xcells/3) * GRID_THIN_BORDER + xcells/3 * GRID_THICK_BORDER);
-            xcells--;
-        } while(rect.x > x);
-
-        do {
-            rect.y = GRID_MARGIN + ((ycells < 3) ? ycells*(GRID_CELL_SIZE + GRID_THIN_BORDER) : ycells * GRID_CELL_SIZE + (ycells - ycells/3) * GRID_THIN_BORDER + ycells/3 * GRID_THICK_BORDER);
-            ycells--;
-        } while(rect.y > y);
-
-        rect.w = GRID_CELL_SIZE;
-        rect.h = GRID_CELL_SIZE;
-
-        // #4DD0E1
-        SDL_Color lightblue = {0x4D, 0xD0, 0xE1};
-        SDL_SetRenderDrawColorStruct(grid->renderer, &lightblue);
-        for(int i = 0; i < 2; i++) {
-            SDL_RenderDrawRect(grid->renderer, &rect);
-            rect.x++;
-            rect.y++;
-            rect.w -= 2;
-            rect.h -= 2;
-        }
-    }
-}
-
-void calculatePositionAndUpdate() {
-    int x, y;
-    SDL_GetMouseState(&x, &y);
-
-    if(x > GRID_MARGIN && x < GRID_MARGIN + GRID_SIZE && y > GRID_MARGIN && y < GRID_MARGIN + GRID_SIZE) {
-        SDL_Rect rect;
-
-        int xcells = (x-(x>=381) - GRID_MARGIN)/(GRID_CELL_SIZE+1), ycells = (y-(x>=381) - GRID_MARGIN)/(GRID_CELL_SIZE+1);
-
-        while(rect.x > x && xcells > 1) {
-            rect.x = GRID_MARGIN + ((xcells < 3) ? xcells*(GRID_CELL_SIZE + GRID_THIN_BORDER) : xcells * GRID_CELL_SIZE + (xcells - xcells/3) * GRID_THIN_BORDER + xcells/3 * GRID_THICK_BORDER);
-            xcells--;
-        }
-
-        while(rect.y > y && ycells > 1) {
-            rect.y = GRID_MARGIN + ((ycells < 3) ? ycells*(GRID_CELL_SIZE + GRID_THIN_BORDER) : ycells * GRID_CELL_SIZE + (ycells - ycells/3) * GRID_THIN_BORDER + ycells/3 * GRID_THICK_BORDER);
-            ycells--;
-        }
-
-    }
+    SDL_Color white = {0xFF, 0xFF, 0xFF};
+    SDL_SetRenderDrawColorStruct(grid->renderer, &white);
+    SDL_RenderFillRect(grid->renderer, &rect);
 }
 
 cell* getMousePosition(sudokuGrid* data){

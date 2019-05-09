@@ -31,8 +31,7 @@ int main(int argc, char **argv)
         }
     }
 
-    // on dessine le fon des nombres?
-    drawNumbersBackground(grid);
+    drawNumberButtonsBackground(grid);
 
     // on affiche le rendu
     SDL_RenderPresent(grid->renderer);

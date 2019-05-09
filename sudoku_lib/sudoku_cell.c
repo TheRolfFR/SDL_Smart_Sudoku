@@ -13,6 +13,7 @@ cell *initCell(int l, int c, int number, char isHovered, char isClicked) {
     myCell->line = l;
     myCell->column = c;
     myCell->number = number;
+    myCell->isReadOnly = (number != -1) ? 1 : 0;
 }
 
 void printCell(cell *c) {

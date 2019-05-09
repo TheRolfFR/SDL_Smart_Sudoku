@@ -7,12 +7,11 @@
 
 #include "sdl_sudoku.h"
 
-void drawNumbersBackground(sudokuGrid*);
+void drawNumberButtonsBackground(sudokuGrid*);
 
 void drawNumberAtPosition(sudokuGrid*, cell*);
 
-void drawHoverBackground(sudokuGrid*);
-void calculatePositionAndUpdate();
+void drawNumberBackground(sudokuGrid*, cell*);
 
 void updateHover(sudokuGrid*, cell*);
 

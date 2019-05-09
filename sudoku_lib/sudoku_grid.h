@@ -29,7 +29,9 @@ typedef struct sudoku_grid {
     SDL_Renderer *renderer;
     TTF_Font *font;
     cell* lastHovered;
+    cell* lastClicked;
     cell* cells[9][9];
+    char pencilMarkMode;
 } sudokuGrid;
 
 void tryInitGridFont(sudokuGrid*);
