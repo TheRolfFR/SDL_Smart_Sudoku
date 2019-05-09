@@ -18,8 +18,11 @@ cell *initCell(int l, int c, int number, char isHovered, char isClicked) {
 
 void printCell(cell *c) {
     printf("cell %p : ", c);
-    printf(" number : %d", c->number);
-    printf(" line : %d", c->line);
-    printf(" column : %d", c->column);
-    printf(" isHovered : %d\n", c->isHovered);
+    if(c != NULL) {
+        printf(" number : %d", c->number);
+        printf(" line : %d", c->line);
+        printf(" column : %d", c->column);
+        printf(" isHovered : %d", c->isHovered);
+        printf(" isReadOnly : %d\n", c->isReadOnly);
+    }
 }

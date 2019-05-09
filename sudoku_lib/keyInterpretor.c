@@ -15,34 +15,43 @@ void keyInterpretor(sudokuGrid* data,SDL_Keycode key){
             data->pencilMarkMode = (!data->pencilMarkMode);
             break;
         default:
-            if(data->lastHovered->isClicked){
+            if(data->lastClicked != NULL){
                 switch (key){
                     case SDLK_1:
+                    case SDLK_KP_1:
                         updateCellValue(data,1);
                         break;
                     case SDLK_2:
+                    case SDLK_KP_2:
                         updateCellValue(data,2);
                         break;
                     case SDLK_3:
+                    case SDLK_KP_3:
                         updateCellValue(data,3);
                         break;
                     case SDLK_4:
+                    case SDLK_KP_4:
                         updateCellValue(data,4);
                         break;
                     case SDLK_5:
+                    case SDLK_KP_5:
                         updateCellValue(data,5);
                         break;
                     case SDLK_6:
+                    case SDLK_KP_6:
                         updateCellValue(data,6);
                         break;
                     case SDLK_7:
+                    case SDLK_KP_7:
                         updateCellValue(data,7);
                         break;
                     case SDLK_8:
+                    case SDLK_KP_8:
                         updateCellValue(data,8);
                         break;
                     case SDLK_9:
-                        updateCellValue(data,2);
+                    case SDLK_KP_9:
+                        updateCellValue(data,9);
                         break;
                     case SDLK_DOWN:
                         moveSelected(data, 1, 0);

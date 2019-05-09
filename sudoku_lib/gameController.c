@@ -44,7 +44,7 @@ void gameController(sudokuGrid* data){
         Uint32 difference = SDL_GetTicks() - tick;
 
         // si le temps est inférieur aux ticks on pause le jeu
-        printf("%u %u\n", difference, TICKS_FPS);
+        // printf("%u %u\n", difference, TICKS_FPS);
         if(difference < TICKS_FPS) {
             SDL_Delay(difference);
         }

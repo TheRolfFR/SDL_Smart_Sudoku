@@ -82,8 +82,10 @@ void drawNumberAtPosition(sudokuGrid *grid, cell *number) {
         char *string = convertInt(number->number);
 
         SDL_Color black = {0, 0, 0};
+        SDL_Color grey = {0x37, 0x47, 0x4F}; //37474F
+
         tryInitGridFont(grid);
-        surfaceText = TTF_RenderText_Solid(grid->font, string, black);
+        surfaceText = TTF_RenderText_Solid(grid->font, string, (number->isReadOnly) ? grey : black);
 
         // if the text rendered by the surface is not null
         if(surfaceText != NULL) {
@@ -93,8 +95,8 @@ void drawNumberAtPosition(sudokuGrid *grid, cell *number) {
             SDL_FreeSurface(surfaceText);
 
             // define the number rect
-            rect.x = GRID_MARGIN + number->column/3*GRID_THICK_BORDER + number->column * GRID_CELL_SIZE + GRID_THIN_BORDER * (number->column - number->column/3);  //controls the rect's x coordinate
-            rect.y = GRID_MARGIN + number->line/3*GRID_THICK_BORDER + number->line * GRID_CELL_SIZE + GRID_THIN_BORDER * (number->line - number->line/3); // controls the rect's y coordinate
+            rect.y = GRID_MARGIN + number->column/3*GRID_THICK_BORDER + number->column * GRID_CELL_SIZE + GRID_THIN_BORDER * (number->column - number->column/3);  //controls the rect's x coordinate
+            rect.x = GRID_MARGIN + number->line/3*GRID_THICK_BORDER + number->line * GRID_CELL_SIZE + GRID_THIN_BORDER * (number->line - number->line/3); // controls the rect's y coordinate
             rect.w = GRID_FONT_SIZE; // controls the width of the rect
             rect.h = GRID_FONT_SIZE; // controls the height of the rect
 
@@ -118,11 +120,11 @@ void drawNumberButtonsBackground(sudokuGrid *grid) {
 void drawNumberBackground(sudokuGrid *grid, cell* selectedCell) {
     // x et y égalent à la marge + le nombre de cellules précédant cette cellule + les bordures
     SDL_Rect rect;
-    rect.y = GRID_MARGIN + selectedCell->column/3*GRID_THICK_BORDER + selectedCell->column * GRID_CELL_SIZE + GRID_THIN_BORDER * (selectedCell->column - selectedCell->column/3);
-    rect.x = GRID_MARGIN + selectedCell->line/3*GRID_THICK_BORDER + selectedCell->line * GRID_CELL_SIZE + GRID_THIN_BORDER * (selectedCell->line - selectedCell->line/3);
+    rect.y = GRID_HOVER_BORDER + GRID_MARGIN + selectedCell->column/3*GRID_THICK_BORDER + selectedCell->column * GRID_CELL_SIZE + GRID_THIN_BORDER * (selectedCell->column - selectedCell->column/3);
+    rect.x = GRID_HOVER_BORDER + GRID_MARGIN + selectedCell->line/3*GRID_THICK_BORDER + selectedCell->line * GRID_CELL_SIZE + GRID_THIN_BORDER * (selectedCell->line - selectedCell->line/3);
     // la largeur et hauteur c'est la taille de la cellule
-    rect.w = GRID_CELL_SIZE;
-    rect.h = GRID_CELL_SIZE;
+    rect.w = GRID_CELL_SIZE - 2*GRID_HOVER_BORDER;
+    rect.h = GRID_CELL_SIZE - 2*GRID_HOVER_BORDER;
 
     SDL_Color white = {0xFF, 0xFF, 0xFF};
     SDL_SetRenderDrawColorStruct(grid->renderer, &white);
