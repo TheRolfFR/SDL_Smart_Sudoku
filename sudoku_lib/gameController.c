@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "gameController.h"
+#include "sdl_sudoku.h"
 
 #define FPS 60
 #define TICKS_FPS 1000/FPS
@@ -30,8 +30,10 @@ void gameController(sudokuGrid* data){
                 updateHover(data, getMousePosition(data));
                 break;
             case SDL_MOUSEBUTTONUP: // on "clique"
-                // lol
+                selectCell(data, getMousePosition(data));
                 break;
+            case SDL_KEYDOWN:
+                keyInterpretor(data,event.key.keysym.sym);
         }
 
         if(event.type != SDL_QUIT) {

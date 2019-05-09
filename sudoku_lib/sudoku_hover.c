@@ -45,17 +45,19 @@ void updateHover(sudokuGrid *grid, cell* position){
     else{ //la souris était précédemment dans la grid
 
         if (!grid->lastHovered->isClicked){ //aucune case n'est séléctionnée
-            if (position==NULL){ //la souris est sortis de la grid
-                removeHover(grid, grid->lastHovered);
-                grid->lastHovered->isHovered=0;
-                grid->lastHovered=position;
-            }
-            else{ //la souris est tjr dans la grid
-                removeHover(grid, grid->lastHovered);
-                grid->lastHovered->isHovered=0;
-                printHover(grid, position);
-                position->isHovered=1;
-                grid->lastHovered=position;
+            if (position!=grid->lastHovered){ // la souris n'a pas changée de case
+                if (position==NULL){ //la souris est sortis de la grid
+                    removeHover(grid, grid->lastHovered);
+                    grid->lastHovered->isHovered=0;
+                    grid->lastHovered=position;
+                }
+                else{ //la souris est tjr dans la grid
+                    removeHover(grid, grid->lastHovered);
+                    grid->lastHovered->isHovered=0;
+                    printHover(grid, position);
+                    position->isHovered=1;
+                    grid->lastHovered=position;
+                }
             }
         }
     }

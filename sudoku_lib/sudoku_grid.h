@@ -30,6 +30,7 @@ typedef struct sudoku_grid {
     TTF_Font *font;
     cell* lastHovered;
     cell* cells[9][9];
+    char pencilMarkMode = 0;
 } sudokuGrid;
 
 void tryInitGridFont(sudokuGrid*);

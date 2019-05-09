@@ -16,6 +16,8 @@
 #include "sudoku_hover.h"
 #include "initializeSudoku.h"
 #include "gameController.h"
+#include "selectCell.h"
+#include "keyInterpretor.h"
 
 #ifndef SDL_SUDOKU_H
 #define SDL_SUDOKU_H
