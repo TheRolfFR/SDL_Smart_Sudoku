@@ -10,14 +10,22 @@
 void printRect(sudokuGrid *grid, cell* selectedCell, SDL_Color *color) {
     // x et y égalent à la marge + le nombre de cellules précédant cette cellule + les bordures
     SDL_Rect rect;
-    rect.x = GRID_MARGIN + selectedCell->column/3*GRID_THICK_BORDER + selectedCell->column * GRID_CELL_SIZE + GRID_THIN_BORDER * (selectedCell->column - selectedCell->column/3);
-    rect.y = GRID_MARGIN + selectedCell->line/3*GRID_THICK_BORDER + selectedCell->line * GRID_CELL_SIZE + GRID_THIN_BORDER * (selectedCell->line - selectedCell->line/3);
+    rect.y = GRID_MARGIN + selectedCell->column/3*GRID_THICK_BORDER + selectedCell->column * GRID_CELL_SIZE + GRID_THIN_BORDER * (selectedCell->column - selectedCell->column/3);
+    rect.x = GRID_MARGIN + selectedCell->line/3*GRID_THICK_BORDER + selectedCell->line * GRID_CELL_SIZE + GRID_THIN_BORDER * (selectedCell->line - selectedCell->line/3);
     // la largeur et hauteur c'est la taille de la cellule
     rect.w = GRID_CELL_SIZE;
     rect.h = GRID_CELL_SIZE;
 
     // on change la couleur de rendu
     SDL_SetRenderDrawColorStruct(grid->renderer, color);
+    int i;
+    for(i = 0; i < GRID_HOVER_BORDER; i++) {
+        SDL_RenderDrawRect(grid->renderer, &rect);
+        rect.x++;
+        rect.y++;
+        rect.w -= 2;
+        rect.h -= 2;
+    }
 }
 
 //affiche une bordure bleu sur la case passée en paramètre
@@ -33,12 +41,10 @@ void removeHover(sudokuGrid *grid, cell* selectedCell){
 }
 
 void updateHover(sudokuGrid *grid, cell* position){
-
     if (grid->lastHovered==NULL){ //la souris était précédemment hors de la grid
-
         if (position!=NULL){ //la souris est entrée dans la grid
             printHover(grid, position);
-            position->isHovered=1;
+            position->isHovered = 1;
             grid->lastHovered=position;
         }
     }
@@ -47,15 +53,15 @@ void updateHover(sudokuGrid *grid, cell* position){
         if (!grid->lastHovered->isClicked){ //aucune case n'est séléctionnée
             if (position==NULL){ //la souris est sortis de la grid
                 removeHover(grid, grid->lastHovered);
-                grid->lastHovered->isHovered=0;
-                grid->lastHovered=position;
+                grid->lastHovered->isHovered = 0;
+                grid->lastHovered = position;
             }
             else{ //la souris est tjr dans la grid
                 removeHover(grid, grid->lastHovered);
-                grid->lastHovered->isHovered=0;
+                grid->lastHovered->isHovered = 0;
                 printHover(grid, position);
-                position->isHovered=1;
-                grid->lastHovered=position;
+                position->isHovered = 1;
+                grid->lastHovered = position;
             }
         }
     }
@@ -74,6 +80,7 @@ void drawNumberAtPosition(sudokuGrid *grid, cell *number) {
         char *string = convertInt(number->number);
 
         SDL_Color black = {0, 0, 0};
+        tryInitGridFont(grid);
         surfaceText = TTF_RenderText_Solid(grid->font, string, black);
 
         // if the text rendered by the surface is not null

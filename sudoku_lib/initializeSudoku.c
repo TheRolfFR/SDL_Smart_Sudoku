@@ -34,7 +34,9 @@ int initializeSudoku(sudokuGrid *grid) {
 
             // on initialise la police d'écriture
             tryInitGridFont(grid);
-            grid->font = TTF_OpenFont("../Sans.ttf", GRID_FONT_SIZE);
+            grid->font = NULL;
+            grid->font = TTF_OpenFont("../Sans.ttf", 60);
+
 
             // on change l'icône
             SDL_Surface *bg = SDL_CreateRGBSurface( SDL_SWSURFACE, 32, 32, 32, RED_MASK,GREEN_MASK,BLUE_MASK,ALPHA_MASK);

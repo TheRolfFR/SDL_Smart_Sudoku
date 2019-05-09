@@ -27,7 +27,7 @@ void gameController(sudokuGrid* data){
                 continuer = 0;
                 break;
             case SDL_MOUSEMOTION: // la souris bouge
-                updateHover(data, getMousePosition(data));
+                 updateHover(data, getMousePosition(data));
                 break;
             case SDL_MOUSEBUTTONUP: // on "clique"
                 // lol
