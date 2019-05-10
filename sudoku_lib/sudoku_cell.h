@@ -7,6 +7,11 @@
 
 #include "sudoku_grid.h"
 
+typedef struct cellList{
+    struct cell_struct* bloqueur;
+    struct sdlist* next;
+}cellList;
+
 typedef struct cell_struct {
     int number;
     int line;
@@ -14,6 +19,8 @@ typedef struct cell_struct {
     char isHovered;
     char isClicked;
     char isReadOnly;
+    cellList* rules[9];
+    char pencilMark[9];
 } cell;
 
 cell *initCell(int, int, int, char, char);

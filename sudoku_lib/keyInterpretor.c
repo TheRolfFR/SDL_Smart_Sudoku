@@ -9,13 +9,13 @@ void keyInterpretor(sudokuGrid* data,SDL_Keycode key){
     switch (key){
         case SDLK_LCTRL:
         case SDLK_RCTRL:
-            //Wait();
+            //zWait();
             break;
         case SDLK_CAPSLOCK:
             data->pencilMarkMode = (!data->pencilMarkMode);
             break;
         default:
-            if(data->lastClicked != NULL){
+            if(data->lastClicked != NULL){ //cas suppr
                 switch (key){
                     case SDLK_1:
                     case SDLK_KP_1:
@@ -66,8 +66,7 @@ void keyInterpretor(sudokuGrid* data,SDL_Keycode key){
                         moveSelected(data, 0, 1);
                         break;
                     case SDLK_ESCAPE:
-                        data->lastHovered->isClicked = 0;
-                        updateHover(data,getMousePosition(data));
+                        unselect(data);
                         break;
                     default:
                         break;

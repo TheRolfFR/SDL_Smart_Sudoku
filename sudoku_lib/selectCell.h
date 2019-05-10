@@ -7,4 +7,6 @@
 
 void selectCell(sudokuGrid*, cell*);
 
+void unselect(sudokuGrid*);
+
 #endif //SDL_SUDOKU_SELECTCELL_H

@@ -28,3 +28,9 @@ void selectCell(sudokuGrid* data, cell* position){
         }
     }
 }
+
+void unselect(sudokuGrid* data){
+    data->lastHovered->isClicked = 0;
+    updateHover(data,getMousePosition(data));
+    data->lastClicked = NULL;
+}
