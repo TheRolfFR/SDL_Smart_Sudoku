@@ -11,7 +11,7 @@ int main(int argc, char **argv)
     sudokuGrid g;
     sudokuGrid *grid = &g;
 
-    // on initialise la grille
+    // on initialise la grilles
     if(!initializeSudoku(grid))
         return -1;
 

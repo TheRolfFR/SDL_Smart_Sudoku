@@ -8,6 +8,7 @@
 #include "sdl_sudoku.h"
 
 void updateCellValue(sudokuGrid*, int);
-void updateRules(sudokuGrid*);
+void resetPencilMark(cell*);
+void clearCell(sudokuGrid*);
 
 #endif //SDL_SUDOKU_UPDATECELLVALUE_H

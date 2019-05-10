@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 #include <SDL2/SDL_ttf.h>
 #include "../sdl_custom_lib.h"
 #include "sdl_sudoku.h"
@@ -87,7 +88,7 @@ void drawSudokuGrid(sudokuGrid *grid)  {
     SDL_Rect rect = {GRID_MARGIN, GRID_MARGIN, GRID_SIZE, GRID_SIZE};
     SDL_RenderFillRect(grid->renderer, &rect);
 
-    // draw thin borders
+    // draw thin bordersk
     SDL_SetRenderDrawColorStruct(grid->renderer, &grey);
     int i, offset;
     for(i = 0; i < 6; i++) {

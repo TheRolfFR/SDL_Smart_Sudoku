@@ -68,6 +68,9 @@ void keyInterpretor(sudokuGrid* data,SDL_Keycode key){
                     case SDLK_ESCAPE:
                         unselect(data);
                         break;
+                    case SDLK_DELETE:
+                    case SDLK_BACKSPACE:
+                        clearCell(data);
                     default:
                         break;
                 }

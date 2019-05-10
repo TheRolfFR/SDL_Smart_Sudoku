@@ -19,6 +19,8 @@
 #include "updateCellValue.h"
 #include "moveSelected.h"
 #include "drawPencilMark.h"
+#include "addRules.h"
+#include "removeRules.h"
 
 #ifndef SDL_SUDOKU_H
 #define SDL_SUDOKU_H
