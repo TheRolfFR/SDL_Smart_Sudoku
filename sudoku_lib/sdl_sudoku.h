@@ -18,6 +18,7 @@
 #include "keyInterpretor.h"
 #include "updateCellValue.h"
 #include "moveSelected.h"
+#include "drawPencilMark.h"
 
 #ifndef SDL_SUDOKU_H
 #define SDL_SUDOKU_H
