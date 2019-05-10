@@ -26,6 +26,7 @@ void selectCell(sudokuGrid* data, cell* position){
                 data->lastClicked = position;
             }
         }
+        printRules(data->lastClicked);
     }
 }
 
