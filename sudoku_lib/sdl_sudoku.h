@@ -19,6 +19,7 @@
 #include "updateCellValue.h"
 #include "moveSelected.h"
 #include "drawPencilMark.h"
+#include "Rules.h"
 #include "addRules.h"
 #include "removeRules.h"
 

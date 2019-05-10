@@ -9,7 +9,7 @@ void updateCellValue(sudokuGrid *data, int value) {
         if(data->pencilMarkMode) {
             if(data->lastClicked->pencilMark[value-1]){
                 data->lastClicked->pencilMark[value-1] = 0;
-                removePencilMark(data->lastClicked,value);
+                //removePencilMark(data->lastClicked,value);
             }
             else{
                 data->lastClicked->pencilMark[value-1] = 1;
