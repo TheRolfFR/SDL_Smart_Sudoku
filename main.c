@@ -31,8 +31,6 @@ int main(int argc, char **argv)
         }
     }
 
-    drawNumberButtonsBackground(grid);
-
     // on affiche le rendu
     SDL_RenderPresent(grid->renderer);
 

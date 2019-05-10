@@ -7,7 +7,9 @@
 
 #include "sdl_sudoku.h"
 
-void drawNumberButtonsBackground(sudokuGrid*);
+void drawNumberButtonsBackground(sudokuGrid*, SDL_Color *);
+void drawAvailableNumbers(sudokuGrid*);
+
 
 void drawNumberAtPosition(sudokuGrid*, cell*);
 

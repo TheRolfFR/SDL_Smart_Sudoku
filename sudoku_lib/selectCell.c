@@ -27,11 +27,14 @@ void selectCell(sudokuGrid* data, cell* position){
             }
         }
         printRules(data->lastClicked);
+        drawAvailableNumbers(data);
     }
 }
 
 void unselect(sudokuGrid* data){
     data->lastHovered->isClicked = 0;
     updateHover(data,getMousePosition(data));
+    SDL_Color lightgrey = {189,189,189};
+    drawNumberButtonsBackground(data, &lightgrey);
     data->lastClicked = NULL;
 }
