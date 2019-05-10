@@ -34,7 +34,7 @@ void addRules(sudokuGrid* data){
     for(i = (modified->line%3==0); i<=2; i = i+1+(modified->line%3-1==i)){
         int j;
         for (j = (modified->column%3==0); j<=2; j=j+1+(modified->column%3-1==j)){
-            current = data->cells[i+modified->line/3][j+modified->column/3];
+            current = data->cells[i+modified->line-modified->line%3][j+modified->column-modified->column%3];
             current->rules[modified->number-1] = addRule(current->rules[modified->number], modified);
             if(current->pencilMark[modified->number-1]){
                 current->pencilMark[modified->number-1] = 0;
