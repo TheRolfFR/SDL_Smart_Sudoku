@@ -17,6 +17,7 @@ cell *initCell(int l, int c, int number, char isHovered, char isClicked) {
 
     int i;
     for(i = 0; i < 9; i++) {
+        myCell->rules[i] = NULL;
         myCell->pencilMark[i] = 0;
     }
 
