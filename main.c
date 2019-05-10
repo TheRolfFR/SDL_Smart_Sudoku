@@ -16,7 +16,7 @@ int main(int argc, char **argv)
         return -1;
 
     // on charge une grille random
-    if(loadGrid(grid->cells, "../grids/", 2))
+    if(loadGrid(grid, "../grids/", 2))
         return -1;
 
     // on dessine la grille

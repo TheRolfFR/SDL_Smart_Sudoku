@@ -9,7 +9,7 @@
 
 typedef struct cellList{
     struct cell_struct* bloqueur;
-    struct sdlist* next;
+    struct cellList* next;
 }cellList;
 
 typedef struct cell_struct {

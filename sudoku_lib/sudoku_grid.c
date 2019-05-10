@@ -14,7 +14,7 @@ void tryInitGridFont(sudokuGrid *grid) {
     grid->font = Sans;
 }
 
-int loadGrid(cell* tab[9][9], char *path, int numberOfFiles) {
+int loadGrid(sudokuGrid *grid, char *path, int numberOfFiles) {
     srand(time(0));
     int index = rand()%numberOfFiles;
 
@@ -36,7 +36,7 @@ int loadGrid(cell* tab[9][9], char *path, int numberOfFiles) {
 
             // while line did not end add the cell values
             while(line[c*2] != 0 && c < 9) {
-                tab[l][c] = initCell(l, c, (line[c*2] != ' ') ? line[c*2] - '0' : -1, 0, 0);
+                grid->cells[l][c] = initCell(l, c, (line[c*2] != ' ') ? line[c*2] - '0' : -1, 0, 0);
 
                 c++;
             }
@@ -45,14 +45,9 @@ int loadGrid(cell* tab[9][9], char *path, int numberOfFiles) {
             if(c < 9) {
                 // add the other ones
                 for(c = c; c < 9; c++) {
-                    myCell = malloc(sizeof(cell));
-                    myCell->isHovered = 0;
-                    myCell->isClicked=0;
-                    myCell->line = l;
-                    myCell->column = c;
-                    myCell->number = -1;
+                    myCell = initCell(l, c, EMPTY_VALUE, 0, 0);
 
-                    tab[l][c] = myCell;
+                    grid->cells[l][c] = myCell;
                 }
             }
 

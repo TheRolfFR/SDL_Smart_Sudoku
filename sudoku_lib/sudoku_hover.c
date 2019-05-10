@@ -72,7 +72,7 @@ void updateHover(sudokuGrid *grid, cell* position){
 
 void drawNumberAtPosition(sudokuGrid *grid, cell *number) {
     // if there is a number to render
-    if(number->number != -1) {
+    if(number->number != EMPTY_VALUE) {
         SDL_Rect rect;
         // if the font is not defined, define it
         // create a null pointer and try to draw some text

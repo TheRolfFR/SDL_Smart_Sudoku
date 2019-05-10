@@ -14,7 +14,8 @@ void drawPencilMark(sudokuGrid* grid, cell* selectedCell) {
     int i;
     for(i = 0; i < 9; i++) {
         if(selectedCell->pencilMark[i] != 0) {
-            SDL_Surface *mark = TTF_RenderText_Solid(grid->font, convertInt(selectedCell->pencilMark[i]));
+            SDL_Color black = {0, 0xFF, 0};
+            SDL_Surface *mark = TTF_RenderText_Solid(grid->font, convertInt(selectedCell->pencilMark[i]), black);
             SDL_Rect *fit = SDL_RectFit(&rect, mark);
 
             switch(selectedCell->pencilMark[i]) {

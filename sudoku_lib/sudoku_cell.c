@@ -13,12 +13,14 @@ cell *initCell(int l, int c, int number, char isHovered, char isClicked) {
     myCell->line = l;
     myCell->column = c;
     myCell->number = number;
-    myCell->isReadOnly = (number != -1) ? 1 : 0;
+    myCell->isReadOnly = (number != EMPTY_VALUE) ? 1 : 0;
 
     int i;
     for(i = 0; i < 9; i++) {
         myCell->pencilMark[i] = 0;
     }
+
+    return myCell;
 }
 
 void printCell(cell *c) {

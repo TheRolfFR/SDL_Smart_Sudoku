@@ -37,7 +37,7 @@ typedef struct sudoku_grid {
 
 void tryInitGridFont(sudokuGrid*);
 
-int loadGrid(cell* [][9], char*, int);
+int loadGrid(sudokuGrid*, char*, int);
 
 sudokuGrid *initGrid(SDL_Window **, SDL_Surface **, SDL_Renderer **);
 
