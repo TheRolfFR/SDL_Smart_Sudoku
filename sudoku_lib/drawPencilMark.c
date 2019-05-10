@@ -14,43 +14,12 @@ void drawPencilMark(sudokuGrid* grid, cell* selectedCell) {
     int i;
     for(i = 0; i < 9; i++) {
         if(selectedCell->pencilMark[i] != 0) {
-            SDL_Color black = {0, 0xFF, 0};
+            SDL_Color black = {0xCC, 0xCC, 0xCC};
             SDL_Surface *mark = TTF_RenderText_Solid(grid->font, convertInt(selectedCell->pencilMark[i]), black);
             SDL_Rect *fit = SDL_RectFit(&rect, mark);
 
-            switch(selectedCell->pencilMark[i]) {
-                case 1:
-                    break;
-                case 2:
-                    fit->x += GRID_CELL_SIZE/3;
-                    break;
-                case 3:
-                    fit->x += GRID_CELL_SIZE*2/3;
-                    break;
-                case 4:
-                    fit->x += GRID_CELL_SIZE*2/3;
-                    fit->y += GRID_CELL_SIZE/3;
-                    break;
-                case 5:
-                    fit->x += GRID_CELL_SIZE*2/3;
-                    fit->y += GRID_CELL_SIZE*2/3;
-                case 6:
-                    fit->x += GRID_CELL_SIZE/3;
-                    fit->y += GRID_CELL_SIZE*2/3;
-                    break;
-                case 7:
-                    fit->y += GRID_CELL_SIZE*2/3;
-                    break;
-                case 8:
-                    fit->y += GRID_CELL_SIZE/3;
-                    break;
-                case 9:
-                    fit->x += GRID_CELL_SIZE/3;
-                    fit->y += GRID_CELL_SIZE/3;
-                    break;
-                default:
-                    break;
-            }
+            fit->x += GRID_CELL_SIZE / 3 * (i%3);
+            fit->y += GRID_CELL_SIZE / 3 * (i/3);
 
             SDL_Texture *markTexture = SDL_CreateTextureFromSurface(grid->renderer, mark);
             SDL_FreeSurface(mark);

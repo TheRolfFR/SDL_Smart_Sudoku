@@ -6,12 +6,18 @@
 
 void updateCellValue(sudokuGrid *data, int value) {
     if(data->lastClicked != NULL && !data->lastClicked->isReadOnly && data->lastClicked->rules[value-1]==NULL) {
-        if (data->lastClicked->number!=EMPTY_VALUE){
-            drawNumberBackground(data, data->lastClicked);
+        if(data->pencilMarkMode) {
+            data->lastClicked->pencilMark[value-1] = value;
+            drawPencilMark(data, data->lastClicked);
+        } else {
+            // mode nombre normal
+            if (data->lastClicked->number!=EMPTY_VALUE){
+                drawNumberBackground(data, data->lastClicked);
+            }
+            data->lastClicked->number = value;
+            drawNumberAtPosition(data, data->lastClicked);
+            updateRules(data);
         }
-        data->lastClicked->number = value;
-        drawNumberAtPosition(data, data->lastClicked);
-        updateRules(data);
     }
 }
 
