@@ -7,13 +7,15 @@
 void updateCellValue(sudokuGrid *data, int value) {
     if(data->lastClicked != NULL && !data->lastClicked->isReadOnly && data->lastClicked->rules[value-1]==NULL) {
         if(data->pencilMarkMode) {
-            if(data->lastClicked->pencilMark[value-1]){
-                data->lastClicked->pencilMark[value-1] = 0;
-                //removePencilMark(data->lastClicked,value);
-            }
-            else{
-                data->lastClicked->pencilMark[value-1] = 1;
-                drawPencilMark(data, data->lastClicked);
+            if(data->lastClicked->number==EMPTY_VALUE){
+                if(data->lastClicked->pencilMark[value-1]){
+                    data->lastClicked->pencilMark[value-1] = 0;
+                    //removePencilMark(data->lastClicked,value);
+                }
+                else{
+                    data->lastClicked->pencilMark[value-1] = 1;
+                    drawPencilMark(data, data->lastClicked);
+                }
             }
         }
         else {

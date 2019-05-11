@@ -19,6 +19,8 @@ int main(int argc, char **argv)
     if(loadGrid(grid, "../grids/", 2))
         return -1;
 
+    initRules(grid);
+
     // on dessine la grille
     drawSudokuGrid(grid);
 

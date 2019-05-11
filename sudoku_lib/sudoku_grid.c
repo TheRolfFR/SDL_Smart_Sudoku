@@ -38,7 +38,6 @@ int loadGrid(sudokuGrid *grid, char *path, int numberOfFiles) {
             // while line did not end add the cell values
             while(line[c*2] != 0 && c < 9) {
                 grid->cells[l][c] = initCell(l, c, (line[c*2] != ' ') ? line[c*2] - '0' : -1, 0, 0);
-
                 c++;
             }
 
