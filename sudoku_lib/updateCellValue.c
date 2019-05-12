@@ -10,18 +10,20 @@ void updateCellValue(sudokuGrid *data, int value) {
             if(data->lastClicked->number==EMPTY_VALUE){
                 if(data->lastClicked->pencilMark[value-1]){
                     data->lastClicked->pencilMark[value-1] = 0;
-                    //removePencilMark(data->lastClicked,value);
+                    removePencilMark(data, data->lastClicked,value);
                 }
                 else{
                     data->lastClicked->pencilMark[value-1] = 1;
-                    drawPencilMark(data, data->lastClicked);
+                    drawPencilMark(data, data->lastClicked, value);
                 }
             }
         }
         else {
             // mode nombre normal
-            if (data->lastClicked->number!=EMPTY_VALUE){
+            if(data->lastClicked->number!=EMPTY_VALUE) {
                 removeRules(data);
+            }
+            if (data->lastClicked->number!=EMPTY_VALUE || hasPencilMark(data->lastClicked)){
                 drawNumberBackground(data, data->lastClicked);
             }
             data->lastClicked->number = value;

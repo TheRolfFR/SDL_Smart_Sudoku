@@ -24,7 +24,7 @@
 #define TAILLE_MAX 200
 
 typedef struct sudoku_grid {
-    SDL_Color thinBorderColor;
+    char initialTitle[TAILLE_MAX];
     SDL_Window *window;
     SDL_Surface *windowSurface;
     SDL_Renderer *renderer;

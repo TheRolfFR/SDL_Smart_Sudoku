@@ -13,6 +13,7 @@ void keyInterpretor(sudokuGrid* data,SDL_Keycode key){
             break;
         case SDLK_CAPSLOCK:
             data->pencilMarkMode = (!data->pencilMarkMode);
+            ChangeTitleMode(data);
             break;
         default:
             if(data->lastClicked != NULL){ //cas suppr

@@ -23,7 +23,8 @@ int initializeSudoku(sudokuGrid *grid) {
     else {
         //On créé la fenêtre
         grid->window = NULL;
-        grid->window = SDL_CreateWindow( "Smart Sudoku", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, GRID_SIZE + 2*GRID_MARGIN, GRID_SIZE + 3*GRID_MARGIN + GRID_BOTTOMSPACE, SDL_WINDOW_SHOWN );
+        strcpy(grid->initialTitle, "Smart Sudoku");
+        grid->window = SDL_CreateWindow( grid->initialTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, GRID_SIZE + 2*GRID_MARGIN, GRID_SIZE + 3*GRID_MARGIN + GRID_BOTTOMSPACE, SDL_WINDOW_SHOWN );
         if( grid->window == NULL ) {
             fprintf(stderr, "La fenetre n'a pas pu etre cree ! SDL_Error: %s\n", SDL_GetError());
             succes = 0;

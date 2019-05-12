@@ -15,6 +15,8 @@ void drawNumberAtPosition(sudokuGrid*, cell*);
 
 void drawNumberBackground(sudokuGrid*, cell*);
 
+int hasPencilMark(cell*);
+
 void updateHover(sudokuGrid*, cell*);
 
 void printRect(sudokuGrid*, cell*, SDL_Color*);

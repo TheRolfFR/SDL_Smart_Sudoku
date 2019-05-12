@@ -117,9 +117,20 @@ void drawNumberButtonsBackground(sudokuGrid *grid, SDL_Color *color) {
     SDL_RenderFillRect(grid->renderer, &rect);
 }
 
+int hasPencilMark(cell *selectedCell) {
+    // find one and exit
+    int i = 0;
+    for(i = 0; i < 9; i++) {
+        if(selectedCell->rules[i] != NULL) {
+            return 1;
+        }
+    }
+
+    // return that you didn't find anything
+    return 0;
+}
+
 void drawAvailableNumbers(sudokuGrid *data) {
-    SDL_Color white = {255, 255, 255};
-    drawNumberButtonsBackground(data, &white);
     // le rect bla bla
     SDL_Rect rect;
     rect.y = GRID_MARGIN*2 + GRID_SIZE;
@@ -127,17 +138,19 @@ void drawAvailableNumbers(sudokuGrid *data) {
     rect.w = GRID_CELL_SIZE;
     rect.h = GRID_CELL_SIZE;
 
+    rect.x += (GRID_SIZE - 9*GRID_CELL_SIZE)/2;
+
     tryInitGridFont(data);
     SDL_Surface *surface;
     SDL_Texture *texture;
 
     SDL_Color black = {0,0,0};
-    SDL_Color grey = {0xCC, 0xCC, 0xCC};
+    SDL_Color white = {255, 255, 255};
 
     //on affiche tous les nombres dispo
     int i;
     for(i = 0; i < 9; i++) {
-        surface = TTF_RenderText_Solid(data->font, convertInt(i+1), (data->lastClicked->rules[i]==NULL) ? black : grey);
+        surface = TTF_RenderText_Solid(data->font, convertInt(i+1), (data->lastClicked->rules[i]==NULL) ? black : white);
         texture = SDL_CreateTextureFromSurface(data->renderer, surface);
 
         SDL_RenderCopy(data->renderer, texture, NULL, SDL_RectFit(&rect, surface));
