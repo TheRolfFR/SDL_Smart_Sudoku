@@ -39,8 +39,6 @@ void tryInitGridFont(sudokuGrid*);
 
 int loadGrid(sudokuGrid*, char*, int);
 
-sudokuGrid *initGrid(SDL_Window **, SDL_Surface **, SDL_Renderer **);
-
 void drawSudokuGrid(sudokuGrid*);
 
 #endif //SDL_SUDOKUGRID_H

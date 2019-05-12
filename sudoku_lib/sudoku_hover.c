@@ -71,54 +71,58 @@ void updateHover(sudokuGrid *grid, cell* position){
 }
 
 void drawNumberAtPosition(sudokuGrid *grid, cell *number) {
-    // if there is a number to render
+    // si il y a un nombre à rendre (case non vide)
     if(number->number != EMPTY_VALUE) {
         SDL_Rect rect;
-        // if the font is not defined, define it
-        // create a null pointer and try to draw some text
+
+        // on crée une surface nulle et on essaue de dessiner dessus
         SDL_Surface *surfaceText = NULL;
 
-        //convert integer to string
+        //on convertit le nombre en string
         char *string = convertInt(number->number);
 
         SDL_Color black = {0, 0, 0};
-        SDL_Color grey = {0x37, 0x47, 0x4F}; //37474F
+        SDL_Color grey = {0x37, 0x47, 0x4F}; // #37474F
 
+        // on essaye d'initialiser le font
         tryInitGridFont(grid);
-        surfaceText = TTF_RenderText_Solid(grid->font, string, (number->isReadOnly) ? grey : black);
+        // on dessine sur la surface le nombre
+        surfaceText = TTF_RenderText_Solid(grid->font, string, (number->isReadOnly) ? grey : black); // en gris si il ne peut pas être réécris, en noir sinon
 
-        // if the text rendered by the surface is not null
+        // s'il arrive à rendre le texte
         if(surfaceText != NULL) {
-            // create a texture
+            // on crée la texture avec la surface
             SDL_Texture *texture = SDL_CreateTextureFromSurface(grid->renderer, surfaceText);
-            // free the surface not null
-            SDL_FreeSurface(surfaceText);
 
-            // define the number rect
+            // on definit l'espace disponible pour le texte
             rect.y = GRID_MARGIN + number->column/3*GRID_THICK_BORDER + number->column * GRID_CELL_SIZE + GRID_THIN_BORDER * (number->column - number->column/3);  //controls the rect's x coordinate
             rect.x = GRID_MARGIN + number->line/3*GRID_THICK_BORDER + number->line * GRID_CELL_SIZE + GRID_THIN_BORDER * (number->line - number->line/3); // controls the rect's y coordinate
             rect.w = GRID_FONT_SIZE; // controls the width of the rect
             rect.h = GRID_FONT_SIZE; // controls the height of the rect
 
-            // make it fit to the rect of my text surface
+            // on crée un nouveau rect permettant de case rle nombre dedans l'espace disponible
             SDL_Rect *fitRect = SDL_RectFit(&rect, surfaceText);
 
-            // copy it on the render
+            // on libère la surface
+            SDL_FreeSurface(surfaceText);
+            // on copie le rnedu dans le renderer dans l'espace donné
             SDL_RenderCopy(grid->renderer, texture, NULL, fitRect);
-            // destroy the texture created
+            // on détruit la texture
             SDL_DestroyTexture(texture);
         }
     }
 }
 
+// fonction permettant de dessiner le fond des nombres disponibles
 void drawNumberButtonsBackground(sudokuGrid *grid, SDL_Color *color) {
     SDL_Rect rect = {GRID_MARGIN, GRID_SIZE + 2*GRID_MARGIN, GRID_SIZE, GRID_CELL_SIZE};
     SDL_SetRenderDrawColorStruct(grid->renderer, color);
     SDL_RenderFillRect(grid->renderer, &rect);
 }
 
+// fonction renvoyant si la cellule donnée possède une pencil mark
 int hasPencilMark(cell *selectedCell) {
-    // find one and exit
+    // trouves-en une et sort
     int i = 0;
     for(i = 0; i < 9; i++) {
         if(selectedCell->rules[i] != NULL) {
@@ -126,37 +130,47 @@ int hasPencilMark(cell *selectedCell) {
         }
     }
 
-    // return that you didn't find anything
+    // sinon retourne 0
     return 0;
 }
 
+// fincrion permettant de dessiner les nombres disponibles à l'écriture
 void drawAvailableNumbers(sudokuGrid *data) {
-    // le rect bla bla
+    // le rect pour se positionner
     SDL_Rect rect;
     rect.y = GRID_MARGIN*2 + GRID_SIZE;
     rect.x = GRID_MARGIN;
     rect.w = GRID_CELL_SIZE;
     rect.h = GRID_CELL_SIZE;
 
+    // on décale un tout petit peu pour centrer tous les nombres (pas de bordures)
     rect.x += (GRID_SIZE - 9*GRID_CELL_SIZE)/2;
 
+    // on lance le font
     tryInitGridFont(data);
+
     SDL_Surface *surface;
     SDL_Texture *texture;
 
     SDL_Color black = {0,0,0};
     SDL_Color white = {255, 255, 255};
 
-    //on affiche tous les nombres dispo
+    //on affiche tous les nombres disponibles
     int i;
     for(i = 0; i < 9; i++) {
+        // on dessine le texte dans la surface
         surface = TTF_RenderText_Solid(data->font, convertInt(i+1), (data->lastClicked->rules[i]==NULL) ? black : white);
+        // on crée la texture associée
         texture = SDL_CreateTextureFromSurface(data->renderer, surface);
 
+        // on copie dans le renderer le texte
         SDL_RenderCopy(data->renderer, texture, NULL, SDL_RectFit(&rect, surface));
+
+        // on libère la surface et la texture
         SDL_FreeSurface(surface);
         SDL_DestroyTexture(texture);
 
+        // on décale la position horizontale
         rect.x += GRID_CELL_SIZE;
     }
 }
@@ -175,6 +189,7 @@ void drawNumberBackground(sudokuGrid *grid, cell* selectedCell) {
     SDL_RenderFillRect(grid->renderer, &rect);
 }
 
+// retourne la cellule associée à la position dans la fenêtre
 cell* getMousePosition(sudokuGrid* data){
     int x, y;
     cell* currentCell=NULL;

@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// finction pour convertir un entier en chaine de caractères
 char *convertInt(int b)
 {
     char *a;

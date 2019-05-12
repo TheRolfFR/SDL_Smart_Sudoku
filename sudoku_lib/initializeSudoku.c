@@ -62,6 +62,7 @@ int initializeSudoku(sudokuGrid *grid) {
             grid->lastClicked = NULL;
             grid->pencilMarkMode = 0;
 
+            // erreur bla bla bla
             if( grid->renderer == NULL ) {
                 fprintf(stderr, "Le renderer n'a pas pu etre cree ! SDL_eror : %s\n", SDL_GetError());
                 succes = 0;
