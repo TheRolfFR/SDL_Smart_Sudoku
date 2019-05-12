@@ -15,7 +15,7 @@ void addRules(sudokuGrid* data){
             current->rules[modified->number-1] = addRule(current->rules[modified->number-1], modified); //a faire
             if(current->pencilMark[modified->number-1]){
                 current->pencilMark[modified->number-1] = 0;
-                //removePencilMark(current,modified->number);
+                removePencilMark(data,current,modified->number);
             }
         }
     }
@@ -26,7 +26,7 @@ void addRules(sudokuGrid* data){
             current->rules[modified->number-1] = addRule(current->rules[modified->number-1], modified); //a faire
             if(current->pencilMark[modified->number-1]){
                 current->pencilMark[modified->number-1] = 0;
-                //removePencilMark(current,modified->number);
+                removePencilMark(data,current,modified->number);
             }
         }
     }
@@ -38,7 +38,7 @@ void addRules(sudokuGrid* data){
             current->rules[modified->number-1] = addRule(current->rules[modified->number], modified);
             if(current->pencilMark[modified->number-1]){
                 current->pencilMark[modified->number-1] = 0;
-                //removePencilMark(current,modified->number);
+                removePencilMark(data,current,modified->number);
             }
         }
     }

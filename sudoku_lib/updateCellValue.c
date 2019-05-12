@@ -23,6 +23,9 @@ void updateCellValue(sudokuGrid *data, int value) {
             if(data->lastClicked->number!=EMPTY_VALUE) {
                 removeRules(data);
             }
+            else{
+                data->emptyCell = data->emptyCell-1;
+            }
             if (data->lastClicked->number!=EMPTY_VALUE || hasPencilMark(data->lastClicked)){
                 drawNumberBackground(data, data->lastClicked);
             }
@@ -37,6 +40,7 @@ void clearCell(sudokuGrid* data){
     if(data->lastClicked->number!=EMPTY_VALUE){
         removeRules(data);
         data->lastClicked->number = EMPTY_VALUE;
+        data->emptyCell = data->emptyCell+1;
     }
     else {
         resetPencilMark(data->lastClicked);

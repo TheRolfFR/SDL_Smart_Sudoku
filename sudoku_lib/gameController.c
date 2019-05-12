@@ -40,6 +40,11 @@ void gameController(sudokuGrid* data){
             SDL_RenderPresent(data->renderer);
         }
 
+        if(data->emptyCell==0){
+            //win();
+            continuer = 0;
+        }
+
         // avoir le temps d'éxécution
         Uint32 difference = SDL_GetTicks() - tick;
 
