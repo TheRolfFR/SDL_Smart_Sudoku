@@ -3,6 +3,7 @@
 //
 
 #include "sdl_sudoku.h"
+#include <string.h>
 
 void drawPencilMark(sudokuGrid* grid, cell* selectedCell, int value) {
     // on détemrine la position de la pencil mark

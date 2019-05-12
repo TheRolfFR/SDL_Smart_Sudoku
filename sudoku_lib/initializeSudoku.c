@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "sdl_sudoku.h"
 
 /* Constantes de masque NE PAS TOUCHER */
@@ -61,6 +62,7 @@ int initializeSudoku(sudokuGrid *grid) {
             grid->lastHovered = NULL;
             grid->lastClicked = NULL;
             grid->pencilMarkMode = 0;
+            grid->emptyCell = 81;
 
             // erreur bla bla bla
             if( grid->renderer == NULL ) {
