@@ -23,6 +23,7 @@
 #include "addRules.h"
 #include "removeRules.h"
 #include "initRules.h"
+#include "win.h"
 
 #ifndef SDL_SUDOKU_H
 #define SDL_SUDOKU_H
