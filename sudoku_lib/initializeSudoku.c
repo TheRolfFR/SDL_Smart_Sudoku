@@ -16,13 +16,13 @@
 int initializeSudoku(sudokuGrid *grid) {
     int succes = 1;
 
-    //On initialise SDL
+    //Initialision de SDL
     if( SDL_Init( SDL_INIT_EVERYTHING ) < 0 ) {
         fprintf(stderr, "SDL n'a pas pu etre initialise ! SDL_Error: %s\n", SDL_GetError() );
         succes = 0;
     }
     else {
-        //On créé la fenêtre
+        //Création de la fenêtre
         grid->window = NULL;
         strcpy(grid->initialTitle, "Smart Sudoku");
         grid->window = SDL_CreateWindow( grid->initialTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, GRID_SIZE + 2*GRID_MARGIN, GRID_SIZE + 3*GRID_MARGIN + GRID_BOTTOMSPACE, SDL_WINDOW_SHOWN );
@@ -31,16 +31,16 @@ int initializeSudoku(sudokuGrid *grid) {
             succes = 0;
         }
         else {
-            //On récupère la surface de la fenêtre
+            //Récupération de la surface de la fenêtre
             grid->windowSurface = SDL_GetWindowSurface( grid->window );
 
-            // on initialise la police d'écriture
+            //Initialisation de la police d'écriture
             tryInitGridFont(grid);
             grid->font = NULL;
             grid->font = TTF_OpenFont("../Sans.ttf", 60);
 
 
-            // on change l'icône
+            //Changement de l'icône
             SDL_Surface *bg = SDL_CreateRGBSurface( SDL_SWSURFACE, 32, 32, 32, RED_MASK,GREEN_MASK,BLUE_MASK,ALPHA_MASK);
             SDL_FillRect(bg, NULL, SDL_MapRGBA(grid->windowSurface->format, 0,0,0, SDL_ALPHA_TRANSPARENT));
             SDL_Color black = {0, 0, 0};
@@ -51,11 +51,11 @@ int initializeSudoku(sudokuGrid *grid) {
             SDL_BlitSurface(text, NULL, bg, &rect2);
             SDL_SetWindowIcon(grid->window, bg);
 
-            // on libère les surfaces et textures associées
+            //Libération des surfaces et textures associées
             SDL_FreeSurface(bg);
             SDL_FreeSurface(text);
 
-            //On récupère le renderer
+            //Récupération du renderer
             grid->renderer = NULL;
             grid->renderer = (SDL_CreateRenderer(grid->window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC));
 
@@ -64,7 +64,7 @@ int initializeSudoku(sudokuGrid *grid) {
             grid->pencilMarkMode = 0;
             grid->emptyCell = 81;
 
-            // erreur bla bla bla
+            //Message d'erreur
             if( grid->renderer == NULL ) {
                 fprintf(stderr, "Le renderer n'a pas pu etre cree ! SDL_eror : %s\n", SDL_GetError());
                 succes = 0;

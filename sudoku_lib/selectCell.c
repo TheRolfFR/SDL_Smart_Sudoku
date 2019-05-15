@@ -5,25 +5,25 @@
 #include "sdl_sudoku.h"
 
 
-// fonction pour sélectionner la cellule
+//Selection d'une cellule
 void selectCell(sudokuGrid* data, cell* position){
-    if(position==NULL){ // rien n'est sélectionné
-        if(data->lastHovered!=NULL){ // on enlève tout
-            data->lastHovered->isClicked = 0;
+    if(position==NULL){ //Souris hors de la grille
+        if(data->lastHovered!=NULL){ //Si une cellule était sélectionnée
+            data->lastHovered->isClicked = 0; //Désélection
             data->lastClicked = NULL;
-            updateHover(data,position);
+            updateHover(data,position); //Mise à jour du "Hover"
         }
     }
-    else{
-        if (position!=data->lastHovered){ // on sélectionne sur un élément différent de celui précédemment survolé (supposé impossible mais codé)
-            data->lastHovered->isClicked = 0;
-            updateHover(data,position);
-            position->isClicked = 1;
+    else{ //Souris dans la grille
+        if (position!=data->lastHovered){ //Position différente de la cellule en surbrillance(hover)
+            data->lastHovered->isClicked = 0; //Déselection de la précédente
+            updateHover(data,position); //Déplacer le "Hover" sur la cellule actuelle
+            position->isClicked = 1; //Sélectionner la nouvelle cellule
             data->lastClicked = position;
         }
-        else{ // on sélectionne l'élément survolé
-            if(!position->isClicked){ // s'il n'est pas cliqué, on le met
-                position->isClicked = 1;
+        else{ //Souris sur la case en surbrillance
+            if(!position->isClicked){ //Cellule actuelle non sélectionnée
+                position->isClicked = 1; //Sélection
                 data->lastClicked = position;
             }
         } // on affiche les nombres disponibles pour la cellule
@@ -31,9 +31,9 @@ void selectCell(sudokuGrid* data, cell* position){
     }
 }
 
-void unselect(sudokuGrid* data){  // on supprime tout
+void unselect(sudokuGrid* data){  // Déselection de la cellule actuellement sélectionnée
     data->lastHovered->isClicked = 0;
-    updateHover(data,getMousePosition(data));
+    updateHover(data,getMousePosition(data)); //Mise à jour du "Hover"
     SDL_Color lightgrey = {189,189,189};
     drawNumberButtonsBackground(data, &lightgrey); // on reaffiche la couleur de fond sur les anciens nombres disponibles
     data->lastClicked = NULL;

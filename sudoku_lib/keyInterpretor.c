@@ -7,20 +7,20 @@
 
 void keyInterpretor(sudokuGrid* data,SDL_Keycode key){
     switch (key){
-        case SDLK_LCTRL: // retour en arrière "Undo"
+        case SDLK_LCTRL: // retour en arrière "Undo" (non implémenter)
         case SDLK_RCTRL:
             //zWait();
             break;
-        case SDLK_CAPSLOCK: // Basculage du mode pencil mark
+        case SDLK_CAPSLOCK: // Basculement du mode pencil mark
             data->pencilMarkMode = (!data->pencilMarkMode);
-            ChangeTitleMode(data); // et du titre de la fenetre
+            ChangeTitleMode(data); //Changement du titre de la fenetre (pour indiquer le mode)
             break;
         default:
-            if(data->lastClicked != NULL){ //if necessaire si on a précédement déselectionné une case avec suppr
-                switch (key){ // d abord toutes les touches
-                    case SDLK_1:
+            if(data->lastClicked != NULL){ //Event agissant sur une case séléctionnée
+                switch (key){
+                    case SDLK_1: //nombre
                     case SDLK_KP_1:
-                        updateCellValue(data,1);
+                        updateCellValue(data,1); //mise à jour de la valeur de la case
                         break;
                     case SDLK_2:
                     case SDLK_KP_2:
@@ -54,9 +54,9 @@ void keyInterpretor(sudokuGrid* data,SDL_Keycode key){
                     case SDLK_KP_9:
                         updateCellValue(data,9);
                         break;
-                        // Puis les flèches directionelles pour se déplacer sur le plateau
+                        //Fléches directionnelles
                     case SDLK_DOWN:
-                        moveSelected(data, 1, 0);
+                        moveSelected(data, 1, 0); //Changement de cellule sélectionnée
                         break;
                     case SDLK_UP:
                         moveSelected(data, -1, 0);
@@ -67,14 +67,14 @@ void keyInterpretor(sudokuGrid* data,SDL_Keycode key){
                     case SDLK_RIGHT:
                         moveSelected(data, 0, 1);
                         break;
-                        // puis échap pour pouvoir déselectionner
+                        //Echap
                     case SDLK_ESCAPE:
-                        unselect(data);
+                        unselect(data); //Désélection de la cellule sélectionnée
                         break;
-                        // Suppr ou "retour en arrière" pour nettoyer la cellule
+                        //Suppr
                     case SDLK_DELETE:
                     case SDLK_BACKSPACE:
-                        clearCell(data);
+                        clearCell(data); //Nettoyage de la cellule sélectionnée
                     default:
                         break;
                 }

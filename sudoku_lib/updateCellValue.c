@@ -6,7 +6,7 @@
 
 // fonction qui met à jour la cellule en fonction d'une touche numérique tapée
 void updateCellValue(sudokuGrid *data, int value) {
-    // si une case a été clique est qu'elle est modifiable et qu'elle n'est pas bloquée
+    // si une case a été clique et qu'elle est modifiable et qu'elle n'est pas bloquée
     if(data->lastClicked != NULL && !data->lastClicked->isReadOnly && data->lastClicked->rules[value-1]==NULL) {
         // si on est en mode pencilmark
         if(data->pencilMarkMode) {
@@ -25,8 +25,8 @@ void updateCellValue(sudokuGrid *data, int value) {
         }
         else {
             // si on est en mode nombre normal
-            if(data->lastClicked->number!=EMPTY_VALUE) {
-                // on enlève les règles
+            if(data->lastClicked->number!=EMPTY_VALUE) { //La case conntient une valeur
+                //retrait des restrictions concernant cette valeur
                 removeRules(data);
             }
             // si l'y avait quelque-chose avant, on redessine un fond
@@ -34,13 +34,13 @@ void updateCellValue(sudokuGrid *data, int value) {
                 drawNumberBackground(data, data->lastClicked);
             }
 
-            // on met à jour la valeur
+            //Mise à jour de la valeur
             data->lastClicked->number = value;
 
-            // on rajoute les restrictions aux cases concernées
+            //Ajout des restrictions concernat la nouvelle valeur
             addRules(data);
 
-            // on dessine le nombre en question
+            //Dessin du nombre en question
             drawNumberAtPosition(data, data->lastClicked);
         }
     }
@@ -48,12 +48,12 @@ void updateCellValue(sudokuGrid *data, int value) {
 
 // fonction qui nettoie les cellules
 void clearCell(sudokuGrid* data){
-    if(data->lastClicked->number!=EMPTY_VALUE){
-        removeRules(data);
-        data->lastClicked->number = EMPTY_VALUE;
+    if(data->lastClicked->number!=EMPTY_VALUE){ //Si la cellule à une valeur
+        removeRules(data); //Retire les restrictions
+        data->lastClicked->number = EMPTY_VALUE; //Retire la valeur
     }
-    else {
-        resetPencilMark(data->lastClicked);
+    else { //Si la cellule n'a pas de valeur
+        resetPencilMark(data->lastClicked); //retire les annotations
     }
     drawNumberBackground(data,data->lastClicked);
 }
