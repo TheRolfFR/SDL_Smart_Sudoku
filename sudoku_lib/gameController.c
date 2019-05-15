@@ -36,14 +36,15 @@ void gameController(sudokuGrid* data){
                 keyInterpretor(data,event.key.keysym.sym);
         }
 
-        // si l'évènement est différent de quitter on rafraichit le rendu
-        if(event.type != SDL_QUIT) {
-            SDL_RenderPresent(data->renderer);
+        // nombre de cellules vide nul
+        if(data->emptyCell==0){
+            win(data);
+            continuer = 0;
         }
 
-        if(data->emptyCell==0){
-            //win();
-            continuer = 0;
+        // si l'évènement est différent de quitter on rafraichit le rendu
+        if(event.type != SDL_QUIT || 1) {
+            SDL_RenderPresent(data->renderer);
         }
 
         // avoir le temps d'éxécution
