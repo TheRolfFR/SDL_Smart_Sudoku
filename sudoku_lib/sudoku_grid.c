@@ -65,7 +65,7 @@ int loadGrid(sudokuGrid *grid, char *path, int numberOfFiles) {
 
         fclose(file);
         return 0;
-    } else { // erreur bla bla
+    } else { // erreur
         fprintf(stderr, "Impossible to open %s\n", totalpath);
     }
     return -1;

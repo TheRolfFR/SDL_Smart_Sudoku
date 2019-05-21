@@ -43,7 +43,7 @@ void gameController(sudokuGrid* data){
         }
 
         // si l'évènement est différent de quitter on rafraichit le rendu
-        if(event.type != SDL_QUIT || 1) {
+        if(event.type != SDL_QUIT) {
             SDL_RenderPresent(data->renderer);
         }
 

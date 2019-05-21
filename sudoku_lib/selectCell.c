@@ -34,6 +34,7 @@ void selectCell(sudokuGrid* data, cell* position){
 void unselect(sudokuGrid* data){  // Déselection de la cellule actuellement sélectionnée
     data->lastHovered->isClicked = 0;
     updateHover(data,getMousePosition(data)); //Mise à jour du "Hover"
+
     SDL_Color lightgrey = {189,189,189};
     drawNumberButtonsBackground(data, &lightgrey); // on reaffiche la couleur de fond sur les anciens nombres disponibles
     data->lastClicked = NULL;

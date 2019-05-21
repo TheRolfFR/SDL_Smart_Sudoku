@@ -42,7 +42,7 @@ int main(int argc, char **argv)
     // on détruit le rendu
     SDL_DestroyRenderer(grid->renderer);
 
-    // on détruit la fenêtre etc bla bla bla
+    // on détruit la fenêtre etc
     destroyAndQuit(&grid->window);
 
     return 0;

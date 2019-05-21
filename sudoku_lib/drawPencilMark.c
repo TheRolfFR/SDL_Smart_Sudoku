@@ -35,7 +35,7 @@ void drawPencilMark(sudokuGrid* grid, cell* selectedCell, int value) {
 
 void removePencilMark(sudokuGrid* grid, cell* selectedCell, int value) {
     // meme fonction que la precedente sauf que c'est en blanc
-    // bla bla bla
+    //
     SDL_Rect rect;
     rect.y = GRID_MARGIN + selectedCell->column/3*GRID_THICK_BORDER + selectedCell->column * GRID_CELL_SIZE + GRID_THIN_BORDER * (selectedCell->column - selectedCell->column/3);
     rect.x = GRID_MARGIN + selectedCell->line/3*GRID_THICK_BORDER + selectedCell->line * GRID_CELL_SIZE + GRID_THIN_BORDER * (selectedCell->line - selectedCell->line/3);
