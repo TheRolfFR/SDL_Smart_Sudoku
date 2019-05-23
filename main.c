@@ -6,44 +6,45 @@
 #define CONST_MAIN
 #endif
 
+sudokuGrid *data;
 int main(int argc, char **argv)
 {
     sudokuGrid g;
-    sudokuGrid *grid = &g;
+    data = &g;
 
     // on initialise la grilles
-    if(!initializeSudoku(grid))
+    if(!initializeSudoku())
         return -1;
 
     // on charge une grille random
-    if(loadGrid(grid, "../grids/", 2))
+    if(loadGrid("../grids/", 2))
         return -1;
 
-    initRules(grid);
+    initRules();
 
     // on dessine la grille
-    drawSudokuGrid(grid);
+    drawSudokuGrid();
 
     // on dessine tous les chiffres de la grille
     int a, b;
     for(a = 0; a < 9; a++) {
         for(b = 0; b < 9; b++) {
-            cell *c = grid->cells[a][b];
-            drawNumberAtPosition(grid, c);
+            cell *c = data->cells[a][b];
+            drawNumberAtPosition(c);
         }
     }
 
     // on affiche le rendu
-    SDL_RenderPresent(grid->renderer);
+    SDL_RenderPresent(data->renderer);
 
     //le jeu lorsqu'il est lancé
-    gameController(grid);
+    gameController();
 
     // on détruit le rendu
-    SDL_DestroyRenderer(grid->renderer);
+    SDL_DestroyRenderer(data->renderer);
 
     // on détruit la fenêtre etc
-    destroyAndQuit(&grid->window);
+    destroyAndQuit(&data->window);
 
     return 0;
 }

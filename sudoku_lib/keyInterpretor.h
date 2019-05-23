@@ -9,6 +9,6 @@
 #include <stdlib.h>
 #include "sdl_sudoku.h"
 
-void keyInterpretor(sudokuGrid*,SDL_Keycode);
+void keyInterpretor(SDL_Keycode);
 
 #endif //SDL_SUDOKU_KEYINTERPRETOR_H

@@ -5,6 +5,6 @@
 #ifndef SDL_SUDOKU_UPDATERULES_H
 #define SDL_SUDOKU_UPDATERULES_H
 
-void addRules(sudokuGrid*);
+void addRules();
 
 #endif //SDL_SUDOKU_UPDATERULES_H

@@ -4,7 +4,8 @@
 
 #include "sdl_sudoku.h"
 
-void addRules(sudokuGrid* data){
+extern sudokuGrid *data;
+void addRules(){
     cell* current; //Cellule en cours de traitement (déclarée pour simplifier l'écriture et la compréhension)
     cell* modified = data->lastClicked; //Cellule dernièrement modifiée par le joueur (déeclaré pour simplifier l'écriture et la compréhension)
     int i;
@@ -15,7 +16,7 @@ void addRules(sudokuGrid* data){
             current->rules[modified->number-1] = addRule(current->rules[modified->number-1], modified); //Ajout de la cellule modifié comme "bloqueur" de la cellule en cours
             if(current->pencilMark[modified->number-1]){ //Si il y a une annotation correspondante à la valeur bloqué
                 current->pencilMark[modified->number-1] = 0; //L'annotation est retirée
-                removePencilMark(data,current,modified->number);
+                removePencilMark(current,modified->number);
             }
         }
     }
@@ -26,7 +27,7 @@ void addRules(sudokuGrid* data){
             current->rules[modified->number-1] = addRule(current->rules[modified->number-1], modified);
             if(current->pencilMark[modified->number-1]){
                 current->pencilMark[modified->number-1] = 0;
-                removePencilMark(data,current,modified->number);
+                removePencilMark(current,modified->number);
             }
         }
     }
@@ -38,7 +39,7 @@ void addRules(sudokuGrid* data){
             current->rules[modified->number-1] = addRule(current->rules[modified->number], modified);
             if(current->pencilMark[modified->number-1]){
                 current->pencilMark[modified->number-1] = 0;
-                removePencilMark(data,current,modified->number);
+                removePencilMark(current,modified->number);
             }
         }
     }

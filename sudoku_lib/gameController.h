@@ -7,6 +7,6 @@
 
 #include "sdl_sudoku.h"
 
-void gameController(sudokuGrid*);
+void gameController();
 
 #endif //SDL_SUDOKU_GAMECONTROLLER_H

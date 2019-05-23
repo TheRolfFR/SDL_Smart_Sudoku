@@ -13,7 +13,8 @@
 #define BLUE_MASK  0x0000FF00
 #define ALPHA_MASK 0x000000FF
 
-int initializeSudoku(sudokuGrid *grid) {
+extern sudokuGrid *data;
+int initializeSudoku() {
     int succes = 1;
 
     //Initialision de SDL
@@ -23,49 +24,49 @@ int initializeSudoku(sudokuGrid *grid) {
     }
     else {
         //Création de la fenêtre
-        grid->window = NULL;
-        strcpy(grid->initialTitle, "Smart Sudoku");
-        grid->window = SDL_CreateWindow( grid->initialTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, GRID_SIZE + 2*GRID_MARGIN, GRID_SIZE + 3*GRID_MARGIN + GRID_BOTTOMSPACE, SDL_WINDOW_SHOWN );
-        if( grid->window == NULL ) {
+        data->window = NULL;
+        strcpy(data->initialTitle, "Smart Sudoku");
+        data->window = SDL_CreateWindow( data->initialTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, GRID_SIZE + 2*GRID_MARGIN, GRID_SIZE + 3*GRID_MARGIN + GRID_BOTTOMSPACE, SDL_WINDOW_SHOWN );
+        if( data->window == NULL ) {
             fprintf(stderr, "La fenetre n'a pas pu etre cree ! SDL_Error: %s\n", SDL_GetError());
             succes = 0;
         }
         else {
             //Récupération de la surface de la fenêtre
-            grid->windowSurface = SDL_GetWindowSurface( grid->window );
+            data->windowSurface = SDL_GetWindowSurface( data->window );
 
             //Initialisation de la police d'écriture
-            tryInitGridFont(grid);
-            grid->font = NULL;
-            grid->font = TTF_OpenFont("../Sans.ttf", 60);
+            tryInitGridFont();
+            data->font = NULL;
+            data->font = TTF_OpenFont("../Sans.ttf", 60);
 
 
             //Changement de l'icône
             SDL_Surface *bg = SDL_CreateRGBSurface( SDL_SWSURFACE, 32, 32, 32, RED_MASK,GREEN_MASK,BLUE_MASK,ALPHA_MASK);
-            SDL_FillRect(bg, NULL, SDL_MapRGBA(grid->windowSurface->format, 0,0,0, SDL_ALPHA_TRANSPARENT));
+            SDL_FillRect(bg, NULL, SDL_MapRGBA(data->windowSurface->format, 0,0,0, SDL_ALPHA_TRANSPARENT));
             SDL_Color black = {0, 0, 0};
             SDL_Surface *text = SDL_SurfaceText("../Sans.ttf", "S", 38, &black);
             SDL_Rect rect2;
             rect2.x = (32 - (text->clip_rect).w)/2;
             rect2.y = (32 - (text->clip_rect).h)/2;
             SDL_BlitSurface(text, NULL, bg, &rect2);
-            SDL_SetWindowIcon(grid->window, bg);
+            SDL_SetWindowIcon(data->window, bg);
 
             //Libération des surfaces et textures associées
             SDL_FreeSurface(bg);
             SDL_FreeSurface(text);
 
             //Récupération du renderer
-            grid->renderer = NULL;
-            grid->renderer = (SDL_CreateRenderer(grid->window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC));
+            data->renderer = NULL;
+            data->renderer = (SDL_CreateRenderer(data->window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC));
 
-            grid->lastHovered = NULL;
-            grid->lastClicked = NULL;
-            grid->pencilMarkMode = 0;
-            grid->emptyCell = 81;
+            data->lastHovered = NULL;
+            data->lastClicked = NULL;
+            data->pencilMarkMode = 0;
+            data->emptyCell = 81;
 
             //Message d'erreur
-            if( grid->renderer == NULL ) {
+            if( data->renderer == NULL ) {
                 fprintf(stderr, "Le renderer n'a pas pu etre cree ! SDL_eror : %s\n", SDL_GetError());
                 succes = 0;
             }

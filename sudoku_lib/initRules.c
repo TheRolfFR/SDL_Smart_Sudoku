@@ -5,7 +5,8 @@
 #include "sdl_sudoku.h"
 
 //Initialisation des "bloqueurs"
-void initRules(sudokuGrid* data){
+extern sudokuGrid *data;
+void initRules(){
     int i,j;
     for (i = 0; i<=8; i = i+1){
         for (j = 0; j <=8 ; j = j+1) {

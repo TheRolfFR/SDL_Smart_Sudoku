@@ -6,6 +6,6 @@
 #define SDL_SUDOKU_INITIALIZESUDOKU_H
 
 #include "sdl_sudoku.h"
-int initializeSudoku(sudokuGrid *);
+int initializeSudoku();
 
 #endif //SDL_SUDOKU_INITIALIZESUDOKU_H

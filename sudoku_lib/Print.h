@@ -6,6 +6,6 @@
 #define SDL_SUDOKU_PRINT_H
 
 #include "sdl_sudoku.h"
-void printRed(sudokuGrid*, cell*);
+void printRed(cell*);
 
 #endif //SDL_SUDOKU_PRINT_H

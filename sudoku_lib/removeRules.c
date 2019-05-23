@@ -4,7 +4,8 @@
 
 #include "sdl_sudoku.h"
 
-void removeRules(sudokuGrid* data){ //Fonctionnement similaire à addRules
+extern sudokuGrid *data;
+void removeRules(){ //Fonctionnement similaire à addRules
     cell* current;
     cell* modified = data->lastClicked;
     int i;

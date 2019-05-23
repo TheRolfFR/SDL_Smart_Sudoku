@@ -6,8 +6,9 @@
 #include <stdlib.h>
 #include "sdl_sudoku.h"
 
+extern sudokuGrid *data;
 // dessine une bodure de la couleur choisie sur la case choisie
-void printRect(sudokuGrid *grid, cell* selectedCell, SDL_Color *color) {
+void printRect(cell* selectedCell, SDL_Color *color) {
     // x et y égalent à la marge + le nombre de cellules précédant cette cellule + les bordures
     SDL_Rect rect;
     rect.y = GRID_MARGIN + selectedCell->column/3*GRID_THICK_BORDER + selectedCell->column * GRID_CELL_SIZE + GRID_THIN_BORDER * (selectedCell->column - selectedCell->column/3);
@@ -17,10 +18,10 @@ void printRect(sudokuGrid *grid, cell* selectedCell, SDL_Color *color) {
     rect.h = GRID_CELL_SIZE;
 
     // on change la couleur de rendu
-    SDL_SetRenderDrawColorStruct(grid->renderer, color);
+    SDL_SetRenderDrawColorStruct(data->renderer, color);
     int i;
     for(i = 0; i < GRID_HOVER_BORDER; i++) {
-        SDL_RenderDrawRect(grid->renderer, &rect);
+        SDL_RenderDrawRect(data->renderer, &rect);
         rect.x++;
         rect.y++;
         rect.w -= 2;
@@ -29,40 +30,40 @@ void printRect(sudokuGrid *grid, cell* selectedCell, SDL_Color *color) {
 }
 
 //affiche une bordure bleu sur la case passée en paramètre
-void printHover(sudokuGrid *grid, cell* selectedCell){
+void printHover(cell* selectedCell){
     SDL_Color bleu = {0x4D, 0xD0, 0xE1};
-    printRect(grid, selectedCell, &bleu);
+    printRect(selectedCell, &bleu);
 }
 
 //affiche une bordure blanche sur la case passée en paramètre
-void removeHover(sudokuGrid *grid, cell* selectedCell){
+void removeHover(cell* selectedCell){
     SDL_Color blanc = {0xFF, 0xFF, 0xFF};
-    printRect(grid, selectedCell, &blanc);
+    printRect(selectedCell, &blanc);
 }
 
-void updateHover(sudokuGrid *grid, cell* position){
-    if (grid->lastHovered==NULL){ //la souris était précédemment hors de la grid
+void updateHover(cell* position){
+    if (data->lastHovered==NULL){ //la souris était précédemment hors de la grid
         if (position!=NULL){ //la souris est entrée dans la grid
-            printHover(grid, position);
+            printHover(position);
             position->isHovered = 1;
-            grid->lastHovered=position;
+            data->lastHovered=position;
         }
     }
     else{ //la souris était précédemment dans la grid
 
-        if (!grid->lastHovered->isClicked){ //aucune case n'est séléctionnée
-            if (position!=grid->lastHovered){ // la souris n'a pas changée de case
+        if (!data->lastHovered->isClicked){ //aucune case n'est séléctionnée
+            if (position!=data->lastHovered){ // la souris n'a pas changée de case
                 if (position==NULL){ //la souris est sortis de la grid
-                    removeHover(grid, grid->lastHovered);
-                    grid->lastHovered->isHovered=0;
-                    grid->lastHovered=position;
+                    removeHover(data->lastHovered);
+                    data->lastHovered->isHovered=0;
+                    data->lastHovered=position;
                 }
                 else{ //la souris est tjr dans la grid
-                    removeHover(grid, grid->lastHovered);
-                    grid->lastHovered->isHovered=0;
-                    printHover(grid, position);
+                    removeHover(data->lastHovered);
+                    data->lastHovered->isHovered=0;
+                    printHover(position);
                     position->isHovered=1;
-                    grid->lastHovered=position;
+                    data->lastHovered=position;
                 }
             }
         }
@@ -70,7 +71,7 @@ void updateHover(sudokuGrid *grid, cell* position){
 
 }
 
-void drawNumberAtPosition(sudokuGrid *grid, cell *number) {
+void drawNumberAtPosition(cell *number) {
     // si il y a un nombre à rendre (case non vide)
     if(number->number != EMPTY_VALUE) {
         SDL_Rect rect;
@@ -85,14 +86,14 @@ void drawNumberAtPosition(sudokuGrid *grid, cell *number) {
         SDL_Color grey = {0x37, 0x47, 0x4F}; // #37474F
 
         // on essaye d'initialiser le font
-        tryInitGridFont(grid);
+        tryInitGridFont();
         // on dessine sur la surface le nombre
-        surfaceText = TTF_RenderText_Solid(grid->font, string, (number->isReadOnly) ? grey : black); // en gris si il ne peut pas être réécris, en noir sinon
+        surfaceText = TTF_RenderText_Solid(data->font, string, (number->isReadOnly) ? grey : black); // en gris si il ne peut pas être réécris, en noir sinon
 
         // s'il arrive à rendre le texte
         if(surfaceText != NULL) {
             // on crée la texture avec la surface
-            SDL_Texture *texture = SDL_CreateTextureFromSurface(grid->renderer, surfaceText);
+            SDL_Texture *texture = SDL_CreateTextureFromSurface(data->renderer, surfaceText);
 
             // on definit l'espace disponible pour le texte
             rect.y = GRID_MARGIN + number->column/3*GRID_THICK_BORDER + number->column * GRID_CELL_SIZE + GRID_THIN_BORDER * (number->column - number->column/3);  //controls the rect's x coordinate
@@ -106,7 +107,7 @@ void drawNumberAtPosition(sudokuGrid *grid, cell *number) {
             // on libère la surface
             SDL_FreeSurface(surfaceText);
             // on copie le rnedu dans le renderer dans l'espace donné
-            SDL_RenderCopy(grid->renderer, texture, NULL, fitRect);
+            SDL_RenderCopy(data->renderer, texture, NULL, fitRect);
             // on détruit la texture
             SDL_DestroyTexture(texture);
         }
@@ -114,10 +115,10 @@ void drawNumberAtPosition(sudokuGrid *grid, cell *number) {
 }
 
 // fonction permettant de dessiner le fond des nombres disponibles
-void drawNumberButtonsBackground(sudokuGrid *grid, SDL_Color *color) {
+void drawNumberButtonsBackground(SDL_Color *color) {
     SDL_Rect rect = {GRID_MARGIN, GRID_SIZE + 2*GRID_MARGIN, GRID_SIZE, GRID_CELL_SIZE};
-    SDL_SetRenderDrawColorStruct(grid->renderer, color);
-    SDL_RenderFillRect(grid->renderer, &rect);
+    SDL_SetRenderDrawColorStruct(data->renderer, color);
+    SDL_RenderFillRect(data->renderer, &rect);
 }
 
 // fonction renvoyant si la cellule donnée possède une pencil mark
@@ -135,7 +136,7 @@ int hasPencilMark(cell *selectedCell) {
 }
 
 // fincrion permettant de dessiner les nombres disponibles à l'écriture
-void drawAvailableNumbers(sudokuGrid *data) {
+void drawAvailableNumbers() {
     // le rect pour se positionner
     SDL_Rect rect;
     rect.y = GRID_MARGIN*2 + GRID_SIZE;
@@ -147,7 +148,7 @@ void drawAvailableNumbers(sudokuGrid *data) {
     rect.x += (GRID_SIZE - 9*GRID_CELL_SIZE)/2;
 
     // on lance le font
-    tryInitGridFont(data);
+    tryInitGridFont();
 
     SDL_Surface *surface;
     SDL_Texture *texture;
@@ -175,7 +176,7 @@ void drawAvailableNumbers(sudokuGrid *data) {
     }
 }
 
-void drawNumberBackground(sudokuGrid *grid, cell* selectedCell) {
+void drawNumberBackground(cell* selectedCell) {
     // x et y égalent à la marge + le nombre de cellules précédant cette cellule + les bordures
     SDL_Rect rect;
     rect.y = GRID_HOVER_BORDER + GRID_MARGIN + selectedCell->column/3*GRID_THICK_BORDER + selectedCell->column * GRID_CELL_SIZE + GRID_THIN_BORDER * (selectedCell->column - selectedCell->column/3);
@@ -185,12 +186,12 @@ void drawNumberBackground(sudokuGrid *grid, cell* selectedCell) {
     rect.h = GRID_CELL_SIZE - 2*GRID_HOVER_BORDER;
 
     SDL_Color white = {0xFF, 0xFF, 0xFF};
-    SDL_SetRenderDrawColorStruct(grid->renderer, &white);
-    SDL_RenderFillRect(grid->renderer, &rect);
+    SDL_SetRenderDrawColorStruct(data->renderer, &white);
+    SDL_RenderFillRect(data->renderer, &rect);
 }
 
 // retourne la cellule associée à la position dans la fenêtre
-cell* getMousePosition(sudokuGrid* data){
+cell* getMousePosition(){
     int x, y;
     cell* currentCell=NULL;
     SDL_GetMouseState(&x, &y);

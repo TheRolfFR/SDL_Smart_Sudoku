@@ -4,11 +4,12 @@
 
 #include "sdl_sudoku.h"
 
-void win(sudokuGrid *data) {
+extern sudokuGrid *data;
+void win() {
     // on remet un fond grid
     SDL_Color lightgrey = {189,189,189};
 
-    tryInitGridFont(data);
+    tryInitGridFont();
 
     SDL_Color black = {0, 0, 0};
     SDL_Surface *bravo = TTF_RenderText_Solid(data->font, "Bravo !", black);

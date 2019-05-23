@@ -5,9 +5,9 @@
 #ifndef SDL_SUDOKU_SELECTCELL_H
 #define SDL_SUDOKU_SELECTCELL_H
 
-void selectCell(sudokuGrid*, cell*);
+void selectCell(cell*);
 
 
-void unselect(sudokuGrid*);
+void unselect();
 
 #endif //SDL_SUDOKU_SELECTCELL_H

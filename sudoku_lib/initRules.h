@@ -7,6 +7,6 @@
 #ifndef SDL_SUDOKU_INITRULES_H
 #define SDL_SUDOKU_INITRULES_H
 
-void initRules(sudokuGrid*);
+void initRules();
 
 #endif //SDL_SUDOKU_INITRULES_H

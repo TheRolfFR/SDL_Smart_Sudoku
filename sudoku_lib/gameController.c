@@ -9,7 +9,8 @@
 #define FPS 60
 #define TICKS_FPS 1000/FPS
 
-void gameController(sudokuGrid* data){
+extern sudokuGrid *data;
+void gameController(){
 
 
     int continuer = 1;
@@ -27,18 +28,18 @@ void gameController(sudokuGrid* data){
                 continuer = 0;
                 break;
             case SDL_MOUSEMOTION: // mouvement de souris
-                 updateHover(data, getMousePosition(data));
+                 updateHover(getMousePosition());
                 break;
             case SDL_MOUSEBUTTONUP: // clique souris
-                selectCell(data, getMousePosition(data));
+                selectCell(getMousePosition());
                 break;
             case SDL_KEYDOWN: // appui clavier
-                keyInterpretor(data,event.key.keysym.sym);
+                keyInterpretor(event.key.keysym.sym);
         }
 
         // nombre de cellules vide nul
         if(data->emptyCell==0){ //Si il n'y a aucun cellule vide
-            win(data); //Message de victoire
+            win(); //Message de victoire
             continuer = 0;
         }
 

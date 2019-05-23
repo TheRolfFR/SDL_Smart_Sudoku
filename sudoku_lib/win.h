@@ -7,6 +7,6 @@
 
 #include "sdl_sudoku.h"
 
-void win(sudokuGrid*);
+void win();
 
 #endif //SDL_SUDOKU_WIN_H

@@ -7,22 +7,22 @@
 
 #include "sdl_sudoku.h"
 
-void drawNumberButtonsBackground(sudokuGrid*, SDL_Color *);
-void drawAvailableNumbers(sudokuGrid*);
+void drawNumberButtonsBackground(SDL_Color *);
+void drawAvailableNumbers();
 
 
-void drawNumberAtPosition(sudokuGrid*, cell*);
+void drawNumberAtPosition(cell*);
 
-void drawNumberBackground(sudokuGrid*, cell*);
+void drawNumberBackground(cell*);
 
 int hasPencilMark(cell*);
 
-void updateHover(sudokuGrid*, cell*);
+void updateHover(cell*);
 
-void printRect(sudokuGrid*, cell*, SDL_Color*);
-void printHover(sudokuGrid*, cell*);
-void removeHover(sudokuGrid*, cell*);
+void printRect(cell*, SDL_Color*);
+void printHover(cell*);
+void removeHover(cell*);
 
-cell* getMousePosition(sudokuGrid*);
+cell* getMousePosition();
 
 #endif //SDL_SUDOKU_SUDOKU_HOVER_H

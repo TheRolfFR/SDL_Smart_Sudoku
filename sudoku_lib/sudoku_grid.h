@@ -36,10 +36,10 @@ typedef struct sudoku_grid {
     char emptyCell;
 } sudokuGrid;
 
-void tryInitGridFont(sudokuGrid*);
+void tryInitGridFont();
 
-int loadGrid(sudokuGrid*, char*, int);
+int loadGrid(char*, int);
 
-void drawSudokuGrid(sudokuGrid*);
+void drawSudokuGrid();
 
 #endif //SDL_SUDOKUGRID_H

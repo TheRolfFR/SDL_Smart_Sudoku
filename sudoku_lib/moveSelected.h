@@ -7,6 +7,6 @@
 
 #include "sdl_sudoku.h"
 
-void moveSelected(sudokuGrid*, int, int);
+void moveSelected(int, int);
 
 #endif //SDL_SUDOKU_MOVESELECTED_H

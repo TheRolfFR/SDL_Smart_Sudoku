@@ -4,7 +4,8 @@
 
 #include "sdl_sudoku.h"
 
-void printRed(sudokuGrid *data, cell *selectedCell) {
+extern sudokuGrid *data;
+void printRed(cell *selectedCell) {
 
     // x et y égalent à la marge + le nombre de cellules précédant cette cellule + les bordures
     SDL_Rect rect;
@@ -32,5 +33,5 @@ void printRed(sudokuGrid *data, cell *selectedCell) {
     SDL_RenderDrawRect(data->renderer, &rect);
 
     // dessiner le nombre
-    drawNumberAtPosition(data, selectedCell);
+    drawNumberAtPosition(selectedCell);
 }

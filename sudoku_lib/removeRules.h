@@ -5,6 +5,6 @@
 #ifndef SDL_SUDOKU_REMOVERULES_H
 #define SDL_SUDOKU_REMOVERULES_H
 
-void removeRules(sudokuGrid*);
+void removeRules();
 
 #endif //SDL_SUDOKU_REMOVERULES_H

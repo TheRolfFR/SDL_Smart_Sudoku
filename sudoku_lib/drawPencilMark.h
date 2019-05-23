@@ -7,9 +7,9 @@
 
 #include "sdl_sudoku.h"
 
-void removePencilMark(sudokuGrid*, cell*, int);
-void drawPencilMark(sudokuGrid*, cell*, int);
+void removePencilMark(cell*, int);
+void drawPencilMark(cell*, int);
 
-void ChangeTitleMode(sudokuGrid*);
+void ChangeTitleMode();
 
 #endif //SDL_SUDOKU_DRAWPENCILMARK_H
