@@ -48,6 +48,8 @@ void gameController(){
             SDL_RenderPresent(data->renderer);
         }
 
+        printRed(data->cells[6][0]);
+
         // avoir le temps d'éxécution
         Uint32 difference = SDL_GetTicks() - tick;
 

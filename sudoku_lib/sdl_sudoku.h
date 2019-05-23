@@ -24,6 +24,7 @@
 #include "removeRules.h"
 #include "initRules.h"
 #include "win.h"
+#include "Print.h"
 
 #ifndef SDL_SUDOKU_H
 #define SDL_SUDOKU_H
