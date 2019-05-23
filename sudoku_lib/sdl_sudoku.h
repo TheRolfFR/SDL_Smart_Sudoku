@@ -23,8 +23,10 @@
 #include "addRules.h"
 #include "removeRules.h"
 #include "initRules.h"
+#include <string.h>
 #include "win.h"
 #include "Print.h"
+#include "showRules.h"
 
 #ifndef SDL_SUDOKU_H
 #define SDL_SUDOKU_H

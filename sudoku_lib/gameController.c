@@ -31,6 +31,7 @@ void gameController(){
                  updateHover(getMousePosition());
                 break;
             case SDL_MOUSEBUTTONUP: // clique souris
+                data->lastKeyWasCtrl = 0;
                 selectCell(getMousePosition());
                 break;
             case SDL_KEYDOWN: // appui clavier
@@ -48,7 +49,7 @@ void gameController(){
             SDL_RenderPresent(data->renderer);
         }
 
-        printRed(data->cells[6][0]);
+        //printRed(data->cells[6][0]);
 
         // avoir le temps d'éxécution
         Uint32 difference = SDL_GetTicks() - tick;

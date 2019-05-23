@@ -10,6 +10,9 @@ extern sudokuGrid *data;
 void selectCell(cell* position){
     if(position==NULL){ //Souris hors de la grille
         if(data->lastHovered!=NULL){ //Si une cellule était sélectionnée
+            if(data->redHover!=0){
+                hideRules(data->lastClicked->rules[data->redHover-1]);
+            }
             data->lastHovered->isClicked = 0; //Désélection
             data->lastClicked = NULL;
             updateHover(position); //Mise à jour du "Hover"
@@ -17,6 +20,9 @@ void selectCell(cell* position){
     }
     else{ //Souris dans la grille
         if (position!=data->lastHovered){ //Position différente de la cellule en surbrillance(hover)
+            if(data->redHover!=0){
+                hideRules(data->lastClicked->rules[data->redHover-1]);
+            }
             data->lastHovered->isClicked = 0; //Déselection de la précédente
             updateHover(position); //Déplacer le "Hover" sur la cellule actuelle
             position->isClicked = 1; //Sélectionner la nouvelle cellule
@@ -33,6 +39,7 @@ void selectCell(cell* position){
 }
 
 void unselect(){  // Déselection de la cellule actuellement sélectionnée
+    hideRules(data->lastClicked->rules[data->redHover-1]);
     data->lastHovered->isClicked = 0;
     updateHover(getMousePosition()); //Mise à jour du "Hover"
 
