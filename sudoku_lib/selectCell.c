@@ -39,7 +39,9 @@ void selectCell(cell* position){
 }
 
 void unselect(){  // Déselection de la cellule actuellement sélectionnée
-    hideRules(data->lastClicked->rules[data->redHover-1]);
+    if(data->redHover!=0){
+        hideRules(data->lastClicked->rules[data->redHover-1]);
+    }
     data->lastHovered->isClicked = 0;
     updateHover(getMousePosition()); //Mise à jour du "Hover"
 
