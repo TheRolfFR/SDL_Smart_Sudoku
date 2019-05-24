@@ -191,15 +191,13 @@ void drawNumberBackground(cell* selectedCell) {
 }
 
 // retourne la cellule associée à la position dans la fenêtre
-cell* getMousePosition(){
+void getMousePosition(cell **c, int* number){
     int x, y;
-    cell* currentCell=NULL;
     SDL_GetMouseState(&x, &y);
 
     if(x > GRID_MARGIN && x < GRID_MARGIN + GRID_SIZE && y > GRID_MARGIN && y < GRID_MARGIN + GRID_SIZE){
         int xcells = (x-(x>=381) - GRID_MARGIN)/(GRID_CELL_SIZE+1);
         int ycells = (y-(y>=381) - GRID_MARGIN)/(GRID_CELL_SIZE+1);
-        currentCell = data->cells[xcells][ycells];
+        *c = data->cells[xcells][ycells];
     }
-    return currentCell;
 }

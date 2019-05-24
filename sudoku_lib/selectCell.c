@@ -16,6 +16,9 @@ void selectCell(cell* position){
             data->lastHovered->isClicked = 0; //Désélection
             data->lastClicked = NULL;
             updateHover(position); //Mise à jour du "Hover"
+
+            SDL_Color lightgrey = {189,189,189};
+            drawNumberButtonsBackground(&lightgrey); // on reaffiche la couleur de fond sur les anciens nombres disponibles
         }
     }
     else{ //Souris dans la grille
@@ -41,7 +44,9 @@ void selectCell(cell* position){
 void unselect(){  // Déselection de la cellule actuellement sélectionnée
     hideRules(data->lastClicked->rules[data->redHover-1]);
     data->lastHovered->isClicked = 0;
-    updateHover(getMousePosition()); //Mise à jour du "Hover"
+    cell *c;
+    getMousePosition(&c, NULL);
+    updateHover(c); //Mise à jour du "Hover"
 
     SDL_Color lightgrey = {189,189,189};
     drawNumberButtonsBackground(&lightgrey); // on reaffiche la couleur de fond sur les anciens nombres disponibles
