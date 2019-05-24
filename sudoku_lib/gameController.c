@@ -14,8 +14,9 @@ void gameController(){
 
 
     int continuer = 1;
+    int number = 0;
     SDL_Event event;
-    cell *c;
+    cell *c = NULL;
     while (continuer) //boucle du jeu
     {
         SDL_WaitEvent(&event);
@@ -34,14 +35,19 @@ void gameController(){
                 break;
             case SDL_MOUSEBUTTONUP: // clique souris
                 data->lastKeyWasCtrl = 0;
-                getMousePosition(&c, NULL);
-                selectCell(c);
+                getMousePosition(&c, &number);
+                if(c != NULL) {
+                    selectCell(c);
+                } else if(number != 0) {
+                    updateCellValue(number);
+                }
                 break;
             case SDL_KEYDOWN: // appui clavier
                 keyInterpretor(event.key.keysym.sym);
         }
 
         c = NULL;
+        number = 0;
 
         // nombre de cellules vide nul
         if(data->emptyCell==0){ //Si il n'y a aucun cellule vide
