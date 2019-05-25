@@ -7,6 +7,8 @@
 #endif
 
 sudokuGrid *data;
+SDL_Color SDL_white = {255, 255, 255};
+SDL_Color SDL_black = {0, 0, 0};
 int main(int argc, char **argv)
 {
     sudokuGrid g;

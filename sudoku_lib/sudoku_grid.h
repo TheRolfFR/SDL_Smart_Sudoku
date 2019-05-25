@@ -15,8 +15,11 @@
 #define GRID_THIN_BORDER 1
 #define GRID_CELL_SIZE 60
 #define GRID_MARGIN 10
-#define GRID_BOTTOMSPACE GRID_CELL_SIZE
+#define BUTTON_HEIGHT GRID_CELL_SIZE/2
+#define GRID_BOTTOMSPACE GRID_CELL_SIZE + GRID_MARGIN + BUTTON_HEIGHT
 #define GRID_SIZE GRID_CELL_SIZE*9 + GRID_THIN_BORDER*6 + GRID_THICK_BORDER * 2
+#define BUTTON_WIDTH GRID_SIZE / 3
+#define BUTTON_Y_OFFSET GRID_MARGIN*3 + GRID_SIZE + GRID_CELL_SIZE
 #define GRID_FONT_SIZE GRID_CELL_SIZE
 #define GRID_HOVER_BORDER 2
 #define EMPTY_VALUE -1
@@ -37,6 +40,9 @@ typedef struct sudoku_grid {
     char redHover;
     char lastKeyWasCtrl;
     int typedNumber;
+    struct s_button* easy;
+    struct s_button* normal;
+    struct s_button* hard;
 } sudokuGrid;
 
 void tryInitGridFont();

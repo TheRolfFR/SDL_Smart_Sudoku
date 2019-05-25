@@ -40,6 +40,7 @@ void gameController(){
                 } else if(data->typedNumber != 0) {
                     updateCellValue();
                 }
+                continuer = handleDifficultyButtons();
                 break;
             case SDL_KEYDOWN: // appui clavier
                 keyInterpretor(event.key.keysym.sym);

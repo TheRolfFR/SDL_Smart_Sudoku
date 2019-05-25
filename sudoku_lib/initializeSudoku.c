@@ -68,6 +68,18 @@ int initializeSudoku() {
             data->typedNumber = 0;
             data->emptyCell = 81;
 
+            data->easy = malloc(sizeof(difficultyButton));
+            data->easy->x = GRID_MARGIN;
+            data->easy->previouslyClicked = 0;
+
+            data->normal = malloc(sizeof(difficultyButton));
+            data->normal->x = GRID_MARGIN + BUTTON_WIDTH;
+            data->normal->previouslyClicked = 0;
+
+            data->hard = malloc(sizeof(difficultyButton));
+            data->hard->x = GRID_MARGIN + BUTTON_WIDTH*2;
+            data->hard->previouslyClicked = 0;
+
             //Message d'erreur
             if( data->renderer == NULL ) {
                 fprintf(stderr, "Le renderer n'a pas pu etre cree ! SDL_eror : %s\n", SDL_GetError());

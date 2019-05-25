@@ -8,6 +8,7 @@
 
 #endif
 
+#include <string.h>
 #include "../sdl_custom_lib.h"
 #include "sudoku_grid.h"
 #include "sudoku_cell.h"
@@ -23,11 +24,11 @@
 #include "addRules.h"
 #include "removeRules.h"
 #include "initRules.h"
-#include <string.h>
 #include "win.h"
 #include "Print.h"
 #include "showRules.h"
 #include "undo.h"
+#include "difficultyButton.h"
 
 #ifndef SDL_SUDOKU_H
 #define SDL_SUDOKU_H

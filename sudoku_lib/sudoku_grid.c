@@ -17,13 +17,30 @@ void tryInitGridFont() {
 }
 
 int loadGrid(char *path, int numberOfFiles) {
-    // on choisit une grille au hasard
+    // on genere un numero au hasard
     srand(time(0));
     int index = rand()%numberOfFiles;
+
+    //on essaye d'aller cherche la difficulte
+    FILE *diffFile = NULL;
+    diffFile = fopen("difficulte.txt", "r");
+
+    char diff[TAILLE_MAX];
+
+    memset(diff, 0, TAILLE_MAX);
+    if(diffFile != NULL) {
+        fgets(diff, TAILLE_MAX, diffFile);
+    }
+
+    if(diffFile == NULL || strcmp(diff, "easy") < 0 || strcmp(diff, "normal") < 0 || strcmp(diff, "hard") < 0) {
+        strcpy(diff, "easy");
+    }
 
     // on va jusqu'au chemin
     char totalpath[TAILLE_MAX];
     strcpy(totalpath, path);
+    strcat(totalpath, diff);
+    strcat(totalpath, "/");
     strcat(totalpath, "grid");
     strcat(totalpath, convertInt(index));
     strcat(totalpath, ".txt");
@@ -114,4 +131,8 @@ void drawSudokuGrid()  {
         // horizontales
         SDL_RenderFillRect(data->renderer, &hori);
     }
+
+    fillAndDrawButton(data->easy, "Facile");
+    fillAndDrawButton(data->normal, "Normal");
+    fillAndDrawButton(data->hard, "Difficile");
 }
