@@ -7,7 +7,7 @@
 
 #include "sdl_sudoku.h"
 
-void updateCellValue(int);
+void updateCellValue();
 void resetPencilMark(cell*);
 void clearCell();
 

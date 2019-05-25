@@ -47,7 +47,7 @@ void unselect(){  // Déselection de la cellule actuellement sélectionnée
     }
     data->lastHovered->isClicked = 0;
     cell *c;
-    getMousePosition(&c, NULL);
+    getMousePosition(&c,0);
     updateHover(c); //Mise à jour du "Hover"
 
     SDL_Color lightgrey = {189,189,189};

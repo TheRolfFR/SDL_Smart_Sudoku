@@ -65,6 +65,7 @@ int initializeSudoku() {
             data->pencilMarkMode = 0;
             data->redHover = 0;
             data->lastKeyWasCtrl = 0;
+            data->typedNumber = 0;
             data->emptyCell = 81;
 
             //Message d'erreur

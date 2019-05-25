@@ -27,6 +27,7 @@
 #include "win.h"
 #include "Print.h"
 #include "showRules.h"
+#include "undo.h"
 
 #ifndef SDL_SUDOKU_H
 #define SDL_SUDOKU_H

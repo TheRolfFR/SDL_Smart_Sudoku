@@ -6,7 +6,8 @@
 
 extern sudokuGrid *data;
 // fonction qui met à jour la cellule en fonction d'une touche numérique tapée
-void updateCellValue(int value) {
+void updateCellValue() {
+    int value = data->typedNumber;
     // si une case a été clique et qu'elle est modifiable et qu'elle n'est pas bloquée
     if(data->lastClicked != NULL && !data->lastClicked->isReadOnly) {
         if(data->lastClicked->rules[value-1]!=NULL){
@@ -58,6 +59,7 @@ void updateCellValue(int value) {
         }
 
     }
+    data->typedNumber = 0;
 }
 
 // fonction qui nettoie les cellules

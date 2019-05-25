@@ -36,6 +36,7 @@ typedef struct sudoku_grid {
     char emptyCell;
     char redHover;
     char lastKeyWasCtrl;
+    int typedNumber;
 } sudokuGrid;
 
 void tryInitGridFont();

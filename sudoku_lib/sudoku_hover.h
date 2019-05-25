@@ -23,6 +23,6 @@ void printRect(cell*, SDL_Color*);
 void printHover(cell*);
 void removeHover(cell*);
 
-void getMousePosition(cell**, int*);
+void getMousePosition(cell**,char);
 
 #endif //SDL_SUDOKU_SUDOKU_HOVER_H

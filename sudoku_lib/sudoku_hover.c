@@ -191,7 +191,7 @@ void drawNumberBackground(cell* selectedCell) {
 }
 
 // retourne la cellule associée à la position dans la fenêtre
-void getMousePosition(cell **c, int* number){
+void getMousePosition(cell **c,char click){
     int x, y;
     SDL_GetMouseState(&x, &y);
 
@@ -201,9 +201,9 @@ void getMousePosition(cell **c, int* number){
         *c = data->cells[xcells][ycells];
     }
 
-    if(number != NULL && x > GRID_MARGIN + 5 && x < GRID_MARGIN + GRID_SIZE - 5 && y > GRID_MARGIN*2 + GRID_SIZE && y < GRID_MARGIN*2 + GRID_SIZE + GRID_CELL_SIZE) {
+    if(click && x > GRID_MARGIN + 5 && x < GRID_MARGIN + GRID_SIZE - 5 && y > GRID_MARGIN*2 + GRID_SIZE && y < GRID_MARGIN*2 + GRID_SIZE + GRID_CELL_SIZE) {
         int l =  (x-GRID_MARGIN - 5)/GRID_CELL_SIZE + 1;
 
-        *number = l;
+        data->typedNumber = l;
     }
 }

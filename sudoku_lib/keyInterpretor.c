@@ -27,39 +27,48 @@ void keyInterpretor(SDL_Keycode key){
                     switch (key){
                         case SDLK_1: //nombre
                         case SDLK_KP_1:
-                            updateCellValue(1); //mise à jour de la valeur de la case
+                            data->typedNumber = 1;
+                            updateCellValue(); //mise à jour de la valeur de la case
                             break;
                         case SDLK_2:
                         case SDLK_KP_2:
-                            updateCellValue(2);
+                            data->typedNumber = 2;
+                            updateCellValue();
                             break;
                         case SDLK_3:
                         case SDLK_KP_3:
-                            updateCellValue(3);
+                            data->typedNumber = 3;
+                            updateCellValue();
                             break;
                         case SDLK_4:
                         case SDLK_KP_4:
-                            updateCellValue(4);
+                            data->typedNumber = 4;
+                            updateCellValue();
                             break;
                         case SDLK_5:
                         case SDLK_KP_5:
-                            updateCellValue(5);
+                            data->typedNumber = 5;
+                            updateCellValue();
                             break;
                         case SDLK_6:
                         case SDLK_KP_6:
-                            updateCellValue(6);
+                            data->typedNumber = 6;
+                            updateCellValue();
                             break;
                         case SDLK_7:
                         case SDLK_KP_7:
-                            updateCellValue(7);
+                            data->typedNumber = 7;
+                            updateCellValue();
                             break;
                         case SDLK_8:
                         case SDLK_KP_8:
-                            updateCellValue(8);
+                            data->typedNumber = 8;
+                            updateCellValue();
                             break;
                         case SDLK_9:
                         case SDLK_KP_9:
-                            updateCellValue(9);
+                            data->typedNumber = 9;
+                            updateCellValue();
                             break;
                             //Fléches directionnelles
                         case SDLK_DOWN:

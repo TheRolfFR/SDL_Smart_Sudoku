@@ -14,7 +14,6 @@ void gameController(){
 
 
     int continuer = 1;
-    int number = 0;
     SDL_Event event;
     cell *c = NULL;
     while (continuer) //boucle du jeu
@@ -30,16 +29,16 @@ void gameController(){
                 continuer = 0;
                 break;
             case SDL_MOUSEMOTION: // mouvement de souris
-                getMousePosition(&c, NULL);
+                getMousePosition(&c,0);
                 updateHover(c);
                 break;
             case SDL_MOUSEBUTTONUP: // clique souris
                 data->lastKeyWasCtrl = 0;
-                getMousePosition(&c, &number);
+                getMousePosition(&c,1);
                 if(c != NULL) {
                     selectCell(c);
-                } else if(number != 0) {
-                    updateCellValue(number);
+                } else if(data->typedNumber != 0) {
+                    updateCellValue();
                 }
                 break;
             case SDL_KEYDOWN: // appui clavier
@@ -47,7 +46,6 @@ void gameController(){
         }
 
         c = NULL;
-        number = 0;
 
         // nombre de cellules vide nul
         if(data->emptyCell==0){ //Si il n'y a aucun cellule vide
@@ -59,8 +57,6 @@ void gameController(){
         if(event.type != SDL_QUIT) {
             SDL_RenderPresent(data->renderer);
         }
-
-        //printRed(data->cells[6][0]);
 
         // avoir le temps d'éxécution
         Uint32 difference = SDL_GetTicks() - tick;
