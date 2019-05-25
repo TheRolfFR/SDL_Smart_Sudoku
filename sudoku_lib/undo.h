@@ -5,7 +5,7 @@
 #ifndef SDL_SUDOKU_UNDO_H
 #define SDL_SUDOKU_UNDO_H
 
-typedef undoList{
+typedef struct undoList{
 
 }undoList;
 
