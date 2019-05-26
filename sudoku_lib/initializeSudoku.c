@@ -67,6 +67,9 @@ int initializeSudoku() {
             data->lastKeyWasCtrl = 0;
             data->typedNumber = 0;
             data->emptyCell = 81;
+            data->save = NULL;
+            data->undoMode = 1;
+
 
             data->easy = malloc(sizeof(difficultyButton));
             data->easy->x = GRID_MARGIN;

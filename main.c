@@ -24,6 +24,8 @@ int main(int argc, char **argv)
 
     initRules();
 
+    data->undoMode = 0;
+
     // on dessine la grille
     drawSudokuGrid();
 

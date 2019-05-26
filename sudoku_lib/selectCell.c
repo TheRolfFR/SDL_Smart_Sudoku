@@ -54,3 +54,8 @@ void unselect(){  // Déselection de la cellule actuellement sélectionnée
     drawNumberButtonsBackground(&lightgrey); // on reaffiche la couleur de fond sur les anciens nombres disponibles
     data->lastClicked = NULL;
 }
+
+void changeLastClicked(){
+    int code = data->typedNumber;
+    data->lastClicked = data->cells[(code/10)-1][(code%10)-1];
+}

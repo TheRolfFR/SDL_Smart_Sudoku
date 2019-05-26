@@ -21,6 +21,7 @@ void updateCellValue() {
                 data->redHover = value;
             }
         } else{
+            addUndoStep(changeLastClicked,(data->lastClicked->line+1)*10+data->lastClicked->column+1);
             // si on est en mode pencilmark
             if(data->pencilMarkMode) {
                 // si la case était vide précédemment (empeche d'écrire des pencils marks sur les nombres)
@@ -34,12 +35,23 @@ void updateCellValue() {
                         data->lastClicked->pencilMark[value-1] = 1;
                         drawPencilMark(data->lastClicked, value);
                     }
+                    if(!data->undoMode){
+                        addUndoAction(changeMode,0);
+                        addUndoAction(updateCellValue,value);
+                        addUndoAction(changeMode,0);
+                    }
                 }
             }
             else {
                 // si on est en mode nombre normal
+                if(!data->undoMode){
+                    addUndoAction(clearCell,0);
+                }
                 if(data->lastClicked->number!=EMPTY_VALUE) { //La case conntient une valeur
                     //retrait des restrictions concernant cette valeur
+                    if(!data->undoMode){
+                        addUndoAction(updateCellValue,data->lastClicked->number);
+                    }
                     removeRules();
                 }
                 // si l'y avait quelque-chose avant, on redessine un fond
@@ -65,10 +77,18 @@ void updateCellValue() {
 // fonction qui nettoie les cellules
 void clearCell(){
     if(data->lastClicked->number!=EMPTY_VALUE){ //Si la cellule à une valeur
+        if(!data->undoMode){
+            addUndoStep(changeLastClicked,(data->lastClicked->line+1)*10+data->lastClicked->column+1);
+            addUndoAction(updateCellValue,data->lastClicked->number);
+        }
         removeRules(); //Retire les restrictions
         data->lastClicked->number = EMPTY_VALUE; //Retire la valeur
     }
     else { //Si la cellule n'a pas de valeur
+        if(!data->undoMode){
+            addUndoStep(changeLastClicked,(data->lastClicked->line+1)*10+data->lastClicked->column+1);
+            addUndoAction(changeMode,0);
+        }
         resetPencilMark(data->lastClicked); //retire les annotations
     }
     drawNumberBackground(data->lastClicked);
@@ -77,6 +97,11 @@ void clearCell(){
 // fonction qui réinitialise les pencil marks
 void resetPencilMark(cell* current){
     for (int i = 0; i < 9; i = i+1) {
-        current->pencilMark[i] = 0;
+        if (current->pencilMark[i]){
+            if(!data->undoMode){
+                addUndoAction(updateCellValue,i);
+            }
+            current->pencilMark[i] = 0;
+        }
     }
 }

@@ -6,6 +6,9 @@
 
 extern sudokuGrid *data;
 void addRules(){
+    if(!data->undoMode){
+        addUndoAction(changeMode,0);
+    }
     cell* current; //Cellule en cours de traitement (déclarée pour simplifier l'écriture et la compréhension)
     cell* modified = data->lastClicked; //Cellule dernièrement modifiée par le joueur (déeclaré pour simplifier l'écriture et la compréhension)
     int i;
@@ -15,6 +18,10 @@ void addRules(){
         if (current!=modified){ //Nous ne mettons pas à jour les autorisations de la case modifiée
             current->rules[modified->number-1] = addRule(current->rules[modified->number-1], modified); //Ajout de la cellule modifié comme "bloqueur" de la cellule en cours
             if(current->pencilMark[modified->number-1]){ //Si il y a une annotation correspondante à la valeur bloqué
+                if(!data->undoMode){
+                    addUndoAction(changeLastClicked,(data->lastClicked->line+1)*10+data->lastClicked->column+1);
+                    addUndoAction(updateCellValue,modified->number);
+                }
                 current->pencilMark[modified->number-1] = 0; //L'annotation est retirée
                 removePencilMark(current,modified->number);
             }
@@ -26,6 +33,10 @@ void addRules(){
         if (current!=modified){
             current->rules[modified->number-1] = addRule(current->rules[modified->number-1], modified);
             if(current->pencilMark[modified->number-1]){
+                if(!data->undoMode){
+                    addUndoAction(changeLastClicked,(data->lastClicked->line+1)*10+data->lastClicked->column+1);
+                    addUndoAction(updateCellValue,modified->number);
+                }
                 current->pencilMark[modified->number-1] = 0;
                 removePencilMark(current,modified->number);
             }
@@ -37,9 +48,16 @@ void addRules(){
             current = data->cells[i+modified->line-modified->line%3][j+modified->column-modified->column%3];
             current->rules[modified->number-1] = addRule(current->rules[modified->number-1], modified);
             if(current->pencilMark[modified->number-1]){
+                if(!data->undoMode){
+                    addUndoAction(changeLastClicked,(data->lastClicked->line+1)*10+data->lastClicked->column+1);
+                    addUndoAction(updateCellValue,modified->number);
+                }
                 current->pencilMark[modified->number-1] = 0;
                 removePencilMark(current,modified->number);
             }
         }
+    }
+    if(!data->undoMode){
+        addUndoAction(changeMode,0);
     }
 }

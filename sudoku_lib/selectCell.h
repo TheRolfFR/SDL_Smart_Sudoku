@@ -6,7 +6,7 @@
 #define SDL_SUDOKU_SELECTCELL_H
 
 void selectCell(cell*);
-
+void changeLastClicked(void);
 
 void unselect();
 

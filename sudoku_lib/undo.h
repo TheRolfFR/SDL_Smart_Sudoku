@@ -22,7 +22,9 @@ typedef struct undoList{
 
 void addUndoStep(void (*pFunction)(void),int);
 void addUndoAction(void (*pFunction)(void),int);
-void undo();
+void undo(void);
+void actionDone(void);
+void stepDone(void);
 
 
 #endif //SDL_SUDOKU_UNDO_H

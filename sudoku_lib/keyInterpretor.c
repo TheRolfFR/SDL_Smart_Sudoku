@@ -9,7 +9,7 @@ extern sudokuGrid *data;
 void keyInterpretor(SDL_Keycode key){
     if (data->lastKeyWasCtrl && key==SDLK_z)
     {
-        //undo();
+        undo();
     }
     else{
         data->lastKeyWasCtrl = 0;
@@ -19,7 +19,7 @@ void keyInterpretor(SDL_Keycode key){
                 data->lastKeyWasCtrl = 1;
                 break;
             case SDLK_CAPSLOCK: // Basculement du mode pencil mark
-                data->pencilMarkMode = (!data->pencilMarkMode);
+                changeMode();
                 ChangeTitleMode(); //Changement du titre de la fenetre (pour indiquer le mode)
                 break;
             default:
@@ -98,10 +98,8 @@ void keyInterpretor(SDL_Keycode key){
                 }
         }
     }
-
 }
 
-
-void zWait(){
-
+void changeMode(){
+    data->pencilMarkMode = (!data->pencilMarkMode);
 }

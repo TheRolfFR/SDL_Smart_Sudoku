@@ -10,5 +10,6 @@
 #include "sdl_sudoku.h"
 
 void keyInterpretor(SDL_Keycode);
+void changeMode(void);
 
 #endif //SDL_SUDOKU_KEYINTERPRETOR_H
