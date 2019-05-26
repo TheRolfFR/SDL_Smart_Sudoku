@@ -16,7 +16,7 @@ void fillAndDrawButton(difficultyButton*, char[]);
 char isInButton(difficultyButton*, int, int);
 void clickButton(difficultyButton*);
 void unclickButton(difficultyButton*);
-int handleDifficultyButtons();
+int handleDifficultyButtons(void);
 int changeDifficulty(char[]);
 
 #endif //SDL_SUDOKU_DIFFICULTYBUTTON_H

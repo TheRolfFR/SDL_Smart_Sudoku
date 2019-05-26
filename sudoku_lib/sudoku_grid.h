@@ -9,6 +9,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include "sudoku_cell.h"
+#include "undo.h"
 
 /* Constantes de la grille */
 #define GRID_THICK_BORDER 2
@@ -17,8 +18,8 @@
 #define GRID_MARGIN 10
 #define BUTTON_HEIGHT GRID_CELL_SIZE/2
 #define GRID_BOTTOMSPACE GRID_CELL_SIZE + GRID_MARGIN + BUTTON_HEIGHT
-#define GRID_SIZE GRID_CELL_SIZE*9 + GRID_THIN_BORDER*6 + GRID_THICK_BORDER * 2
-#define BUTTON_WIDTH GRID_SIZE / 3
+#define GRID_SIZE GRID_CELL_SIZE*9 + GRID_THIN_BORDER*6 + GRID_THICK_BORDER*2
+#define BUTTON_WIDTH (GRID_SIZE)/3
 #define BUTTON_Y_OFFSET GRID_MARGIN*3 + GRID_SIZE + GRID_CELL_SIZE
 #define GRID_FONT_SIZE GRID_CELL_SIZE
 #define GRID_HOVER_BORDER 2
@@ -43,6 +44,7 @@ typedef struct sudoku_grid {
     struct s_button* easy;
     struct s_button* normal;
     struct s_button* hard;
+    undoList* save;
 } sudokuGrid;
 
 void tryInitGridFont();
