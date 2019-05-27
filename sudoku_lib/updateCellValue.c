@@ -21,7 +21,9 @@ void updateCellValue() {
                 data->redHover = value;
             }
         } else{
-            addUndoStep(changeLastClicked,(data->lastClicked->line+1)*10+data->lastClicked->column+1);
+            if(!data->undoMode){
+                addUndoStep(changeLastClicked,(data->lastClicked->line+1)*10+data->lastClicked->column+1);
+            }
             // si on est en mode pencilmark
             if(data->pencilMarkMode) {
                 // si la case était vide précédemment (empeche d'écrire des pencils marks sur les nombres)

@@ -19,7 +19,7 @@ void addRules(){
             current->rules[modified->number-1] = addRule(current->rules[modified->number-1], modified); //Ajout de la cellule modifié comme "bloqueur" de la cellule en cours
             if(current->pencilMark[modified->number-1]){ //Si il y a une annotation correspondante à la valeur bloqué
                 if(!data->undoMode){
-                    addUndoAction(changeLastClicked,(data->lastClicked->line+1)*10+data->lastClicked->column+1);
+                    addUndoAction(changeLastClicked,(current->line+1)*10+current->column+1);
                     addUndoAction(updateCellValue,modified->number);
                 }
                 current->pencilMark[modified->number-1] = 0; //L'annotation est retirée
@@ -34,7 +34,7 @@ void addRules(){
             current->rules[modified->number-1] = addRule(current->rules[modified->number-1], modified);
             if(current->pencilMark[modified->number-1]){
                 if(!data->undoMode){
-                    addUndoAction(changeLastClicked,(data->lastClicked->line+1)*10+data->lastClicked->column+1);
+                    addUndoAction(changeLastClicked,(current->line+1)*10+current->column+1);
                     addUndoAction(updateCellValue,modified->number);
                 }
                 current->pencilMark[modified->number-1] = 0;
@@ -49,7 +49,7 @@ void addRules(){
             current->rules[modified->number-1] = addRule(current->rules[modified->number-1], modified);
             if(current->pencilMark[modified->number-1]){
                 if(!data->undoMode){
-                    addUndoAction(changeLastClicked,(data->lastClicked->line+1)*10+data->lastClicked->column+1);
+                    addUndoAction(changeLastClicked,(current->line+1)*10+current->column+1);
                     addUndoAction(updateCellValue,modified->number);
                 }
                 current->pencilMark[modified->number-1] = 0;

@@ -18,10 +18,8 @@ void undo(){
             data->typedNumber = data->save->actionList->actionData.value;
             data->save->actionList->actionData.pFunction();
             actionDone();
-            printf("actionDone");
         }
         stepDone();
-        printf("stepDone");
         data->lastClicked = temp;
         data->typedNumber = 0;
         data->undoMode = 0;
