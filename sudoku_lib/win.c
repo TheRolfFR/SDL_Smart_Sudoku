@@ -88,6 +88,9 @@ void win() {
 
         SDL_RenderPresent(data->renderer);
 
+        SDL_FreeSurface(autoDestroySurface);
+        SDL_DestroyTexture(autoDestroy);
+
         SDL_Delay(1000);
     }
 }
