@@ -7,7 +7,7 @@
 #include <string.h>
 #include "sdl_sudoku.h"
 
-/* Constantes de masque NE PAS TOUCHER */
+//Constantes de masque NE PAS TOUCHER
 #define RED_MASK   0xFF000000
 #define GREEN_MASK 0x00FF0000
 #define BLUE_MASK  0x0000FF00
@@ -15,6 +15,8 @@
 
 extern sudokuGrid *data;
 int initializeSudoku() {
+    //Fonction permettant d'initialiser le jeu
+
     int succes = 1;
 
     //Initialision de SDL
@@ -60,16 +62,17 @@ int initializeSudoku() {
             data->renderer = NULL;
             data->renderer = (SDL_CreateRenderer(data->window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC));
 
-            data->lastHovered = NULL;
-            data->lastClicked = NULL;
-            data->pencilMarkMode = 0;
-            data->redHover = 0;
-            data->lastKeyWasCtrl = 0;
-            data->typedNumber = 0;
-            data->save = NULL;
-            data->undoMode = 1;
+            //Initialisation des données
+            data->lastHovered = NULL; //Pointeur vers la cellule en surbrillance
+            data->lastClicked = NULL; //Pointeur vers la cellule sélectionnée
+            data->pencilMarkMode = 0; //Indique l'activation du mode annotation
+            data->redHover = 0; //Champs indiquant le nombre que contiennent les cases sur fond rouge
+            data->lastKeyWasCtrl = 0; //Indique la nature du dernier appui clavier ou souris (ctrl ou non)
+            data->typedNumber = 0; //Indique le nombre demandé
+            data->save = NULL; //Liste des actions
+            data->undoMode = 1; //Indique l'activation du mode "retour en arrière" (initialisé comme actif afin de ne pas enregistrer l'initialisation de la grille)
 
-
+            //Initialisation des boutons
             data->easy = malloc(sizeof(difficultyButton));
             data->easy->x = GRID_MARGIN;
             data->easy->previouslyClicked = 0;

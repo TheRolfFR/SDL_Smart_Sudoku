@@ -7,28 +7,31 @@
 
 extern sudokuGrid *data;
 void keyInterpretor(SDL_Keycode key){
-    if (data->lastKeyWasCtrl && key==SDLK_z)
+    //Fonction reliant l'appui clavier à son action
+
+    if (data->lastKeyWasCtrl && key==SDLK_z) //Si la dernière action était appuyer sur crtl et que la touche z est actionnée
     {
-        undo();
+        undo(); //Annule la dernière modification sur la grille
     }
     else{
-        data->lastKeyWasCtrl = 0;
-        switch (key){
+        data->lastKeyWasCtrl = 0; //La dernière touche n'était pas ctrl
+        switch (key){ //Diférentiation des touches
             case SDLK_LCTRL:
-            case SDLK_RCTRL:
+            case SDLK_RCTRL: //Cas ctrl
                 data->lastKeyWasCtrl = 1;
                 break;
-            case SDLK_CAPSLOCK: // Basculement du mode pencil mark
-                changeMode();
+            case SDLK_CAPSLOCK: //Cas MAJUSCULE
+                changeMode(); //Changement de mode (annotation/normal)
                 ChangeTitleMode(); //Changement du titre de la fenetre (pour indiquer le mode)
                 break;
             default:
-                if(data->lastClicked != NULL){ //Event agissant sur une case séléctionnée
+                if(data->lastClicked != NULL){ //Si une cellule est sélectionnée
                     switch (key){
-                        case SDLK_1: //nombre
+                        //Cas nombre
+                        case SDLK_1:
                         case SDLK_KP_1:
-                            data->typedNumber = 1;
-                            updateCellValue(); //mise à jour de la valeur de la case
+                            data->typedNumber = 1; //Mise à jour du nombre demandé
+                            updateCellValue(); //Mise à jour de la valeur de la case
                             break;
                         case SDLK_2:
                         case SDLK_KP_2:
@@ -70,7 +73,8 @@ void keyInterpretor(SDL_Keycode key){
                             data->typedNumber = 9;
                             updateCellValue();
                             break;
-                            //Fléches directionnelles
+
+                            //Cas fléches directionnelles
                         case SDLK_DOWN:
                             moveSelected(1, 0); //Changement de cellule sélectionnée
                             break;
@@ -83,12 +87,12 @@ void keyInterpretor(SDL_Keycode key){
                         case SDLK_RIGHT:
                             moveSelected(0, 1);
                             break;
-                            //Echap
-                        case SDLK_ESCAPE:
+
+                        case SDLK_ESCAPE: //Cas échap
                             unselect(); //Désélection de la cellule sélectionnée
                             break;
-                            //Suppr
-                        case SDLK_DELETE:
+
+                        case SDLK_DELETE: //Cas suppr
                         case SDLK_BACKSPACE:
                             clearCell(); //Nettoyage de la cellule sélectionnée
                         default:
@@ -100,5 +104,7 @@ void keyInterpretor(SDL_Keycode key){
 }
 
 void changeMode(){
-    data->pencilMarkMode = (!data->pencilMarkMode);
+    //Fonction permettant d'activer/désactiver le mode annotation
+
+    data->pencilMarkMode = (!data->pencilMarkMode); //Inversion du mode
 }

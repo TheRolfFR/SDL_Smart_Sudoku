@@ -47,10 +47,11 @@ void gameController(){
 
         c = NULL;
 
-        if(isFinished()){ //Si il n'y a aucun cellule vide
+
+        /*if(isFinished() == 1){ //Si il n'y a aucun cellule vide
             win(); //Message de victoire
             continuer = 0;
-        }
+        }*/
 
         if(event.type != SDL_QUIT) { //Si l'évènement est différent de quitter
             SDL_RenderPresent(data->renderer); //Rafraichissement du rendu

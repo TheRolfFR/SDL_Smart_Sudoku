@@ -6,6 +6,8 @@
 
 extern sudokuGrid *data;
 void moveSelected(int relativex, int relativey) {
+    //Foncton permettant de changer de cellule sélectionnée via les flèches directionnelles
+
     // recupérer le x et y dans la grille
     if(data->lastClicked != NULL) {
         // on calcule les supposés nouveaux x et y
