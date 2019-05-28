@@ -75,7 +75,9 @@ void win() {
         // Redéfinir le texte
         char phrase[TAILLE_MAX] = "";
         strcat(phrase, "Maintenant je vais m'auto-detruire dans " );
-        strcat(phrase, convertInt(3-i));
+        char *countdown = convertInt(3-i);
+        strcat(phrase, countdown);
+        free(countdown);
         strcat(phrase, "s");
 
         // reprint le texte

@@ -7,6 +7,10 @@
 #include "sdl_sudoku.h"
 
 extern sudokuGrid *data;
+extern SDL_Color SDL_white;
+extern SDL_Color SDL_blue;
+extern SDL_Color SDL_black;
+extern SDL_Color SDL_grey;
 // dessine une bodure de la couleur choisie sur la case choisie
 void printRect(cell* selectedCell, SDL_Color *color) {
     // x et y égalent à la marge + le nombre de cellules précédant cette cellule + les bordures
@@ -31,14 +35,12 @@ void printRect(cell* selectedCell, SDL_Color *color) {
 
 //affiche une bordure bleu sur la case passée en paramètre
 void printHover(cell* selectedCell){
-    SDL_Color bleu = {0x4D, 0xD0, 0xE1};
-    printRect(selectedCell, &bleu);
+    printRect(selectedCell, &SDL_blue);
 }
 
 //affiche une bordure blanche sur la case passée en paramètre
 void removeHover(cell* selectedCell){
-    SDL_Color blanc = {0xFF, 0xFF, 0xFF};
-    printRect(selectedCell, &blanc);
+    printRect(selectedCell, &SDL_white);
 }
 
 void updateHover(cell* position){
@@ -82,13 +84,10 @@ void drawNumberAtPosition(cell *number) {
         //on convertit le nombre en string
         char *string = convertInt(number->number);
 
-        SDL_Color black = {0, 0, 0};
-        SDL_Color grey = {0x37, 0x47, 0x4F}; // #37474F
-
         // on essaye d'initialiser le font
         tryInitGridFont();
         // on dessine sur la surface le nombre
-        surfaceText = TTF_RenderText_Solid(data->font, string, (number->isReadOnly) ? grey : black); // en gris si il ne peut pas être réécris, en noir sinon
+        surfaceText = TTF_RenderText_Solid(data->font, string, (number->isReadOnly) ? SDL_grey : SDL_black); // en gris si il ne peut pas être réécris, en noir sinon
 
         // s'il arrive à rendre le texte
         if(surfaceText != NULL) {
@@ -103,9 +102,6 @@ void drawNumberAtPosition(cell *number) {
 
             // on crée un nouveau rect permettant de case rle nombre dedans l'espace disponible
             SDL_Rect *fitRect = SDL_RectFit(&rect, surfaceText);
-
-            // on libère la surface
-            SDL_FreeSurface(surfaceText);
             // on copie le rnedu dans le renderer dans l'espace donné
             SDL_RenderCopy(data->renderer, texture, NULL, fitRect);
             // on détruit la texture
@@ -113,6 +109,11 @@ void drawNumberAtPosition(cell *number) {
             // on libère le rect
             free(fitRect);
         }
+
+        // on libère la surface
+        SDL_FreeSurface(surfaceText);
+
+        free(string);
     }
 }
 
@@ -155,14 +156,12 @@ void drawAvailableNumbers() {
     SDL_Surface *surface;
     SDL_Texture *texture;
 
-    SDL_Color black = {0,0,0};
-    SDL_Color white = {255, 255, 255};
-
     //on affiche tous les nombres disponibles
     int i;
     for(i = 0; i < 9; i++) {
         // on dessine le texte dans la surface
-        surface = TTF_RenderText_Solid(data->font, convertInt(i+1), (data->lastClicked->rules[i]==NULL) ? black : white);
+        char *number = convertInt(i+1);
+        surface = TTF_RenderText_Solid(data->font, number, (data->lastClicked->rules[i]==NULL) ? SDL_black : SDL_white);
         // on crée la texture associée
         texture = SDL_CreateTextureFromSurface(data->renderer, surface);
 
@@ -188,9 +187,7 @@ void drawNumberBackground(cell* selectedCell) {
     // la largeur et hauteur c'est la taille de la cellule
     rect.w = GRID_CELL_SIZE - 2*GRID_HOVER_BORDER;
     rect.h = GRID_CELL_SIZE - 2*GRID_HOVER_BORDER;
-
-    SDL_Color white = {0xFF, 0xFF, 0xFF};
-    SDL_SetRenderDrawColorStruct(data->renderer, &white);
+    SDL_SetRenderDrawColorStruct(data->renderer, &SDL_white);
     SDL_RenderFillRect(data->renderer, &rect);
 }
 

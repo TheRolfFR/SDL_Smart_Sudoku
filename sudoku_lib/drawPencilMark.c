@@ -16,7 +16,8 @@ void drawPencilMark(cell* selectedCell, int value) {
 
     // on rend le texte en noir
     SDL_Color black = {0xCC, 0xCC, 0xCC};
-    SDL_Surface *mark = TTF_RenderText_Solid(data->font, convertInt(value), black);
+    char *number = convertInt(value);
+    SDL_Surface *mark = TTF_RenderText_Solid(data->font, number, black);
     SDL_Rect *fit = SDL_RectFit(&rect, mark); // on crée un nouveau rect qui rentre dans le rect disponible
 
     // on ajuste la position en fonction de la position
@@ -33,6 +34,7 @@ void drawPencilMark(cell* selectedCell, int value) {
     SDL_RenderCopy(data->renderer, markTexture, NULL, fit); // on rend la texture
     SDL_DestroyTexture(markTexture); // on libère la texture
     free(fit); // liberation rect
+    free(number);
 }
 
 void removePencilMark(cell* selectedCell, int value) {
@@ -45,7 +47,8 @@ void removePencilMark(cell* selectedCell, int value) {
     rect.h = GRID_CELL_SIZE/3;
 
     SDL_Color white = {0xFF, 0xFF, 0xFF};
-    SDL_Surface *mark = TTF_RenderText_Solid(data->font, convertInt(value), white);
+    char *number = convertInt(value);
+    SDL_Surface *mark = TTF_RenderText_Solid(data->font, number, white);
     SDL_Rect *fit = SDL_RectFit(&rect, mark);
 
     fit->x += GRID_CELL_SIZE / 3 * ((value-1)%3);
@@ -55,7 +58,8 @@ void removePencilMark(cell* selectedCell, int value) {
     SDL_FreeSurface(mark); // on libère la texture
     SDL_RenderCopy(data->renderer, markTexture, NULL, fit); // on rend la texture
     SDL_DestroyTexture(markTexture); // liberation texture
-    free(fit)
+    free(fit);
+    free(number);
 }
 
 // fonction permettant de changer le titre de la fenêtre selon sir on est en pencil mark ou pas

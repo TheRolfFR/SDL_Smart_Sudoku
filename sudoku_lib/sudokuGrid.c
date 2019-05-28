@@ -11,9 +11,11 @@
 
 extern sudokuGrid *data;
 void tryInitGridFont() {
-    TTF_Font *Sans = TTF_OpenFont("../Sans.ttf", GRID_FONT_SIZE);
+    if(data->font == NULL) {
+        TTF_Font *Sans = TTF_OpenFont("../Sans.ttf", GRID_FONT_SIZE);
 
-    data->font = Sans;
+        data->font = Sans;
+    }
 }
 
 int loadGrid(char *path, int numberOfFiles) {
@@ -42,7 +44,9 @@ int loadGrid(char *path, int numberOfFiles) {
     strcat(totalpath, diff);
     strcat(totalpath, "/");
     strcat(totalpath, "grid");
-    strcat(totalpath, convertInt(index));
+    char *number = convertInt(index);
+    strcat(totalpath, number);
+    free(number);
     strcat(totalpath, ".txt");
 
     // on tente d'ouvrir le fichier

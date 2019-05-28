@@ -6,6 +6,7 @@
 
 
 extern sudokuGrid *data;
+extern SDL_Color SDL_lightgrey;
 //Selection d'une cellule
 void selectCell(cell* position){
     if(position==NULL){ //Souris hors de la grille
@@ -17,8 +18,7 @@ void selectCell(cell* position){
             data->lastClicked = NULL;
             updateHover(position); //Mise à jour du "Hover"
 
-            SDL_Color lightgrey = {189,189,189};
-            drawNumberButtonsBackground(&lightgrey); // on reaffiche la couleur de fond sur les anciens nombres disponibles
+            drawNumberButtonsBackground(&SDL_lightgrey); // on reaffiche la couleur de fond sur les anciens nombres disponibles
         }
     }
     else{ //Souris dans la grille
