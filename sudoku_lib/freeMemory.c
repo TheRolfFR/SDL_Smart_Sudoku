@@ -37,22 +37,11 @@ void freeMemory() {
     free(data->hard);
 
     // undo list
-    undoList *undo = data->save;
-    undoList *nextUndo;
-
-    actionList *action;
-    actionList *nextAction;
-    while(undo != NULL) {
-        nextUndo = undo->next;
-
-        action = undo->actionList;
-        while(action != NULL) {
-            nextAction = action->next;
-            free(action);
-            action = nextAction;
+    while(data->save != NULL) {
+        while(data->save->actionList != NULL) {
+            actionDone();
         }
 
-        free(undo);
-        undo = nextUndo;
+        stepDone();
     }
 }
