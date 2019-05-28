@@ -110,6 +110,8 @@ void drawNumberAtPosition(cell *number) {
             SDL_RenderCopy(data->renderer, texture, NULL, fitRect);
             // on détruit la texture
             SDL_DestroyTexture(texture);
+            // on libère le rect
+            free(fitRect);
         }
     }
 }
@@ -165,11 +167,13 @@ void drawAvailableNumbers() {
         texture = SDL_CreateTextureFromSurface(data->renderer, surface);
 
         // on copie dans le renderer le texte
-        SDL_RenderCopy(data->renderer, texture, NULL, SDL_RectFit(&rect, surface));
+        SDL_Rect *fit = SDL_RectFit(&rect, surface);
+        SDL_RenderCopy(data->renderer, texture, NULL, fit);
 
-        // on libère la surface et la texture
+        // on libère la surface, le texture et le rect
         SDL_FreeSurface(surface);
         SDL_DestroyTexture(texture);
+        free(fit);
 
         // on décale la position horizontale
         rect.x += GRID_CELL_SIZE;

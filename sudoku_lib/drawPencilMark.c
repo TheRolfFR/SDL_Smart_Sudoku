@@ -32,6 +32,7 @@ void drawPencilMark(cell* selectedCell, int value) {
     SDL_FreeSurface(mark); // on libère la surface
     SDL_RenderCopy(data->renderer, markTexture, NULL, fit); // on rend la texture
     SDL_DestroyTexture(markTexture); // on libère la texture
+    free(fit); // liberation rect
 }
 
 void removePencilMark(cell* selectedCell, int value) {
@@ -53,7 +54,8 @@ void removePencilMark(cell* selectedCell, int value) {
     SDL_Texture *markTexture = SDL_CreateTextureFromSurface(data->renderer, mark); // on crée la texture
     SDL_FreeSurface(mark); // on libère la texture
     SDL_RenderCopy(data->renderer, markTexture, NULL, fit); // on rend la texture
-    SDL_DestroyTexture(markTexture); //
+    SDL_DestroyTexture(markTexture); // liberation texture
+    free(fit)
 }
 
 // fonction permettant de changer le titre de la fenêtre selon sir on est en pencil mark ou pas

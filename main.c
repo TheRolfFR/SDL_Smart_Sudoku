@@ -50,5 +50,8 @@ int main(int argc, char **argv)
     // on détruit la fenêtre etc
     destroyAndQuit(&data->window);
 
+    // clear memory
+    freeMemory();
+
     return 0;
 }

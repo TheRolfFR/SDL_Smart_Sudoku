@@ -29,6 +29,7 @@
 #include "showRules.h"
 #include "undo.h"
 #include "difficultyButton.h"
+#include "freeMemory.h"
 
 #ifndef SDL_SUDOKU_H
 #define SDL_SUDOKU_H

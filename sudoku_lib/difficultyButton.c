@@ -39,6 +39,7 @@ void fillAndDrawButton(difficultyButton* button, char text[]) {
     // nettoyage
     SDL_DestroyTexture(t);
     SDL_FreeSurface(textSurface);
+    free(fit);
 }
 
 char isInButton(difficultyButton* button, int x, int y) {
