@@ -66,7 +66,6 @@ int initializeSudoku() {
             data->redHover = 0;
             data->lastKeyWasCtrl = 0;
             data->typedNumber = 0;
-            data->emptyCell = 81;
             data->save = NULL;
             data->undoMode = 1;
 

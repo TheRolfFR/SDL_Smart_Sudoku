@@ -6,15 +6,14 @@
 
 extern sudokuGrid* data;
 void freeMemory() {
-    // basic data
+    //Fonction liberant les espaces mémoires alloués dynamiquement
+
     free(data->window);
     free(data->windowSurface);
     free(data->renderer);
     free(data->font);
-    free(data->lastHovered);
-    free(data->lastClicked);
 
-    // the tab cells
+    //Libération des listes chainées des restrictions pour chaque cellule
     int a, b, c;
     cellList *rule;
     cellList *nextRule;
@@ -31,12 +30,12 @@ void freeMemory() {
         }
     }
 
-    // difficulty buttons
+    //Libération des boutons de difficulté
     free(data->easy);
     free(data->normal);
     free(data->hard);
 
-    // undo list
+    //Libération de la liste de sauvegarde des actions
     while(data->save != NULL) {
         while(data->save->actionList != NULL) {
             actionDone();

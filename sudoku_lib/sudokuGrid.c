@@ -64,9 +64,6 @@ int loadGrid(char *path, int numberOfFiles) {
             // tant que la ligne n'est pas terminée on crée les cellules
             while(line[c*2] != 0 && c < 9) {
                 data->cells[l][c] = initCell(l, c, (line[c*2] != ' ') ? line[c*2] - '0' : -1, 0, 0);
-                if(line[c*2]!=' '){
-                    data->emptyCell = data->emptyCell-1;
-                }
                 c++;
             }
 

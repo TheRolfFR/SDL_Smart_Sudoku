@@ -8,5 +8,6 @@
 #include "sdl_sudoku.h"
 
 void gameController();
+char isFinished(void);
 
 #endif //SDL_SUDOKU_GAMECONTROLLER_H

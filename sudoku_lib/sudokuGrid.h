@@ -37,7 +37,6 @@ typedef struct sudoku_grid {
     cell* lastClicked;
     cell* cells[9][9];
     char pencilMarkMode;
-    char emptyCell;
     char redHover;
     char lastKeyWasCtrl;
     int typedNumber;

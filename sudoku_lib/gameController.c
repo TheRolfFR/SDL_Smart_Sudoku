@@ -11,61 +11,78 @@
 
 extern sudokuGrid *data;
 void gameController(){
-
+    //Fonction s'occupant du fonctionnement du jeu
 
     int continuer = 1;
     SDL_Event event;
     cell *c = NULL;
-    while (continuer) //boucle du jeu
+    while (continuer) //Tant que continuer=1, le jeu continue
     {
-        SDL_WaitEvent(&event);
+        SDL_WaitEvent(&event); //Attente d'une action de la part du joueur
 
-        // le timer
-        Uint32 tick = SDL_GetTicks();
+        Uint32 tick = SDL_GetTicks(); //Récupération du temps avant les calculs
 
-        switch(event.type)
+        switch(event.type) //Différentiation des events
         {
-            case SDL_QUIT: // on quitte
+            case SDL_QUIT:
                 continuer = 0;
                 break;
-            case SDL_MOUSEMOTION: // mouvement de souris
-                getMousePosition(&c,0);
-                updateHover(c);
+            case SDL_MOUSEMOTION: //Mouvement de la souris
+                getMousePosition(&c,0); //Obtention de la position de la souris
+                updateHover(c); //Mise à jour de la cellule en surbrillance
                 break;
-            case SDL_MOUSEBUTTONUP: // clique souris
+            case SDL_MOUSEBUTTONUP: //Clique de la souris
                 data->lastKeyWasCtrl = 0;
-                getMousePosition(&c,1);
-                if(c != NULL) {
-                    selectCell(c);
-                } else if(data->typedNumber != 0) {
-                    updateCellValue();
+                getMousePosition(&c,1); //Obtention de la position de la souris
+                if(c != NULL) { //Si la position est une cellule
+                    selectCell(c); //Selection de la cellule
+                } else if(data->typedNumber != 0) { //Si la position est un des 9 nombres
+                    updateCellValue(); //Mets à jour la cellule
                 }
-                continuer = handleDifficultyButtons();
+                continuer = handleDifficultyButtons(); //Test de la selection de difficulté
                 break;
-            case SDL_KEYDOWN: // appui clavier
-                keyInterpretor(event.key.keysym.sym);
+            case SDL_KEYDOWN: //Appui clavier
+                keyInterpretor(event.key.keysym.sym); //Interprétation de la touche appuyée
         }
 
         c = NULL;
 
-        // nombre de cellules vide nul
-        if(data->emptyCell==0){ //Si il n'y a aucun cellule vide
+        if(isFinished()){ //Si il n'y a aucun cellule vide
             win(); //Message de victoire
             continuer = 0;
         }
 
-        // si l'évènement est différent de quitter on rafraichit le rendu
-        if(event.type != SDL_QUIT) {
-            SDL_RenderPresent(data->renderer);
+        if(event.type != SDL_QUIT) { //Si l'évènement est différent de quitter
+            SDL_RenderPresent(data->renderer); //Rafraichissement du rendu
         }
 
-        // avoir le temps d'éxécution
-        Uint32 difference = SDL_GetTicks() - tick;
+        Uint32 difference = SDL_GetTicks() - tick; //Obtention du temps d'exécution
 
-        // si le temps est inférieur aux ticks on pause le jeu
-        // printf("%u %u\n", difference, TICKS_FPS); //debug
-        if(difference < TICKS_FPS) {
-            SDL_Delay(difference);
+
+        if(difference < TICKS_FPS) { //Si le temps est inférieur à la durée d'un "tick"
+            SDL_Delay(difference); //Pause du jeu afin de compléter le "tick"
         }
     }
+}
+
+char isFinished(){
+    //Fonction indiquant qi la grille est finie
+
+    int finished = 1, i = 0, j = 0;
+
+    while (finished == 1 && j != 9){ //Boucle parcourant la grille
+        if (data->cells[i][j]->number == EMPTY_VALUE){ //Si la cellule est vide
+            finished == 0; //Le jeu n'est pas fini
+        }
+        else{ //Si la cellule n'est pas vide
+            if (i != 8){ //Si la colonne n'est pas terminée
+                i = i + 1; //Incrémentation
+            }
+            else{ //Si la colonne est terminée
+                j = j + 1; //Passage à la suivante
+                i = 0;
+            }
+        }
+    }
+    return finished;
 }

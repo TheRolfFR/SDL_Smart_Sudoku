@@ -6,24 +6,26 @@
 
 extern sudokuGrid *data;
 void addRules(){
-    if(!data->undoMode){
+    //Fonction mettant à jour les restrictions après le dernier changements sur la grille
+
+    if(!data->undoMode){ //ajout d'un changement de mode dans la liste "undo" (les modifications ici ne concernent que les annotations)
         addUndoAction(changeMode,0);
     }
     cell* current; //Cellule en cours de traitement (déclarée pour simplifier l'écriture et la compréhension)
     cell* modified = data->lastClicked; //Cellule dernièrement modifiée par le joueur (déeclaré pour simplifier l'écriture et la compréhension)
     int i;
 
-    for(i = 0; i<=8; i = i+1){ //Mise à jour des autorisation sur la colonne de la case modifiée
+    for(i = 0; i<=8; i = i+1){ //Mise à jour des restrictions sur la colonne de la case modifiée
         current = data->cells[i][modified->column];
-        if (current!=modified){ //Nous ne mettons pas à jour les autorisations de la case modifiée
-            current->rules[modified->number-1] = addRule(current->rules[modified->number-1], modified); //Ajout de la cellule modifié comme "bloqueur" de la cellule en cours
-            if(current->pencilMark[modified->number-1]){ //Si il y a une annotation correspondante à la valeur bloqué
-                if(!data->undoMode){
-                    addUndoAction(changeLastClicked,(current->line+1)*10+current->column+1);
+        if (current!=modified){ //Nous ne mettons pas à jour les restrictions de la case modifiée
+            current->rules[modified->number-1] = addRule(current->rules[modified->number-1], modified); //Ajout de la cellule modifiée comme restriction de la cellule en cours de traitement
+            if(current->pencilMark[modified->number-1]){ //Si il y a une annotation correspondant à la valeur restreinte
+                if(!data->undoMode){ //Si nous ne somme pas en train d'annuler des actions
+                    addUndoAction(changeLastClicked,(current->line+1)*10+current->column+1); //ajout des actions contraires à la liste "undo"
                     addUndoAction(updateCellValue,modified->number);
                 }
-                current->pencilMark[modified->number-1] = 0; //L'annotation est retirée
-                removePencilMark(current,modified->number);
+                current->pencilMark[modified->number-1] = 0; //Retrait de l'annotation (en terme de donnée)
+                removePencilMark(current,modified->number); //Retrait de l'annotation (en terme graphique)
             }
         }
     }
@@ -57,7 +59,7 @@ void addRules(){
             }
         }
     }
-    if(!data->undoMode){
+    if(!data->undoMode){ //retour en mode normal dans la list undo
         addUndoAction(changeMode,0);
     }
 }

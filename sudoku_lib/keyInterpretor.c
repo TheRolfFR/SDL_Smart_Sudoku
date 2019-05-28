@@ -94,7 +94,6 @@ void keyInterpretor(SDL_Keycode key){
                         default:
                             break;
                     }
-
                 }
         }
     }
