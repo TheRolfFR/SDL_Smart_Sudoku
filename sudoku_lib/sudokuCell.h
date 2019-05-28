@@ -2,10 +2,10 @@
 // Created by TheRolf on 03/05/2019.
 //
 
-#ifndef SDL_SUDOKU_SUDOKU_CELL_H
-#define SDL_SUDOKU_SUDOKU_CELL_H
+#ifndef SDL_SUDOKU_SUDOKUCELL_H
+#define SDL_SUDOKU_SUDOKUCELL_H
 
-#include "sudoku_grid.h"
+#include "sudokuGrid.h"
 
 typedef struct cellList{
     struct cell_struct* bloqueur;
@@ -26,4 +26,4 @@ typedef struct cell_struct {
 cell *initCell(int, int, int, char, char);
 void printCell(cell*);
 
-#endif //SDL_SUDOKU_SUDOKU_CELL_H
+#endif //SDL_SUDOKU_SUDOKUCELL_H

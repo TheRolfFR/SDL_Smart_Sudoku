@@ -10,9 +10,9 @@
 
 #include <string.h>
 #include "../sdl_custom_lib.h"
-#include "sudoku_grid.h"
-#include "sudoku_cell.h"
-#include "sudoku_hover.h"
+#include "sudokuGrid.h"
+#include "sudokuCell.h"
+#include "sudokuHover.h"
 #include "initializeSudoku.h"
 #include "gameController.h"
 #include "selectCell.h"
