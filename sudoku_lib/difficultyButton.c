@@ -15,9 +15,6 @@ void fillAndDrawButton(difficultyButton* button, char text[]) {
     r.w = BUTTON_WIDTH;
     r.h = BUTTON_HEIGHT;
 
-    int w = BUTTON_WIDTH;
-    printf("%d", w);
-
     //remplissage du fond
     SDL_SetRenderDrawColorStruct(data->renderer, &SDL_white);
     SDL_RenderFillRect(data->renderer, &r);
