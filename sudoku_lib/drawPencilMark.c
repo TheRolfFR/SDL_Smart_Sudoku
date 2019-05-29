@@ -6,7 +6,7 @@
 #include <string.h>
 
 extern sudokuGrid *data;
-extern SDL_Color SDL_black;
+extern SDL_Color SDL_lightgrey;
 void drawPencilMark(cell* selectedCell, int value) {
     //Fonction affichant une annotation
 
@@ -18,7 +18,7 @@ void drawPencilMark(cell* selectedCell, int value) {
     rect.h = GRID_CELL_SIZE/3;
 
     char *number = convertInt(value); //Converstion de "value" en chaine de caractère (prérequis à TTF_RenderText_Solid()
-    SDL_Surface *mark = TTF_RenderText_Solid(data->font, number, SDL_black); //Dessin de l'annotation
+    SDL_Surface *mark = TTF_RenderText_Solid(data->font, number, SDL_lightgrey); //Dessin de l'annotation
     free(number); //Libération de la chaine de caractère
     SDL_Rect *fit = SDL_RectFit(&rect, mark); //Mise à l'échelle du dessin
 
