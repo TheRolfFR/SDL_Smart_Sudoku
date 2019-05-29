@@ -10,6 +10,9 @@
 #include "sdl_sudoku.h"
 
 extern sudokuGrid *data;
+extern SDL_Color SDL_lightgrey;
+extern SDL_Color SDL_white;
+extern SDL_Color SDL_grey;
 void tryInitGridFont() {
     if(data->font == NULL) {
         TTF_Font *Sans = TTF_OpenFont("../Sans.ttf", GRID_FONT_SIZE);
@@ -94,19 +97,17 @@ void drawSudokuGrid()  {
     // on nettoie le rendu
     SDL_RenderClear(data->renderer);
 
-    SDL_Color lightgrey = {189,189,189}, white = {255,255,255}, grey = {158,158,158};
-
     // on rend le fond en gris clair
-    SDL_SetRenderDrawColorStruct(data->renderer, &lightgrey);
+    SDL_SetRenderDrawColorStruct(data->renderer, &SDL_lightgrey);
     SDL_RenderFillRect(data->renderer, NULL);
 
     // on rend le fond de la grille en blanc
-    SDL_SetRenderDrawColorStruct(data->renderer, &white);
+    SDL_SetRenderDrawColorStruct(data->renderer, &SDL_white);
     SDL_Rect rect = {GRID_MARGIN, GRID_MARGIN, GRID_SIZE, GRID_SIZE};
     SDL_RenderFillRect(data->renderer, &rect);
 
     // on dessine les bordures fines de la grille
-    SDL_SetRenderDrawColorStruct(data->renderer, &grey);
+    SDL_SetRenderDrawColorStruct(data->renderer, &SDL_grey);
     int i, offset;
     for(i = 0; i < 6; i++) {
         offset = (i+ 1 + i / 2)*GRID_CELL_SIZE + i*GRID_THIN_BORDER + i/2*GRID_THICK_BORDER + GRID_MARGIN;
@@ -119,7 +120,7 @@ void drawSudokuGrid()  {
     }
 
     // on dessine les bordures épaisses des groupes
-    SDL_SetRenderDrawColorStruct(data->renderer, &grey);
+    SDL_SetRenderDrawColorStruct(data->renderer, &SDL_grey);
     SDL_Rect vert = {0, GRID_MARGIN, GRID_THICK_BORDER, GRID_SIZE}, hori = {GRID_MARGIN, 0, GRID_SIZE, GRID_THICK_BORDER};
     for(i = 0; i < 2; i++) {
         offset = 3*(1+i)*GRID_CELL_SIZE + 2*(i+1)*GRID_THIN_BORDER + GRID_MARGIN + i * GRID_THICK_BORDER;

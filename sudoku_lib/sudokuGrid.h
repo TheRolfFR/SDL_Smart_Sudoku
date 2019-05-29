@@ -45,6 +45,7 @@ typedef struct sudoku_grid {
     struct s_button* hard;
     undoList* save;
     char undoMode;
+    char difficultyChanged;
 } sudokuGrid;
 
 void tryInitGridFont();

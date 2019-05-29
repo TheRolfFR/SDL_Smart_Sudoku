@@ -113,6 +113,7 @@ int changeDifficulty(char dif[]) {
         fputs(dif, file); //Ecriture de la difficulté
 
         fclose(file); //Fermeture du fichier
+        data->difficultyChanged = 1; //Guillaume aled
         return 0;
     }
 
