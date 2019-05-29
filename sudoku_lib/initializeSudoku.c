@@ -70,7 +70,7 @@ int initializeSudoku() {
             data->typedNumber = 0; //Indique le nombre demandé
             data->save = NULL; //Liste des actions
             data->undoMode = 1; //Indique l'activation du mode "retour en arrière" (initialisé comme actif afin de ne pas enregistrer l'initialisation de la grille)
-            data->difficultyChanged = 0; //Indique qu'un changement de difficulté a été demandé guillaume aled
+            data->difficultyChanged = 0; //Indique la requête d'un changement de difficulté
 
             //Initialisation des boutons
             data->easy = malloc(sizeof(difficultyButton));

@@ -63,61 +63,59 @@ int loadGrid(char *path, int numberOfFiles) {
         while(fgets(line, TAILLE_MAX, file)) { //Tant qu'il y a des ligne dans le fichier
             c = 0;
 
+            //Initialisaion des données de base
             while(line[c*2] != 0 && c < 9) {
                 data->cells[l][c] = initCell(l, c, (line[c*2] != ' ') ? line[c*2] - '0' : -1, 0, 0);
                 c++;
             }
 
-            // si il manque des cellules
+            //Ajout de cellule vide si la ligne n'était pas complète
             if(c < 9) {
-                // on crée les restantes
                 for(c = c; c < 9; c++) {
                     myCell = initCell(l, c, EMPTY_VALUE, 0, 0);
-
                     data->cells[l][c] = myCell;
                 }
             }
-
-            // on reset la ligne avec des zéros
-            memset(line,0,strlen(line));
+            memset(line,0,strlen(line)); //Réinitialisation de la ligne
             l++;
         }
-
-        fclose(file);
+        fclose(file); //fermeture du fichier
         return 0;
-    } else { // erreur
+    } else {
         fprintf(stderr, "Impossible to open %s\n", totalpath);
     }
     return -1;
 }
 
 void drawSudokuGrid()  {
-    // on nettoie le rendu
+    //Fonction permettant d'afficher une grille
+
+    //Nettoyage du rendu
     SDL_RenderClear(data->renderer);
 
-    // on rend le fond en gris clair
+    //Affichage du fond grid clair de la fenêtre
     SDL_SetRenderDrawColorStruct(data->renderer, &SDL_lightgrey);
     SDL_RenderFillRect(data->renderer, NULL);
 
-    // on rend le fond de la grille en blanc
+    //Affichage du fond blanc de la grille
     SDL_SetRenderDrawColorStruct(data->renderer, &SDL_white);
     SDL_Rect rect = {GRID_MARGIN, GRID_MARGIN, GRID_SIZE, GRID_SIZE};
     SDL_RenderFillRect(data->renderer, &rect);
 
-    // on dessine les bordures fines de la grille
+    //Affichage des séparateur de cellules de la grille
     SDL_SetRenderDrawColorStruct(data->renderer, &SDL_grey);
     int i, offset;
     for(i = 0; i < 6; i++) {
         offset = (i+ 1 + i / 2)*GRID_CELL_SIZE + i*GRID_THIN_BORDER + i/2*GRID_THICK_BORDER + GRID_MARGIN;
 
-        //verticales
+        //Séparateur verticaux
         SDL_RenderDrawLine(data->renderer, offset, GRID_MARGIN, offset, GRID_MARGIN + GRID_SIZE);
 
-        // horizontales
+        //Séparateur horizontaux
         SDL_RenderDrawLine(data->renderer, GRID_MARGIN, offset, GRID_MARGIN + GRID_SIZE, offset);
     }
 
-    // on dessine les bordures épaisses des groupes
+    //Affichage des séparateur de régions de la grille
     SDL_SetRenderDrawColorStruct(data->renderer, &SDL_grey);
     SDL_Rect vert = {0, GRID_MARGIN, GRID_THICK_BORDER, GRID_SIZE}, hori = {GRID_MARGIN, 0, GRID_SIZE, GRID_THICK_BORDER};
     for(i = 0; i < 2; i++) {
@@ -125,13 +123,14 @@ void drawSudokuGrid()  {
         vert.x = offset;
         hori.y = offset;
 
-        // verticales
+        //Séparateur verticaux
         SDL_RenderFillRect(data->renderer, &vert);
 
-        // horizontales
+        //Séparateur horizontaux
         SDL_RenderFillRect(data->renderer, &hori);
     }
 
+    //Affichage des boutons de choix de la difficulté
     fillAndDrawButton(data->easy, "Facile");
     fillAndDrawButton(data->normal, "Normal");
     fillAndDrawButton(data->hard, "Difficile");

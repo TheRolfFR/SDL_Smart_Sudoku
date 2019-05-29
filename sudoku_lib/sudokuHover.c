@@ -11,20 +11,21 @@ extern SDL_Color SDL_white;
 extern SDL_Color SDL_blue;
 extern SDL_Color SDL_black;
 extern SDL_Color SDL_grey;
-// dessine une bodure de la couleur choisie sur la case choisie
+
 void printRect(cell* selectedCell, SDL_Color *color) {
-    // x et y égalent à la marge + le nombre de cellules précédant cette cellule + les bordures
+    //Fonction affichant un cadre à l'intérieur de la cellule indiquée
+
+    //Calcul de la postion du cadre
     SDL_Rect rect;
     rect.y = GRID_MARGIN + selectedCell->column/3*GRID_THICK_BORDER + selectedCell->column * GRID_CELL_SIZE + GRID_THIN_BORDER * (selectedCell->column - selectedCell->column/3);
     rect.x = GRID_MARGIN + selectedCell->line/3*GRID_THICK_BORDER + selectedCell->line * GRID_CELL_SIZE + GRID_THIN_BORDER * (selectedCell->line - selectedCell->line/3);
-    // la largeur et hauteur c'est la taille de la cellule
+    //Calcul de la taille du cadre
     rect.w = GRID_CELL_SIZE;
     rect.h = GRID_CELL_SIZE;
 
-    // on change la couleur de rendu
-    SDL_SetRenderDrawColorStruct(data->renderer, color);
+    SDL_SetRenderDrawColorStruct(data->renderer, color); //Définition de la couleur du cadre
     int i;
-    for(i = 0; i < GRID_HOVER_BORDER; i++) {
+    for(i = 0; i < GRID_HOVER_BORDER; i++) { //Affichage du cadre
         SDL_RenderDrawRect(data->renderer, &rect);
         rect.x++;
         rect.y++;
@@ -33,37 +34,40 @@ void printRect(cell* selectedCell, SDL_Color *color) {
     }
 }
 
-//affiche une bordure bleu sur la case passée en paramètre
 void printHover(cell* selectedCell){
+    //Fonction permettant de mettre une cellule en surbrillance
+
     printRect(selectedCell, &SDL_blue);
 }
 
-//affiche une bordure blanche sur la case passée en paramètre
 void removeHover(cell* selectedCell){
+    //Fonction permettant qu'une celllule ne soit plus en surbrillance
+
     printRect(selectedCell, &SDL_white);
 }
 
 void updateHover(cell* position){
-    if (data->lastHovered==NULL){ //la souris était précédemment hors de la grid
-        if (position!=NULL){ //la souris est entrée dans la grid
-            printHover(position);
-            position->isHovered = 1;
+    //Fonction permettant de mettre à jour la cellule en surbrillance
+
+    if (data->lastHovered==NULL){ //Si la souris était précédemment hors de la grille
+        if (position!=NULL){ //Si la cellule est actuellement dans la grille
+            printHover(position); //Mets en surbrillance la cellule survolée (en terme graphique)
+            position->isHovered = 1; //Mets en surbrillance la cellule survolée (en terme de donnée)
             data->lastHovered=position;
         }
     }
-    else{ //la souris était précédemment dans la grid
-
-        if (!data->lastHovered->isClicked){ //aucune case n'est séléctionnée
-            if (position!=data->lastHovered){ // la souris n'a pas changée de case
-                if (position==NULL){ //la souris est sortis de la grid
-                    removeHover(data->lastHovered);
+    else{ //Si la souris était précédemment dans la grille
+        if (!data->lastHovered->isClicked){ //Si la cellule en surbrillance n'est pas sélectionnée
+            if (position!=data->lastHovered){ //Si la souris ne survole pas la case en surbrillance
+                if (position==NULL){ //Si la souris est hors de la grille
+                    removeHover(data->lastHovered); //La cellule dernièrement en surbrillance ne l'est plus
                     data->lastHovered->isHovered=0;
                     data->lastHovered=position;
                 }
-                else{ //la souris est tjr dans la grid
-                    removeHover(data->lastHovered);
+                else{ //Si la souris est dans la grille
+                    removeHover(data->lastHovered); //la cellule dernièrement en surbrillance ne l'est plus
                     data->lastHovered->isHovered=0;
-                    printHover(position);
+                    printHover(position); //La cellule survolée passe en surbrillance
                     position->isHovered=1;
                     data->lastHovered=position;
                 }
@@ -74,6 +78,8 @@ void updateHover(cell* position){
 }
 
 void drawNumberAtPosition(cell *number) {
+    //Fonction permettant d'afficher un nombre dans une cellule
+
     // si il y a un nombre à rendre (case non vide)
     if(number->number != EMPTY_VALUE) {
         SDL_Rect rect;

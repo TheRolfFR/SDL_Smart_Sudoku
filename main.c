@@ -14,7 +14,7 @@ SDL_Color SDL_lightgrey = {130,130,130};
 SDL_Color SDL_grey = {0x37, 0x47, 0x4F}; // #37474F
 int main(int argc, char **argv)
 {
-    do {
+    do { //Faire les actions suivantes tant qu'aucun changement de difficulté et demandé
         sudokuGrid g;
         data = &g;
 
@@ -53,7 +53,7 @@ int main(int argc, char **argv)
 
         // on détruit la fenêtre etc
         destroyAndQuit(&data->window);
-    } while(data->difficultyChanged); // guillaume aled
+    } while(data->difficultyChanged);
 
     // clear memory
     freeMemory();
