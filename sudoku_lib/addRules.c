@@ -6,7 +6,7 @@
 
 extern sudokuGrid *data;
 void addRules(){
-    //Fonction mettant à jour les restrictions après le dernier changements sur la grille
+    //Fonction permmettant d'ajouter les restrictions imposées par la cellules sélectionnée
 
     if(!data->undoMode){ //ajout d'un changement de mode dans la liste "undo" (les modifications ici ne concernent que les annotations)
         addUndoAction(changeMode,0);

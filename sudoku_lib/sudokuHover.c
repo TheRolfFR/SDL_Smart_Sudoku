@@ -204,7 +204,7 @@ void getMousePosition(cell **c,char click){
 
     if(click && x > GRID_MARGIN + 5 && x < GRID_MARGIN + GRID_SIZE - 5 && y > GRID_MARGIN*2 + GRID_SIZE && y < GRID_MARGIN*2 + GRID_SIZE + GRID_CELL_SIZE) {
         int l =  (x-GRID_MARGIN - 5)/GRID_CELL_SIZE + 1;
-
+        *c = data->lastClicked;
         data->typedNumber = l;
     }
 }

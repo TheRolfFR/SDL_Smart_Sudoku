@@ -9,6 +9,5 @@
 
 cellList* addRule(cellList*, cell*);
 cellList* removeRule(cellList*, cell*);
-void printRules(cell*);
 
 #endif //SDL_SUDOKU_RULES_H

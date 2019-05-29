@@ -4,66 +4,47 @@
 
 #include "sdl_sudoku.h"
 
-// fonction ajouter tete d'une liste chainée
 cellList* addRule(cellList *list, cell *cellToAdd) {
-    // on créé l'élément
+    //Fonction permettant d'ajouter un élément en tête de liste chainée
+
+    //Création de l'élément
     cellList *newHead = malloc(sizeof(cellList));
     newHead->bloqueur = cellToAdd;
 
-    // si la liste est pas nulle, alors on ajoute en tete
-    if(list != NULL) {
-        newHead->next = list;
-    } else {
-        newHead->next = NULL;
+    if(list != NULL) { //Si la liste n'est pas vide
+        newHead->next = list; //Ajout de la liste derrière la nouvelle tête
+    } else { //Si la liste est vide
+        newHead->next = NULL; //Indique que la nouvelle tête est le dernier élément de la liste
     }
 
-    // enfin on retourne la nouvelle tête
-    return newHead;
+    return newHead; //Envois du pointeur de la nouvelle tête de liste
 }
 
-// fonction supprimer d'une liste chainée
 cellList *removeRule(cellList *list, cell *cellToRemove) {
-    // sir ma ilste est vide je renvoie que c'est nul
-    if(list == NULL) {
-        return NULL;
-    } else {
-        // sinon
+    //Fonction permettant de supprimer un élément d'une liste chainée
+
+    if(list == NULL) { //Si la liste est vide
+        return NULL; //Aucune action n'est effectuée
+    } else { //Si la liste n'est pas vide
         cellList *precedent = NULL;
         cellList *actuel = list;
-        // j'avance jusqu'à la supposée case en question
-        while(actuel != NULL && actuel->bloqueur != cellToRemove) {
+        while(actuel != NULL && actuel->bloqueur != cellToRemove) { //Boucle recherchant l'élément à supprimer
             precedent = actuel;
             actuel = actuel->next;
         }
 
-
-        // s'il l'a trouvée
-        if(actuel != NULL) {
-            // si c'est le premier
-            if(precedent == NULL) {
-                cellList *newHead = actuel->next;
-                free(actuel);
+        if(actuel != NULL) { //Si l'élément a été trouvé
+            if(precedent == NULL) { //Si l'élémet trouvé et le premier de la liste
+                cellList *newHead = actuel->next; //Suppression de l'élément
+                free(actuel); //Libération de la mémoire
                 return newHead;
-            } else {
-                // si c'est pas le dernier
-                // il faut tous les lier le précédent et le suivant en suprimant l'actuel
-                precedent->next = actuel->next;
-                free(actuel); // on libère l'élément a supprimer (actuel == cellToRemove)
+            } else { //Si l'élément trouvé n'est pas le premier
+                precedent->next = actuel->next; //Suppression de la liste
+                free(actuel); //Libération de la mémoire
                 return list;
             }
-        } else {
-            // il l'a pas trouve on retourne la liste telle qu'elle
-            return list;
+        } else { //Si l'élément n'a pas été trouvé
+            return list; //Aucune action effectuée
         }
     }
-}
-
-// fonction de debug pour voir quels chiffres on peut taper
-void printRules(cell* myCell) {
-    printf("1 2 3 4 5 6 7 8 9\n");
-    int i;
-    for(i = 0; i < 9; i++) {
-        printf("%d ", myCell->rules[i]==NULL);
-    }
-    printf("\n");
 }

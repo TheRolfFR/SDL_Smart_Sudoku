@@ -34,9 +34,8 @@ void gameController(){
             case SDL_MOUSEBUTTONUP: //Clique de la souris
                 data->lastKeyWasCtrl = 0;
                 getMousePosition(&c,1); //Obtention de la position de la souris
-                if(c != NULL) { //Si la position est une cellule
-                    selectCell(c); //Selection de la cellule
-                } else if(data->typedNumber != 0) { //Si la position est un des 9 nombres
+                selectCell(c); //Selection de la cellule
+                if(data->typedNumber != 0) { //Si la position est un des 9 nombres
                     updateCellValue(); //Mets à jour la cellule
                 }
                 continuer = handleDifficultyButtons(); //Test de la selection de difficulté
@@ -48,10 +47,10 @@ void gameController(){
         c = NULL;
 
 
-        /*if(isFinished() == 1){ //Si il n'y a aucun cellule vide
+        if(isFinished() == 1){ //Si la grille est complétée
             win(); //Message de victoire
-            continuer = 0;
-        }*/
+            continuer = 0; //Arrêt du jeu
+        }
 
         if(event.type != SDL_QUIT) { //Si l'évènement est différent de quitter
             SDL_RenderPresent(data->renderer); //Rafraichissement du rendu
@@ -66,14 +65,14 @@ void gameController(){
     }
 }
 
-char isFinished(){
+int isFinished(){
     //Fonction indiquant qi la grille est finie
 
     int finished = 1, i = 0, j = 0;
 
     while (finished == 1 && j != 9){ //Boucle parcourant la grille
         if (data->cells[i][j]->number == EMPTY_VALUE){ //Si la cellule est vide
-            finished == 0; //Le jeu n'est pas fini
+            finished = 0; //Le jeu n'est pas fini
         }
         else{ //Si la cellule n'est pas vide
             if (i != 8){ //Si la colonne n'est pas terminée

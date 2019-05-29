@@ -24,6 +24,5 @@ typedef struct cell_struct {
 } cell;
 
 cell *initCell(int, int, int, char, char);
-void printCell(cell*);
 
 #endif //SDL_SUDOKU_SUDOKUCELL_H

@@ -11,34 +11,35 @@
 
 extern sudokuGrid *data;
 void tryInitGridFont() {
-    if(data->font == NULL) {
-        TTF_Font *Sans = TTF_OpenFont("../Sans.ttf", GRID_FONT_SIZE);
+    //Fonction permetant d'initialiser la police
 
+    if(data->font == NULL) { //Si il n'y a pas de police
+        TTF_Font *Sans = TTF_OpenFont("../Sans.ttf", GRID_FONT_SIZE); //Initialisation de la police
         data->font = Sans;
     }
 }
 
 int loadGrid(char *path, int numberOfFiles) {
-    // on genere un numero au hasard
-    srand(time(0));
-    int index = rand()%numberOfFiles;
+    //Fonction permettant de charger la grille
 
-    //on essaye d'aller cherche la difficulte
+    srand(time(0));
+    int index = rand()%numberOfFiles; //Génération d'un nombre pseudo-aléatoire entre et le nombre de fichier-1
+
     FILE *diffFile = NULL;
-    diffFile = fopen("difficulte.txt", "r");
+    diffFile = fopen("difficulte.txt", "r"); //Recherche de la difficulté
 
     char diff[TAILLE_MAX];
 
-    memset(diff, 0, TAILLE_MAX);
+    memset(diff, 0, TAILLE_MAX); //Création d'une chaine de caractère vide
     if(diffFile != NULL) {
-        fgets(diff, TAILLE_MAX, diffFile);
+        fgets(diff, TAILLE_MAX, diffFile); //Récupération du contenu du fichier difficulté
     }
 
-    if(diffFile == NULL || strcmp(diff, "easy") < 0 || strcmp(diff, "normal") < 0 || strcmp(diff, "hard") < 0) {
-        strcpy(diff, "easy");
+    if(diffFile == NULL || strcmp(diff, "easy") < 0 || strcmp(diff, "normal") < 0 || strcmp(diff, "hard") < 0) { //Si le fichier ne contient pas une difficulté connue
+        strcpy(diff, "easy"); //Mets la difficulté sur facile
     }
 
-    // on va jusqu'au chemin
+    //Création du chemin vers le fichier contenant la grille
     char totalpath[TAILLE_MAX];
     strcpy(totalpath, path);
     strcat(totalpath, diff);
@@ -49,19 +50,16 @@ int loadGrid(char *path, int numberOfFiles) {
     free(number);
     strcat(totalpath, ".txt");
 
-    // on tente d'ouvrir le fichier
     FILE *file = NULL;
-    file = fopen(totalpath, "r");
+    file = fopen(totalpath, "r"); //Ouverture du fichier
 
     cell *myCell;
-    if(file != NULL) {
-        // si on a réussi à l'ouvrir
+    if(file != NULL) { //Si le fichier à été ouvert
         char line[TAILLE_MAX] = "";
         int l = 0, c;
-        while(fgets(line, TAILLE_MAX, file)) {
+        while(fgets(line, TAILLE_MAX, file)) { //Tant qu'il y a des ligne dans le fichier
             c = 0;
 
-            // tant que la ligne n'est pas terminée on crée les cellules
             while(line[c*2] != 0 && c < 9) {
                 data->cells[l][c] = initCell(l, c, (line[c*2] != ' ') ? line[c*2] - '0' : -1, 0, 0);
                 c++;

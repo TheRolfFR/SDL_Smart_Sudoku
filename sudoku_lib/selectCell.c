@@ -7,55 +7,59 @@
 
 extern sudokuGrid *data;
 extern SDL_Color SDL_lightgrey;
-//Selection d'une cellule
 void selectCell(cell* position){
-    if(position==NULL){ //Souris hors de la grille
-        if(data->lastHovered!=NULL){ //Si une cellule était sélectionnée
-            if(data->redHover!=0){
-                hideRules(data->lastClicked->rules[data->redHover-1]);
-            }
-            data->lastHovered->isClicked = 0; //Désélection
-            data->lastClicked = NULL;
-            updateHover(position); //Mise à jour du "Hover"
+    //Fonction permettatn de sélectionner un cellule
 
-            drawNumberButtonsBackground(&SDL_lightgrey); // on reaffiche la couleur de fond sur les anciens nombres disponibles
+    if(position==NULL){ //Si la souris est hors de la grille
+        if(data->lastHovered!=NULL){ //Si la souris était précédemment dans la grille
+            if(data->redHover!=0){ //Si des cellules sont sur fond rouge
+                hideRules(data->lastClicked->rules[data->redHover-1]); //Retrait des fonds rouge
+            }
+            data->lastHovered->isClicked = 0; //Désélection de la cellule sélectionnée
+            data->lastClicked = NULL;
+            updateHover(position); //Mise à jour de la cellule en surbrillance
+            drawNumberButtonsBackground(&SDL_lightgrey); //Retrait des nombres indiquant les restrictions de la case sélectionnée
         }
     }
-    else{ //Souris dans la grille
-        if (position!=data->lastHovered){ //Position différente de la cellule en surbrillance(hover)
-            if(data->redHover!=0){
-                hideRules(data->lastClicked->rules[data->redHover-1]);
+    else{ //Si la souris est dans la grille
+        if (position!=data->lastHovered){ //Si la cellule survolée est différente de la cellule en surbrillance (c'est dire qu'une case est sélectionnée et que la souris survole une case différent de celle sélectionnée)
+            if(data->redHover!=0){ //Si des cellules sont sur fond rouge
+                hideRules(data->lastClicked->rules[data->redHover-1]); //Retrait des fonds rouge
             }
-            data->lastHovered->isClicked = 0; //Déselection de la précédente
-            updateHover(position); //Déplacer le "Hover" sur la cellule actuelle
-            position->isClicked = 1; //Sélectionner la nouvelle cellule
+            data->lastHovered->isClicked = 0; //Déselection de la cellule sélectionnée
+            updateHover(position); //Mise à jour de la cellule en surbrillance
+            position->isClicked = 1; //Sélection de la cellule survolée
             data->lastClicked = position;
         }
-        else{ //Souris sur la case en surbrillance
-            if(!position->isClicked){ //Cellule actuelle non sélectionnée
-                position->isClicked = 1; //Sélection
+        else{ //Si la souris survole la cellule actuellement en surbrillance
+            if(!position->isClicked){ //Si la cellule survolée n'est pas sélectionnée
+                position->isClicked = 1; //Sélection de la cellule survolé
                 data->lastClicked = position;
             }
-        } // on affiche les nombres disponibles pour la cellule
-        drawAvailableNumbers(data);
+        }
+        drawAvailableNumbers(data); //Affichage des restrictions concernants la case sélectionnée
     }
 }
 
-void unselect(){  // Déselection de la cellule actuellement sélectionnée
-    if(data->redHover!=0){
-        hideRules(data->lastClicked->rules[data->redHover-1]);
+void unselect(){
+    //Fonction permettant de déselectionner une cellule
+
+    if(data->redHover!=0){ //Si il y a des cellules sur fond rouge
+        hideRules(data->lastClicked->rules[data->redHover-1]); //Retrait des fonds rouge
     }
-    data->lastHovered->isClicked = 0;
+    data->lastClicked->isClicked = 0; //Déselection de la dernière cellule sélectionnée
     cell *c;
-    getMousePosition(&c,0);
-    updateHover(c); //Mise à jour du "Hover"
+    getMousePosition(&c,0); //Obtention de la position de la souris
+    updateHover(c); //Mise à jour de la cellule en surbrillance
 
     SDL_Color lightgrey = {189,189,189};
-    drawNumberButtonsBackground(&lightgrey); // on reaffiche la couleur de fond sur les anciens nombres disponibles
+    drawNumberButtonsBackground(&lightgrey); //Retrait des nombres indiquant les restrictions de la case sélectionnée
     data->lastClicked = NULL;
 }
 
 void changeLastClicked(){
-    int code = data->typedNumber;
-    data->lastClicked = data->cells[(code/10)-1][(code%10)-1];
+    //Fonction permettant de changer artificiellement la dernière cellule sélectionnée (utilisé pour la fonction de retour en arrière)
+
+    int code = data->typedNumber; //Récupération des coordonnés de la cellule à sélecctionner (codé abscisse*10+ordonné afin de rentrer dans un entier)
+    data->lastClicked = data->cells[(code/10)-1][(code%10)-1]; //Changement de la dernière cellule sélectionnée
 }

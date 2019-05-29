@@ -36,4 +36,4 @@
 
 char *convertInt(int);
 
-#endif //UNTITLED_SDL_SUDOKU_H
+#endif //SDL_SUDOKU_H

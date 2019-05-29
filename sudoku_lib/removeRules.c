@@ -6,6 +6,8 @@
 
 extern sudokuGrid *data;
 void removeRules(){ //Fonctionnement similaire à addRules
+    //Fonction permmettant de retirer les restrictions imposées par la cellules sélectionnée
+
     cell* current;
     cell* modified = data->lastClicked;
     int i;
