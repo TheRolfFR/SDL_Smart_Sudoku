@@ -93,6 +93,15 @@ int handleDifficultyButtons() {
         strcat(title, " (RECLIQUER POUR CONFIRMER)"); //Ajout de la mention "(RECLIQUER POUR CONFIRMER)"
         SDL_SetWindowTitle(data->window, title); //Mise en place du titre
     } else { //Si auncun bouton n'a été cliqué
+        if(data->easy->previouslyClicked) {
+            data->easy->previouslyClicked = 0; // Réinitialisation du bouton facile
+        }
+        if(data->normal->previouslyClicked) {
+            data->normal->previouslyClicked = 0; // Réinitialisation du bouton normal
+        }
+        if(data->hard->previouslyClicked) {
+            data->hard->previouslyClicked = 0; // Réinitialisation du bouton difficile
+        }
         ChangeTitleMode(); //Réinitialisation du titre
     }
 

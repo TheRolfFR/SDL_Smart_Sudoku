@@ -65,14 +65,14 @@ int loadGrid(char *path, int numberOfFiles) {
 
             //Initialisaion des données de base
             while(line[c*2] != 0 && c < 9) {
-                data->cells[l][c] = initCell(l, c, (line[c*2] != ' ') ? line[c*2] - '0' : -1, 0, 0);
+                data->cells[l][c] = initCell(l, c, (line[c*2] != ' ') ? line[c*2] - '0' : -1);
                 c++;
             }
 
             //Ajout de cellule vide si la ligne n'était pas complète
             if(c < 9) {
                 for(c = c; c < 9; c++) {
-                    myCell = initCell(l, c, EMPTY_VALUE, 0, 0);
+                    myCell = initCell(l, c, EMPTY_VALUE);
                     data->cells[l][c] = myCell;
                 }
             }

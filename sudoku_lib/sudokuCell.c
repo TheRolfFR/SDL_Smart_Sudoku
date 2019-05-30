@@ -6,14 +6,14 @@
 #include <stdlib.h>
 #include "sdl_sudoku.h"
 
-cell *initCell(int l, int c, int number, char isHovered, char isClicked) {
+cell *initCell(int l, int c, int number) {
     //Fonction permettant de créer une cellule
 
     cell *myCell = malloc(sizeof(cell)); //Allocation de la mémoire
 
     //Initialisation des champs
-    myCell->isHovered = isHovered; //Champs indiquant si la cellule est en surbrillance
-    myCell->isClicked = isClicked; //Champs indiquant si la cellule est sélectionnée
+    myCell->isHovered = 0; //Champs indiquant si la cellule est en surbrillance
+    myCell->isClicked = 0; //Champs indiquant si la cellule est sélectionnée
     myCell->line = l; //Champs indiquant la ligne (en C) de la cellule
     myCell->column = c; //Champs indiquant la colonne (en C) de la cellule
     myCell->number = number; //Champs indiquant la valeur de la cellule
