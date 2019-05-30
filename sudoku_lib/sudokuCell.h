@@ -23,6 +23,6 @@ typedef struct cell_struct {
     char pencilMark[9];
 } cell;
 
-cell *initCell(int, int, int, char, char);
+cell *initCell(int, int, int);
 
 #endif //SDL_SUDOKU_SUDOKUCELL_H
