@@ -80,137 +80,132 @@ void updateHover(cell* position){
 void drawNumberAtPosition(cell *number) {
     //Fonction permettant d'afficher un nombre dans une cellule
 
-    // si il y a un nombre à rendre (case non vide)
-    if(number->number != EMPTY_VALUE) {
+    if(number->number != EMPTY_VALUE) { //Si la case contient un nombre
         SDL_Rect rect;
 
-        // on crée une surface nulle et on essaue de dessiner dessus
-        SDL_Surface *surfaceText = NULL;
+        SDL_Surface *surfaceText = NULL; //Création de la surface
 
-        //on convertit le nombre en string
-        char *string = convertInt(number->number);
+        char *string = convertInt(number->number); //Conversion du nombre en chaine de caractère
 
-        // on essaye d'initialiser le font
-        tryInitGridFont();
-        // on dessine sur la surface le nombre
-        surfaceText = TTF_RenderText_Solid(data->font, string, (number->isReadOnly) ? SDL_grey : SDL_black); // en gris si il ne peut pas être réécris, en noir sinon
+        tryInitGridFont(); //Initialisation de la police d'écriture
 
-        // s'il arrive à rendre le texte
-        if(surfaceText != NULL) {
-            // on crée la texture avec la surface
-            SDL_Texture *texture = SDL_CreateTextureFromSurface(data->renderer, surfaceText);
+        surfaceText = TTF_RenderText_Solid(data->font, string, (number->isReadOnly) ? SDL_grey : SDL_black); //Dessin du nombre (en gris si c'est une donnée et noir si il est écrit par le joueur)
 
-            // on definit l'espace disponible pour le texte
+        if(surfaceText != NULL) { //Si le texte à réussit à être rendu
+
+            SDL_Texture *texture = SDL_CreateTextureFromSurface(data->renderer, surfaceText); //Création de la surface associée
+
+            //Calcul de la position et des dimensions du renctagle
             rect.y = GRID_MARGIN + number->column/3*GRID_THICK_BORDER + number->column * GRID_CELL_SIZE + GRID_THIN_BORDER * (number->column - number->column/3);  //controls the rect's x coordinate
             rect.x = GRID_MARGIN + number->line/3*GRID_THICK_BORDER + number->line * GRID_CELL_SIZE + GRID_THIN_BORDER * (number->line - number->line/3); // controls the rect's y coordinate
-            rect.w = GRID_FONT_SIZE; // controls the width of the rect
-            rect.h = GRID_FONT_SIZE; // controls the height of the rect
+            rect.w = GRID_FONT_SIZE;
+            rect.h = GRID_FONT_SIZE;
 
-            // on crée un nouveau rect permettant de case rle nombre dedans l'espace disponible
-            SDL_Rect *fitRect = SDL_RectFit(&rect, surfaceText);
-            // on copie le rnedu dans le renderer dans l'espace donné
-            SDL_RenderCopy(data->renderer, texture, NULL, fitRect);
-            // on détruit la texture
+            SDL_Rect *fitRect = SDL_RectFit(&rect, surfaceText); //Ajustement de la surface pour correspondre à la taille de la cellule
+
+            SDL_RenderCopy(data->renderer, texture, NULL, fitRect); //Affichage
+
+            //Libération de la mémoire
             SDL_DestroyTexture(texture);
-            // on libère le rect
             free(fitRect);
         }
 
-        // on libère la surface
+        //Libération de la surface
         SDL_FreeSurface(surfaceText);
 
         free(string);
     }
 }
 
-// fonction permettant de dessiner le fond des nombres disponibles
+
 void drawNumberButtonsBackground(SDL_Color *color) {
-    SDL_Rect rect = {GRID_MARGIN, GRID_SIZE + 2*GRID_MARGIN, GRID_SIZE, GRID_CELL_SIZE};
-    SDL_SetRenderDrawColorStruct(data->renderer, color);
-    SDL_RenderFillRect(data->renderer, &rect);
+    //Fonction permettant d'afficher le fond de la zone affichant les restrictions
+
+    SDL_Rect rect = {GRID_MARGIN, GRID_SIZE + 2*GRID_MARGIN, GRID_SIZE, GRID_CELL_SIZE}; //Calcul de la postion et des dimensions
+    SDL_SetRenderDrawColorStruct(data->renderer, color); //Application de la couleur
+    SDL_RenderFillRect(data->renderer, &rect); //Affichage
 }
 
-// fonction renvoyant si la cellule donnée possède une pencil mark
 int hasPencilMark(cell *selectedCell) {
-    // trouves-en une et sort
+    //Fonction indiquant la présence d'annotation sur une cellule
+
     int i = 0;
-    for(i = 0; i < 9; i++) {
-        if(selectedCell->rules[i] != NULL) {
-            return 1;
+    for(i = 0; i < 9; i++) { //Boucle parcourant le tableau des annotations
+        if(selectedCell->rules[i] != NULL) { //Si il y a une annotation
+            return 1; //Retourne vrai
         }
     }
-
-    // sinon retourne 0
     return 0;
 }
 
-// fincrion permettant de dessiner les nombres disponibles à l'écriture
 void drawAvailableNumbers() {
-    // le rect pour se positionner
+    //Fonction permettant d'afficher les restrictions s'impsant à une cellule
+
+    //Calcul de la postion et des dimensions
     SDL_Rect rect;
     rect.y = GRID_MARGIN*2 + GRID_SIZE;
     rect.x = GRID_MARGIN;
     rect.w = GRID_CELL_SIZE;
     rect.h = GRID_CELL_SIZE;
 
-    // on décale un tout petit peu pour centrer tous les nombres (pas de bordures)
-    rect.x += (GRID_SIZE - 9*GRID_CELL_SIZE)/2;
+    rect.x += (GRID_SIZE - 9*GRID_CELL_SIZE)/2; //Centrage de la zone sur l'axe x
 
-    // on lance le font
-    tryInitGridFont();
+    tryInitGridFont(); //Initialisation de la police
 
     SDL_Surface *surface;
     SDL_Texture *texture;
 
-    //on affiche tous les nombres disponibles
     int i;
     for(i = 0; i < 9; i++) {
-        // on dessine le texte dans la surface
-        char *number = convertInt(i+1);
-        surface = TTF_RenderText_Solid(data->font, number, (data->lastClicked->rules[i]==NULL) ? SDL_black : SDL_white);
-        // on crée la texture associée
-        texture = SDL_CreateTextureFromSurface(data->renderer, surface);
 
-        // on copie dans le renderer le texte
-        SDL_Rect *fit = SDL_RectFit(&rect, surface);
-        SDL_RenderCopy(data->renderer, texture, NULL, fit);
+        char *number = convertInt(i+1); //Conversion des nombres en chaine de caractère
+        surface = TTF_RenderText_Solid(data->font, number, (data->lastClicked->rules[i]==NULL) ? SDL_black : SDL_white); //Affichage en blanc pour les nombres interdits et en noir pour ceux autorisés
 
-        // on libère la surface, le texture et le rect
+        texture = SDL_CreateTextureFromSurface(data->renderer, surface); //Création de la texture associée
+
+        SDL_Rect *fit = SDL_RectFit(&rect, surface); //Ajustement de la surface dans la zone
+        SDL_RenderCopy(data->renderer, texture, NULL, fit); //Affichage à l'écran
+
+        //Libération de la mémoire
         SDL_FreeSurface(surface);
         SDL_DestroyTexture(texture);
         free(fit);
 
-        // on décale la position horizontale
-        rect.x += GRID_CELL_SIZE;
+        rect.x += GRID_CELL_SIZE; //Décalage de l'abscisse pour afficher le prochaine
     }
 }
 
 void drawNumberBackground(cell* selectedCell) {
-    // x et y égalent à la marge + le nombre de cellules précédant cette cellule + les bordures
+    //Fonction permettant d'afficher le fond d'une cellule
+
+    //Calcul de la postion et de dimensions d'un cellule
     SDL_Rect rect;
     rect.y = GRID_HOVER_BORDER + GRID_MARGIN + selectedCell->column/3*GRID_THICK_BORDER + selectedCell->column * GRID_CELL_SIZE + GRID_THIN_BORDER * (selectedCell->column - selectedCell->column/3);
     rect.x = GRID_HOVER_BORDER + GRID_MARGIN + selectedCell->line/3*GRID_THICK_BORDER + selectedCell->line * GRID_CELL_SIZE + GRID_THIN_BORDER * (selectedCell->line - selectedCell->line/3);
-    // la largeur et hauteur c'est la taille de la cellule
     rect.w = GRID_CELL_SIZE - 2*GRID_HOVER_BORDER;
     rect.h = GRID_CELL_SIZE - 2*GRID_HOVER_BORDER;
-    SDL_SetRenderDrawColorStruct(data->renderer, &SDL_white);
-    SDL_RenderFillRect(data->renderer, &rect);
+
+    SDL_SetRenderDrawColorStruct(data->renderer, &SDL_white); //Application de la couleur
+    SDL_RenderFillRect(data->renderer, &rect); //Affichage
 }
 
-// retourne la cellule associée à la position dans la fenêtre
 void getMousePosition(cell **c,char click){
-    int x, y;
-    SDL_GetMouseState(&x, &y);
+    //Fonction permettant d'obtenir la postion de la souris
 
-    if(x > GRID_MARGIN && x < GRID_MARGIN + GRID_SIZE && y > GRID_MARGIN && y < GRID_MARGIN + GRID_SIZE){
+    int x, y;
+    SDL_GetMouseState(&x, &y); //Obtention des coordonés
+
+    if(x > GRID_MARGIN && x < GRID_MARGIN + GRID_SIZE && y > GRID_MARGIN && y < GRID_MARGIN + GRID_SIZE){ //Si la souris est dans la grille
+
+        //Calcul de la cellule survolée
         int xcells = (x-(x>=381) - GRID_MARGIN)/(GRID_CELL_SIZE+1);
         int ycells = (y-(y>=381) - GRID_MARGIN)/(GRID_CELL_SIZE+1);
-        *c = data->cells[xcells][ycells];
+        *c = data->cells[xcells][ycells]; //Stockage dans une variable extérieur (contournement de la restriction d'une seule variable retournée par une fonction)
     }
 
-    if(click && x > GRID_MARGIN + 5 && x < GRID_MARGIN + GRID_SIZE - 5 && y > GRID_MARGIN*2 + GRID_SIZE && y < GRID_MARGIN*2 + GRID_SIZE + GRID_CELL_SIZE) {
-        int l =  (x-GRID_MARGIN - 5)/GRID_CELL_SIZE + 1;
-        *c = data->lastClicked;
-        data->typedNumber = l;
+    if(click && x > GRID_MARGIN + 5 && x < GRID_MARGIN + GRID_SIZE - 5 && y > GRID_MARGIN*2 + GRID_SIZE && y < GRID_MARGIN*2 + GRID_SIZE + GRID_CELL_SIZE) { //Si le joueur à cliqué dans la zone avec les restrictions affichée
+        int l =  (x-GRID_MARGIN - 5)/GRID_CELL_SIZE + 1; //Calcul du nombre survolé
+        *c = data->lastClicked; //Instruction permettant de ne pas déselectionner la cellule actuellement sélectionnée
+        data->typedNumber = l; //Indication que le joueur à saisie le nombre survolé
     }
 }

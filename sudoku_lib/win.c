@@ -6,31 +6,31 @@
 
 extern sudokuGrid *data;
 void win() {
-    // on remet un fond grid
+    //Fonction affichant un message de victoire
+
     SDL_Color lightgrey = {189,189,189};
 
-    tryInitGridFont();
+    tryInitGridFont(); //Initialisation de la police
 
     SDL_Color black = {0, 0, 0};
-    SDL_Surface *bravo = TTF_RenderText_Solid(data->font, "Bravo !", black);
-    SDL_Texture *bravoTexture = SDL_CreateTextureFromSurface(data->renderer, bravo);
+    SDL_Surface *bravo = TTF_RenderText_Solid(data->font, "Bravo !", black); //Création d'un texte
+    SDL_Texture *bravoTexture = SDL_CreateTextureFromSurface(data->renderer, bravo); //Ajout du texte à la texture associée
 
-    SDL_Surface *youWonSurface = TTF_RenderText_Solid(data->font, "Tu as gagne !", black);
-    SDL_Texture *youWon = SDL_CreateTextureFromSurface(data->renderer, youWonSurface);
+    SDL_Surface *youWonSurface = TTF_RenderText_Solid(data->font, "Tu as gagne !", black); //Création d'un texte
+    SDL_Texture *youWon = SDL_CreateTextureFromSurface(data->renderer, youWonSurface); //Ajout du texte
 
-    SDL_Surface *autoDestroySurface = TTF_RenderText_Solid(data->font, "Maintentant je vais m'auto-detruire dans 3s", black);
-    SDL_Texture *autoDestroy = SDL_CreateTextureFromSurface(data->renderer, autoDestroySurface);
+    SDL_Surface *autoDestroySurface = TTF_RenderText_Solid(data->font, "Maintentant je vais m'auto-detruire dans 3s", black); //Création d'un texte
+    SDL_Texture *autoDestroy = SDL_CreateTextureFromSurface(data->renderer, autoDestroySurface); //Ajout du texte
 
-    // Retaille de la fenêtre
+    //Dimensionnement de la fenêtre
     SDL_SetWindowSize(data->window, autoDestroySurface->w + 2*GRID_MARGIN, 2*GRID_MARGIN + bravo->h + youWonSurface->h + autoDestroySurface->h);
     data->windowSurface = SDL_GetWindowSurface(data->window);
 
-    // on rend le fond en gris clair
+    //Application de la couleur de fond
     SDL_SetRenderDrawColorStruct(data->renderer, &lightgrey);
     SDL_RenderFillRect(data->renderer, NULL);
 
-    // calcul des rects
-
+    //Calcul des dimensions et postion pour les différents textes
     SDL_Rect bravoRect;
     bravoRect.x = (2*GRID_MARGIN + autoDestroySurface->w - bravo->w)/2;
     bravoRect.y = (data->windowSurface->h - bravo->h - youWonSurface->h - autoDestroySurface->h)/2;
@@ -49,15 +49,14 @@ void win() {
     autoDestroyRect.w = autoDestroySurface->w;
     autoDestroyRect.h = autoDestroySurface->h;
 
-    // on copie le rendu des félicitations
+    //Ajout des textures dans l'objet à afficher
     SDL_RenderCopy(data->renderer, bravoTexture, NULL, &bravoRect);
-    // on copie le rendu du "tu as gagné !"
     SDL_RenderCopy(data->renderer, youWon, NULL, &youWonRect);
-    // on copie le rendu de l'auto-destruction
     SDL_RenderCopy(data->renderer, autoDestroy, NULL, &autoDestroyRect);
 
-    SDL_RenderPresent(data->renderer);
+    SDL_RenderPresent(data->renderer); //Affichage des texts
 
+    //Libération de la mémoire
     SDL_FreeSurface(bravo);
     SDL_DestroyTexture(bravoTexture);
     SDL_FreeSurface(youWonSurface);

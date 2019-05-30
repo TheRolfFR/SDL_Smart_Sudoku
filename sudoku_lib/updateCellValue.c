@@ -5,105 +5,105 @@
 #include "sdl_sudoku.h"
 
 extern sudokuGrid *data;
-// fonction qui met à jour la cellule en fonction d'une touche numérique tapée
 void updateCellValue() {
-    int value = data->typedNumber;
-    // si une case a été clique et qu'elle est modifiable et qu'elle n'est pas bloquée
-    if(data->lastClicked != NULL && !data->lastClicked->isReadOnly) {
-        if(data->lastClicked->rules[value-1]!=NULL){
-            if (data->redHover == value){
-                hideRules(data->lastClicked->rules[value-1]);
-            } else{
-                if(data->redHover!=0){
-                    hideRules(data->lastClicked->rules[data->redHover-1]);
+    //Fonction permettant de mettre à jour une cellule en fonction du nombre demandé
+
+    int value = data->typedNumber; //Récuration du nombre demandé
+
+    if(data->lastClicked != NULL && !data->lastClicked->isReadOnly) { //Si il y a une cellule modifiable sélectionnée
+        if(data->lastClicked->rules[value-1]!=NULL){ //Si le nombre demandé est interdit
+            if (data->redHover == value){ //Si les cellules empêchant la saisie du nombre demandé sont sur fond rouge
+                hideRules(data->lastClicked->rules[value-1]); //Retrait des fonds rouge
+            } else{ //Si les cellules empêchant la saisie du nombre demandé ne sont pas sur fond rouge
+                if(data->redHover!=0){ //Si des cellules sont sur fond rouge
+                    hideRules(data->lastClicked->rules[data->redHover-1]); //Retrait des fonds rouge
                 }
-                showRules(data->lastClicked->rules[value-1]);
-                data->redHover = value;
+                showRules(data->lastClicked->rules[value-1]); //Affichage d'un fond rouge sur les cellules empêchant la saisie du nombre demandé
+                data->redHover = value; //Indication des cellules actuellement sur fond rouge
             }
-        } else{
-            if(!data->undoMode){
-                addUndoStep(changeLastClicked,(data->lastClicked->line+1)*10+data->lastClicked->column+1);
+        } else{ //Si le nombre demandé est autorisé
+            if(!data->undoMode){ //Si le mode retour en arrière n'est pas activé
+                addUndoStep(changeLastClicked,(data->lastClicked->line+1)*10+data->lastClicked->column+1); //Création d'une nouvelle étape dans la liste retour en arrière
             }
-            // si on est en mode pencilmark
-            if(data->pencilMarkMode) {
-                // si la case était vide précédemment (empeche d'écrire des pencils marks sur les nombres)
-                if(data->lastClicked->number==EMPTY_VALUE){
-                    // si la pencil mark du nombre existait déjà, on l'enlève
-                    if(data->lastClicked->pencilMark[value-1]){
-                        data->lastClicked->pencilMark[value-1] = 0;
-                        removePencilMark(data->lastClicked,value);
+            if(data->pencilMarkMode) { //Si le mode annotation est activé
+                if(data->lastClicked->number==EMPTY_VALUE){ //Si la cellule est vide
+                    if(data->lastClicked->pencilMark[value-1]){ //Si l'annotation demandée est déjà présente
+                        data->lastClicked->pencilMark[value-1] = 0; //Retrait de l'annotation (en terme de donnée)
+                        removePencilMark(data->lastClicked,value); //retrait de l'annotation (en terme graphique)
                     }
-                    else { // sinon on l'ajoute
-                        data->lastClicked->pencilMark[value-1] = 1;
-                        drawPencilMark(data->lastClicked, value);
+                    else { //Si l'annotation demandée n'est pas présente
+                        data->lastClicked->pencilMark[value-1] = 1; //Ajout de l'annotation (en terle de donnée)
+                        drawPencilMark(data->lastClicked, value); //Ajout de l'annotation (en terme graphique)
                     }
-                    if(!data->undoMode){
+                    if(!data->undoMode){ //Si le mode retour en arrière n'est pas activé
+                        //Ajout, dans la liste retour en arrière, des instruction permettant d'annuler les actions effectuée
                         addUndoAction(changeMode,0);
                         addUndoAction(updateCellValue,value);
                         addUndoAction(changeMode,0);
                     }
                 }
             }
-            else {
-                // si on est en mode nombre normal
-                if(!data->undoMode){
-                    addUndoAction(clearCell,0);
+            else { //Si le mode annotation n'est pas activé
+                if(!data->undoMode){ //Si le mode retour en arrière n'est pas activé
+                    addUndoAction(clearCell,0); //Ajout d'instruction dans la liste
                 }
-                if(data->lastClicked->number!=EMPTY_VALUE) { //La case conntient une valeur
-                    //retrait des restrictions concernant cette valeur
-                    if(!data->undoMode){
-                        addUndoAction(updateCellValue,data->lastClicked->number);
+                if(data->lastClicked->number!=EMPTY_VALUE) { //Si la cellule n'est pas vide
+                    if(!data->undoMode){ //Si le mode retour en arrière n'est pas activé
+                        addUndoAction(updateCellValue,data->lastClicked->number); //Ajout d'instruction dans la liste
                     }
-                    removeRules();
+                    removeRules(); //Retrait des restrictions imposée par cette cellule
                 }
-                // si l'y avait quelque-chose avant, on redessine un fond
-                if (data->lastClicked->number!=EMPTY_VALUE || hasPencilMark(data->lastClicked)){
-                    drawNumberBackground(data->lastClicked);
+                if (data->lastClicked->number!=EMPTY_VALUE || hasPencilMark(data->lastClicked)){ //Si la cellule contenait une valeur ou des annotations
+                    drawNumberBackground(data->lastClicked); //Afficahge d'un fond blanc
+                }
+                if (hasPencilMark(data->lastClicked)){ //Si la cellule a des annotations
+                    resetPencilMark(data->lastClicked); //Retrait des annotations
                 }
 
-                //Mise à jour de la valeur
-                data->lastClicked->number = value;
+                data->lastClicked->number = value; //Ajout de la valeur demandée
 
-                //Ajout des restrictions concernat la nouvelle valeur
-                addRules(data);
+                addRules(data); //Ajout des restrictions imposées par la valeur demandée
 
-                //Dessin du nombre en question
-                drawNumberAtPosition(data->lastClicked);
+                drawNumberAtPosition(data->lastClicked); //Afficahge de la valeur demandée
             }
         }
-
     }
-    data->typedNumber = 0;
+    data->typedNumber = 0; //Réinitialisation de la valeur demandée
 }
 
-// fonction qui nettoie les cellules
 void clearCell(){
+    //Fonction vidant une cellule
+
     if(data->lastClicked->number!=EMPTY_VALUE){ //Si la cellule à une valeur
-        if(!data->undoMode){
-            addUndoStep(changeLastClicked,(data->lastClicked->line+1)*10+data->lastClicked->column+1);
-            addUndoAction(updateCellValue,data->lastClicked->number);
+        if(!data->undoMode){ //Si le mode retour en arrière n'est pas activé
+            addUndoStep(changeLastClicked,(data->lastClicked->line+1)*10+data->lastClicked->column+1); //Ajout d'une nouvelle étape
+            addUndoAction(updateCellValue,data->lastClicked->number); //Ajout d'une instruction
         }
-        removeRules(); //Retire les restrictions
-        data->lastClicked->number = EMPTY_VALUE; //Retire la valeur
+        removeRules(); //Retrait des restrictions imposées par la cellule
+        data->lastClicked->number = EMPTY_VALUE; //Retrait de la valeur
+        drawNumberBackground(data->lastClicked); //Affichage d'un fond blanc
     }
-    else { //Si la cellule n'a pas de valeur
-        if(!data->undoMode){
-            addUndoStep(changeLastClicked,(data->lastClicked->line+1)*10+data->lastClicked->column+1);
-            addUndoAction(changeMode,0);
+    if(hasPencilMark(data->lastClicked)){
+        if(!data->undoMode){ //Si le mode retour en arrière n'est pas activé
+            addUndoStep(changeLastClicked,(data->lastClicked->line+1)*10+data->lastClicked->column+1); //Ajout d'une nouvelle étape
         }
-        resetPencilMark(data->lastClicked); //retire les annotations
+        resetPencilMark(data->lastClicked); //Retrait des annotations
+        drawNumberBackground(data->lastClicked); //Affichage d'un fond blanc
     }
-    drawNumberBackground(data->lastClicked);
 }
 
-// fonction qui réinitialise les pencil marks
 void resetPencilMark(cell* current){
-    for (int i = 0; i < 9; i = i+1) {
-        if (current->pencilMark[i]){
-            if(!data->undoMode){
-                addUndoAction(updateCellValue,i);
+    //Fonction retirant les annotations d'une cellule
+
+    for (int i = 0; i < 9; i = i+1) { //Boucle parcourant les annotations possibles
+        if (current->pencilMark[i]){ //Si la cellule possède l'annotation i+1
+            if(!data->undoMode){ //Si le mode retour en arrière n'est pas activé
+                //Ajout d'instructions
+                addUndoAction(changeMode,0);
+                addUndoAction(updateCellValue,i+1);
+                addUndoAction(changeMode,0);
             }
-            current->pencilMark[i] = 0;
+            current->pencilMark[i] = 0; //Retrait de l'annotation
         }
     }
 }
