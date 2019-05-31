@@ -67,12 +67,11 @@ void win() {
 
     // attendre pendant trois secondes
     SDL_SetRenderDrawColorStruct(data->renderer, &SDL_lightgrey);
-    for(int i = 0; i < 3; i++) {
+    for(int i = 0; i < 3; i++) { //Boucle afficahnt le compte à rebours
 
-        // Redessiner le fond grid sur la phrase
-        SDL_RenderFillRect(data->renderer, &autoDestroyRect);
+        SDL_RenderFillRect(data->renderer, &autoDestroyRect); //Dessin du fond
 
-        // Redéfinir le texte
+        //Changement du chiffre à afficher
         char phrase[TAILLE_MAX] = "";
         strcat(phrase, "Maintenant je vais m'auto-detruire dans " );
         char *countdown = convertInt(3-i);
@@ -80,20 +79,20 @@ void win() {
         free(countdown);
         strcat(phrase, "s");
 
-        // reprint le texte
+        //Application du nouveau texte
         autoDestroySurface =TTF_RenderText_Solid(data->font, phrase, SDL_black);
         autoDestroy = SDL_CreateTextureFromSurface(data->renderer, autoDestroySurface);
 
-        autoDestroyRect.x = (data->windowSurface->w - autoDestroySurface->w)/2 - GRID_MARGIN;
+        autoDestroyRect.x = (data->windowSurface->w - autoDestroySurface->w)/2 - GRID_MARGIN; //Calcul de la postion
 
         SDL_RenderCopy(data->renderer, autoDestroy, NULL, &autoDestroyRect);
 
-        SDL_RenderPresent(data->renderer);
+        SDL_RenderPresent(data->renderer); //Affichage du texte
 
         SDL_FreeSurface(autoDestroySurface);
         SDL_DestroyTexture(autoDestroy);
 
-        SDL_Delay(1000);
+        SDL_Delay(1000); //Attente d'une seconde
     }
 }
 

@@ -60,7 +60,7 @@ void removePencilMark(cell* selectedCell, int value) {
 
 
 void ChangeTitleMode() {
-    //Fonction permettant d'indiquer le mode (annotation ou non) via le titre de la fenêtre
+    //Fonction permettant d'indiquer l'activation de mode annotation via le titre de la fenêtre
 
     char title[TAILLE_MAX];
     strcpy(title, data->initialTitle); //Copie du titre original

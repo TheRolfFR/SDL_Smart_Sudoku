@@ -19,22 +19,21 @@ int main(int argc, char **argv)
         sudokuGrid g;
         data = &g;
 
-        // on initialise la grilles
+        //Initialisation des données
         if(!initializeSudoku())
             return -1;
 
-        // on charge une grille random
+        //Chargement d'une grille aléatoire
         if(loadGrid("../grids/", 2))
             return -1;
 
-        initRules();
+        initRules(); //Initialisation des restrictions
 
-        data->undoMode = 0;
+        data->undoMode = 0; //Désactivation du mode retour en arrière
 
-        // on dessine la grille
-        drawSudokuGrid();
+        drawSudokuGrid(); //Dessin de la grille
 
-        // on dessine tous les chiffres de la grille
+        //Dessin des chiffres
         int a, b;
         for(a = 0; a < 9; a++) {
             for(b = 0; b < 9; b++) {
@@ -43,21 +42,16 @@ int main(int argc, char **argv)
             }
         }
 
-        // on affiche le rendu
-        SDL_RenderPresent(data->renderer);
+        SDL_RenderPresent(data->renderer); //Afficahge
 
-        //le jeu lorsqu'il est lancé
-        gameController();
+        gameController(); //Lancement du jeu
 
-        // on détruit le rendu
-        SDL_DestroyRenderer(data->renderer);
+        SDL_DestroyRenderer(data->renderer); //Destruction de l'affichage
 
-        // on détruit la fenêtre etc
-        destroyAndQuit(&data->window);
+        destroyAndQuit(&data->window); //Fermeture de la fenêtre
     } while(data->difficultyChanged);
 
-    // clear memory
-    freeMemory();
+    freeMemory(); //Libération de la mémoire
 
     return 0;
 }
