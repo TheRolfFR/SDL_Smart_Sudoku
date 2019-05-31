@@ -12,6 +12,7 @@ SDL_Color SDL_black = {0, 0, 0};
 SDL_Color SDL_blue = {0x4D, 0xD0, 0xE1};
 SDL_Color SDL_lightgrey = {130,130,130};
 SDL_Color SDL_grey = {0x37, 0x47, 0x4F}; // #37474F
+SDL_Color SDL_lightred = {0xEF, 0x53, 0x50}; // 0xEF5350
 int main(int argc, char **argv)
 {
     do { //Faire les actions suivantes tant qu'aucun changement de difficulté et demandé

@@ -5,6 +5,7 @@
 #include "sdl_sudoku.h"
 
 extern sudokuGrid *data;
+extern SDL_Color SDL_lightred;
 void printRed(cell *selectedCell) {
     //Fonction permettant d'afficher un fond rouge pour une cellule
 
@@ -18,8 +19,7 @@ void printRed(cell *selectedCell) {
     rect.h = GRID_CELL_SIZE - 2*GRID_HOVER_BORDER;
 
     //Dessin du fond
-    SDL_Color lightred = {0xEF, 0x53, 0x50}; // 0xEF5350
-    SDL_SetRenderDrawColorStruct(data->renderer, &lightred);
+    SDL_SetRenderDrawColorStruct(data->renderer, &SDL_lightred);
     SDL_RenderFillRect(data->renderer, &rect);
 
     //Dessin du nombre

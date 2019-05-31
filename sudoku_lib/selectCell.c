@@ -52,8 +52,7 @@ void unselect(){
     getMousePosition(&c,0); //Obtention de la position de la souris
     updateHover(c); //Mise à jour de la cellule en surbrillance
 
-    SDL_Color lightgrey = {189,189,189};
-    drawNumberButtonsBackground(&lightgrey); //Retrait des nombres indiquant les restrictions de la case sélectionnée
+    drawNumberButtonsBackground(&SDL_lightgrey); //Retrait des nombres indiquant les restrictions de la case sélectionnée
     data->lastClicked = NULL;
 }
 

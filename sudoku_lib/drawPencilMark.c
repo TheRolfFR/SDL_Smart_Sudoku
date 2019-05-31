@@ -7,6 +7,7 @@
 
 extern sudokuGrid *data;
 extern SDL_Color SDL_lightgrey;
+extern SDL_Color SDL_white;
 void drawPencilMark(cell* selectedCell, int value) {
     //Fonction affichant une annotation
 
@@ -42,9 +43,8 @@ void removePencilMark(cell* selectedCell, int value) {
     rect.w = GRID_CELL_SIZE/3;
     rect.h = GRID_CELL_SIZE/3;
 
-    SDL_Color white = {0xFF, 0xFF, 0xFF};
     char *number = convertInt(value);
-    SDL_Surface *mark = TTF_RenderText_Solid(data->font, number, white);
+    SDL_Surface *mark = TTF_RenderText_Solid(data->font, number, SDL_white);
     free(number);
     SDL_Rect *fit = SDL_RectFit(&rect, mark);
 

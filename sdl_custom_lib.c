@@ -80,7 +80,6 @@ SDL_Surface *SDL_SurfaceText(char *fontPath, char *string, int ptsize, SDL_Color
     TTF_Init();
 
     TTF_Font *font = TTF_OpenFont(fontPath, ptsize);
-    SDL_Color black = {0, 0, 0};
     SDL_Surface* surfaceMessage = TTF_RenderText_Solid(font, string, *color);
 
     return surfaceMessage;

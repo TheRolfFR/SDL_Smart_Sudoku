@@ -5,20 +5,19 @@
 #include "sdl_sudoku.h"
 
 extern sudokuGrid *data;
+extern SDL_Color SDL_lightgrey;
+extern SDL_Color SDL_black;
 void win() {
-    // on remet un fond grid
-    SDL_Color lightgrey = {189,189,189};
 
     tryInitGridFont();
 
-    SDL_Color black = {0, 0, 0};
-    SDL_Surface *bravo = TTF_RenderText_Solid(data->font, "Bravo !", black);
+    SDL_Surface *bravo = TTF_RenderText_Solid(data->font, "Bravo !", SDL_black);
     SDL_Texture *bravoTexture = SDL_CreateTextureFromSurface(data->renderer, bravo);
 
-    SDL_Surface *youWonSurface = TTF_RenderText_Solid(data->font, "Tu as gagne !", black);
+    SDL_Surface *youWonSurface = TTF_RenderText_Solid(data->font, "Tu as gagne !", SDL_black);
     SDL_Texture *youWon = SDL_CreateTextureFromSurface(data->renderer, youWonSurface);
 
-    SDL_Surface *autoDestroySurface = TTF_RenderText_Solid(data->font, "Maintentant je vais m'auto-detruire dans 3s", black);
+    SDL_Surface *autoDestroySurface = TTF_RenderText_Solid(data->font, "Maintentant je vais m'auto-detruire dans 3s", SDL_black);
     SDL_Texture *autoDestroy = SDL_CreateTextureFromSurface(data->renderer, autoDestroySurface);
 
     // Retaille de la fenêtre
@@ -26,7 +25,7 @@ void win() {
     data->windowSurface = SDL_GetWindowSurface(data->window);
 
     // on rend le fond en gris clair
-    SDL_SetRenderDrawColorStruct(data->renderer, &lightgrey);
+    SDL_SetRenderDrawColorStruct(data->renderer, &SDL_lightgrey);
     SDL_RenderFillRect(data->renderer, NULL);
 
     // calcul des rects
@@ -66,7 +65,7 @@ void win() {
     SDL_DestroyTexture(autoDestroy);
 
     // attendre pendant trois secondes
-    SDL_SetRenderDrawColorStruct(data->renderer, &lightgrey);
+    SDL_SetRenderDrawColorStruct(data->renderer, &SDL_lightgrey);
     for(int i = 0; i < 3; i++) {
 
         // Redessiner le fond grid sur la phrase
@@ -81,7 +80,7 @@ void win() {
         strcat(phrase, "s");
 
         // reprint le texte
-        autoDestroySurface =TTF_RenderText_Solid(data->font, phrase, black);
+        autoDestroySurface =TTF_RenderText_Solid(data->font, phrase, SDL_black);
         autoDestroy = SDL_CreateTextureFromSurface(data->renderer, autoDestroySurface);
 
         autoDestroyRect.x = (data->windowSurface->w - autoDestroySurface->w)/2 - GRID_MARGIN;

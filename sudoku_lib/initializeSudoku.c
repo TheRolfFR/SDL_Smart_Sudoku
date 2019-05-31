@@ -14,6 +14,7 @@
 #define ALPHA_MASK 0x000000FF
 
 extern sudokuGrid *data;
+extern SDL_Color SDL_black;
 int initializeSudoku() {
     //Fonction permettant d'initialiser le jeu
 
@@ -45,8 +46,7 @@ int initializeSudoku() {
             //Changement de l'icône
             SDL_Surface *bg = SDL_CreateRGBSurface( SDL_SWSURFACE, 32, 32, 32, RED_MASK,GREEN_MASK,BLUE_MASK,ALPHA_MASK);
             SDL_FillRect(bg, NULL, SDL_MapRGBA(data->windowSurface->format, 0,0,0, SDL_ALPHA_TRANSPARENT));
-            SDL_Color black = {0, 0, 0};
-            SDL_Surface *text = SDL_SurfaceText("../Sans.ttf", "S", 38, &black);
+            SDL_Surface *text = SDL_SurfaceText("../Sans.ttf", "S", 38, &SDL_black);
             SDL_Rect rect2;
             rect2.x = (32 - (text->clip_rect).w)/2;
             rect2.y = (32 - (text->clip_rect).h)/2;
