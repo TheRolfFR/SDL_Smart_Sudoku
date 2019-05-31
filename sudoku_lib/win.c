@@ -10,8 +10,6 @@ extern SDL_Color SDL_black;
 void win() {
     //Fonction affichant un message de victoire
 
-    SDL_SetWindowPosition(data->window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED); //Centrage de la fenêtre au milieu de l'écran
-
     tryInitGridFont(); //Initialisation de la police
 
     SDL_Surface *bravo = TTF_RenderText_Solid(data->font, "Bravo !", SDL_black); //Création d'un texte
@@ -23,8 +21,9 @@ void win() {
     SDL_Surface *autoDestroySurface = TTF_RenderText_Solid(data->font, "Maintentant je vais m'auto-detruire dans 3s", SDL_black); //Création d'un texte
     SDL_Texture *autoDestroy = SDL_CreateTextureFromSurface(data->renderer, autoDestroySurface); //Ajout du texte
 
-    //Dimensionnement de la fenêtre
+    //Dimensionnement et positionnement de la fenêtre
     SDL_SetWindowSize(data->window, autoDestroySurface->w + 2*GRID_MARGIN, 2*GRID_MARGIN + bravo->h + youWonSurface->h + autoDestroySurface->h);
+    SDL_SetWindowPosition(data->window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED); //Centrage de la fenêtre au milieu de l'écran
     data->windowSurface = SDL_GetWindowSurface(data->window);
 
     //Application de la couleur de fond
@@ -66,7 +65,6 @@ void win() {
     SDL_DestroyTexture(autoDestroy);
 
     // attendre pendant trois secondes
-    SDL_SetRenderDrawColorStruct(data->renderer, &SDL_lightgrey);
     for(int i = 0; i < 3; i++) {
 
         // Redessiner le fond grid sur la phrase
