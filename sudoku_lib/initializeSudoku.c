@@ -29,7 +29,7 @@ int initializeSudoku() {
         //Création de la fenêtre
         data->window = NULL;
         strcpy(data->initialTitle, "Smart Sudoku"); //Initialisation du titre
-        data->window = SDL_CreateWindow( data->initialTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, GRID_SIZE + 2*GRID_MARGIN, GRID_SIZE + 3*GRID_MARGIN + GRID_BOTTOMSPACE, SDL_WINDOW_SHOWN );
+        data->window = SDL_CreateWindow( data->initialTitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, GRID_SIZE + 2*GRID_MARGIN, GRID_SIZE + 3*GRID_MARGIN + GRID_BOTTOMSPACE, SDL_WINDOW_SHOWN );
         if( data->window == NULL ) {
             fprintf(stderr, "La fenetre n'a pas pu etre cree ! SDL_Error: %s\n", SDL_GetError());
             succes = 0;

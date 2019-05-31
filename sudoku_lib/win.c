@@ -10,6 +10,8 @@ extern SDL_Color SDL_black;
 void win() {
     //Fonction affichant un message de victoire
 
+    SDL_SetWindowPosition(data->window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED); //Centrage de la fenêtre au milieu de l'écran
+
     tryInitGridFont(); //Initialisation de la police
 
     SDL_Surface *bravo = TTF_RenderText_Solid(data->font, "Bravo !", SDL_black); //Création d'un texte
