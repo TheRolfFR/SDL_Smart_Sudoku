@@ -23,8 +23,9 @@ void win() {
     SDL_Surface *autoDestroySurface = TTF_RenderText_Solid(data->font, "Maintentant je vais m'auto-detruire dans 3s", SDL_black); //Création d'un texte
     SDL_Texture *autoDestroy = SDL_CreateTextureFromSurface(data->renderer, autoDestroySurface); //Ajout du texte
 
-    //Dimensionnement de la fenêtre
+    //Dimensionnement et positionnement de la fenêtre
     SDL_SetWindowSize(data->window, autoDestroySurface->w + 2*GRID_MARGIN, 2*GRID_MARGIN + bravo->h + youWonSurface->h + autoDestroySurface->h);
+    SDL_SetWindowPosition(data->window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED); //Centrage de la fenêtre au milieu de l'écran
     data->windowSurface = SDL_GetWindowSurface(data->window);
 
     //Application de la couleur de fond
@@ -66,8 +67,7 @@ void win() {
     SDL_DestroyTexture(autoDestroy);
 
     // attendre pendant trois secondes
-    SDL_SetRenderDrawColorStruct(data->renderer, &SDL_lightgrey);
-    for(int i = 0; i < 3; i++) { //Boucle afficahnt le compte à rebours
+    for(int i = 0; i < 3; i++) {
 
         SDL_RenderFillRect(data->renderer, &autoDestroyRect); //Dessin du fond
 
