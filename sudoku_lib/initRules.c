@@ -18,4 +18,5 @@ void initRules(){
         }
     }
     data->lastClicked = NULL; //Réinitialisation de la dernière sélectionnée
+    data->undoMode = 0; //Désactivation du mode retour en arrière (Précédemment activé pour ne pas enregistrer l'initialisation de restrictions comme actions du joueur)
 }

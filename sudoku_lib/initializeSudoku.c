@@ -66,8 +66,8 @@ int initializeSudoku() {
             data->lastClicked = NULL; //Pointeur vers la cellule sélectionnée
             data->pencilMarkMode = 0; //Indique l'activation du mode annotation
             data->redHover = 0; //Champs indiquant le nombre que contiennent les cases sur fond rouge
-            data->lastKeyWasCtrl = 0; //Indique la nature du dernier appui clavier ou souris (ctrl ou non)
-            data->typedNumber = 0; //Indique le nombre demandé
+            data->lastKeyWasCtrl = 0; //Indique la nature du dernier appui clavier ou souris (ctrl ou autre)
+            data->typedNumber = 0; //Indique le nombre saisie par le joueur
             data->save = NULL; //Liste des actions
             data->undoMode = 1; //Indique l'activation du mode "retour en arrière" (initialisé comme actif afin de ne pas enregistrer l'initialisation de la grille)
             data->difficultyChanged = 0; //Indique la requête d'un changement de difficulté

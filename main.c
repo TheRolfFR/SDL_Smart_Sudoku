@@ -29,8 +29,6 @@ int main(int argc, char **argv)
 
         initRules(); //Initialisation des restrictions
 
-        data->undoMode = 0; //Désactivation du mode retour en arrière
-
         drawSudokuGrid(); //Dessin de la grille
 
         //Dessin des chiffres
