@@ -9,7 +9,7 @@
 
 
 
-int hasPencilMark(cell*);
+
 
 void updateHover(cell*);
 

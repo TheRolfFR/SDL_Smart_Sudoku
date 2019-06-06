@@ -92,6 +92,18 @@ void clearCell() {
     }
 }
 
+int hasPencilMark(cell *selectedCell) {
+    //Fonction indiquant la présence d'annotation sur une cellule
+
+    int i = 0;
+    for (i = 0; i < 9; i++) { //Boucle parcourant le tableau des annotations
+        if (selectedCell->rules[i] != NULL) { //Si il y a une annotation
+            return 1; //Retourne vrai
+        }
+    }
+    return 0;
+}
+
 void resetPencilMark(cell* current) {
     //Fonction retirant les annotations d'une cellule
 
