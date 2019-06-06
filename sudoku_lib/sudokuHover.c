@@ -7,11 +7,6 @@
 #include "sdl_sudoku.h"
 
 extern sudokuGrid *data;
-extern SDL_Color SDL_white;
-extern SDL_Color SDL_blue;
-extern SDL_Color SDL_black;
-extern SDL_Color SDL_grey;
-
 void updateHover(cell* position) {
     //Fonction permettant de mettre à jour la cellule en surbrillance
 

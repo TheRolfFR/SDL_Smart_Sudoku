@@ -6,6 +6,10 @@
 
 extern sudokuGrid *data;
 extern SDL_Color SDL_lightred;
+extern SDL_Color SDL_blue;
+extern SDL_Color SDL_white;
+extern SDL_Color SDL_black;
+extern SDL_Color SDL_grey;
 void printRed(cell *selectedCell) {
     //Fonction permettant d'afficher un fond rouge pour une cellule
 
