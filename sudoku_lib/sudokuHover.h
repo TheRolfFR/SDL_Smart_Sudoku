@@ -7,21 +7,11 @@
 
 #include "sdl_sudoku.h"
 
-void drawNumberButtonsBackground(SDL_Color *);
-void drawAvailableNumbers();
 
-
-void drawNumberAtPosition(cell*);
-
-void drawNumberBackground(cell*);
 
 int hasPencilMark(cell*);
 
 void updateHover(cell*);
-
-void printRect(cell*, SDL_Color*);
-void printHover(cell*);
-void removeHover(cell*);
 
 void getMousePosition(cell**,char);
 
