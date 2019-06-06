@@ -8,7 +8,7 @@ extern sudokuGrid *data;
 void moveSelected(int relativex, int relativey) {
     //Fonction permettant de changer de cellule sélectionnée via les flèches directionnelles
 
-    if(data->lastClicked != NULL) { //Si il y a une cellule sélectionnée
+    if (data->lastClicked != NULL) { //Si il y a une cellule sélectionnée
 
         //Calcul coordonnées de la nouvelle cellule sélectionnée
         int newx = data->lastClicked->column + relativex;

@@ -67,7 +67,7 @@ void win() {
     SDL_DestroyTexture(autoDestroy);
 
     // attendre pendant trois secondes
-    for(int i = 0; i < 3; i++) {
+    for (int i = 0; i < 3; i++) {
 
         SDL_RenderFillRect(data->renderer, &autoDestroyRect); //Dessin du fond
 

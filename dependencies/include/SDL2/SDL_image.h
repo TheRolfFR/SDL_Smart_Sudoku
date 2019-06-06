@@ -109,14 +109,14 @@ extern DECLSPEC SDL_Texture * SDLCALL IMG_LoadTextureTyped_RW(SDL_Renderer *rend
 extern DECLSPEC int SDLCALL IMG_isICO(SDL_RWops *src);
 extern DECLSPEC int SDLCALL IMG_isCUR(SDL_RWops *src);
 extern DECLSPEC int SDLCALL IMG_isBMP(SDL_RWops *src);
-extern DECLSPEC int SDLCALL IMG_isGIF(SDL_RWops *src);
+extern DECLSPEC int SDLCALL IMG_isGif (SDL_RWops *src);
 extern DECLSPEC int SDLCALL IMG_isJPG(SDL_RWops *src);
 extern DECLSPEC int SDLCALL IMG_isLBM(SDL_RWops *src);
 extern DECLSPEC int SDLCALL IMG_isPCX(SDL_RWops *src);
 extern DECLSPEC int SDLCALL IMG_isPNG(SDL_RWops *src);
 extern DECLSPEC int SDLCALL IMG_isPNM(SDL_RWops *src);
 extern DECLSPEC int SDLCALL IMG_isSVG(SDL_RWops *src);
-extern DECLSPEC int SDLCALL IMG_isTIF(SDL_RWops *src);
+extern DECLSPEC int SDLCALL IMG_isTif (SDL_RWops *src);
 extern DECLSPEC int SDLCALL IMG_isXCF(SDL_RWops *src);
 extern DECLSPEC int SDLCALL IMG_isXPM(SDL_RWops *src);
 extern DECLSPEC int SDLCALL IMG_isXV(SDL_RWops *src);

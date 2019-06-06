@@ -6,7 +6,7 @@
 #include "sdl_sudoku.h"
 
 extern sudokuGrid *data;
-void keyInterpretor(SDL_Keycode key){
+void keyInterpretor(SDL_Keycode key) {
     //Fonction reliant l'appui clavier à son action
 
     if (data->lastKeyWasCtrl && key==SDLK_z) //Si la dernière action était appuyer sur crtl et que la touche z est actionnée
@@ -15,7 +15,7 @@ void keyInterpretor(SDL_Keycode key){
     }
     else{
         data->lastKeyWasCtrl = 0; //La dernière touche n'était pas ctrl
-        switch (key){ //Diférentiation des touches
+        switch (key) { //Diférentiation des touches
             case SDLK_LCTRL:
             case SDLK_RCTRL: //Cas ctrl
                 data->lastKeyWasCtrl = 1;
@@ -25,8 +25,8 @@ void keyInterpretor(SDL_Keycode key){
                 ChangeTitleMode(); //Changement du titre de la fenetre (pour indiquer le mode)
                 break;
             default:
-                if(data->lastClicked != NULL){ //Si une cellule est sélectionnée
-                    switch (key){
+                if (data->lastClicked != NULL) { //Si une cellule est sélectionnée
+                    switch (key) {
                         //Cas nombre
                         case SDLK_1:
                         case SDLK_KP_1:
@@ -103,7 +103,7 @@ void keyInterpretor(SDL_Keycode key){
     }
 }
 
-void changeMode(){
+void changeMode() {
     //Fonction permettant d'activer/désactiver le mode annotation
 
     data->pencilMarkMode = (!data->pencilMarkMode); //Inversion du mode

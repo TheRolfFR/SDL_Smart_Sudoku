@@ -6,19 +6,19 @@
 
 extern sudokuGrid *data;
 
-void undo(){
+void undo() {
     //Fonction permettant de revenir en arrière d'une action
 
-    if(data->save != NULL){ //Si la liste des étapes n'est pas vide
+    if (data->save != NULL) { //Si la liste des étapes n'est pas vide
         data->undoMode = 1; //Indication du mode retour en arrière (permet de ne pas enregistrer les actions de mode retour en arrière comme action annulable)
         data->pencilMarkMode = 0; //Force la fin du mode annotation
         cell* temp = data->lastClicked; //Sauvergarde de la cellule sélectionnée
 
-        if (data->redHover != 0){ //Si des cellules sont sur fond rouge
+        if (data->redHover != 0) { //Si des cellules sont sur fond rouge
             hideRules(data->lastClicked->rules[data->redHover-1]); //Retrait des fonds rouge
         }
-        while(data->save->actionList != NULL){ //Tant qu'il y a des actions à effectuer
-            data->typedNumber = data->save->actionList->actionData.value; //Indique le nombre nécessaire pour effectuer l'action
+        while (data->save->actionList != NULL) { //Tant qu'il y a des actions à effectuer
+            data->typedNumber = data->save->actionList->actionData.value; //Indique le paramètre nécessaire pour effectuer l'action
             data->save->actionList->actionData.pFunction(); //Effectue l'action de retour en arrière
             actionDone(); //Efface l'action de la liste
         }
@@ -45,7 +45,7 @@ void addUndoStep(void(*pFunction)(void),int value) {
     addUndoAction(pFunction, value); //Ajout de l'action passé en paramètre à la liste
 }
 
-void addUndoAction(void(*pFunction)(void),int value){
+void addUndoAction(void(*pFunction)(void),int value) {
     //Fonction permettant d'ajouter une action à la fin de la liste des actions de l'étape en cours
 
     actionList* newTail = malloc(sizeof(actionList)); //Allocation de la mémoire
@@ -55,19 +55,19 @@ void addUndoAction(void(*pFunction)(void),int value){
     newTail->actionData.value = value;
     newTail->next = NULL;
 
-    if(data->save->actionList == NULL){ //Si la liste est vide
+    if (data->save->actionList == NULL) { //Si la liste est vide
         data->save->actionList = newTail; //Ajout de l'élément
     }
     else{ //Si la liste n'est pas vide
         actionList* temp = data->save->actionList;
-        while (temp->next != NULL){ //Boucle de recherche de la queue
+        while (temp->next != NULL) { //Boucle de recherche de la queue
             temp = temp->next;
         }
         temp->next = newTail; //Ajout de l'action en queue de liste
     }
 }
 
-void actionDone(){
+void actionDone() {
     //Fonction permettant de retirer une action effectuée de la liste
 
     actionList* temp = data->save->actionList->next; //Sauvegarde de la suite de la liste
@@ -75,7 +75,7 @@ void actionDone(){
     data->save->actionList = temp; //Mise à jour de la liste
 }
 
-void stepDone(){
+void stepDone() {
     //Fonction permettant de retirer une étape de la liste
 
     undoList* temp = data->save->next; //Sauvegarde de la suite de la liste

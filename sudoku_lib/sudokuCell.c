@@ -21,7 +21,7 @@ cell *initCell(int l, int c, int number) {
 
 
     int i;
-    for(i = 0; i < 9; i++) {
+    for (i = 0; i < 9; i++) {
         myCell->rules[i] = NULL; //Initialisation des listes des restrictions
         myCell->pencilMark[i] = 0; //Initialisation des indicateurs d'annotation
     }

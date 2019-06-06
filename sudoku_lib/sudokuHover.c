@@ -25,7 +25,7 @@ void printRect(cell* selectedCell, SDL_Color *color) {
 
     SDL_SetRenderDrawColorStruct(data->renderer, color); //Définition de la couleur du cadre
     int i;
-    for(i = 0; i < GRID_HOVER_BORDER; i++) { //Affichage du cadre
+    for (i = 0; i < GRID_HOVER_BORDER; i++) { //Affichage du cadre
         SDL_RenderDrawRect(data->renderer, &rect);
         rect.x++;
         rect.y++;
@@ -34,32 +34,32 @@ void printRect(cell* selectedCell, SDL_Color *color) {
     }
 }
 
-void printHover(cell* selectedCell){
+void printHover(cell* selectedCell) {
     //Fonction permettant de mettre une cellule en surbrillance
 
     printRect(selectedCell, &SDL_blue);
 }
 
-void removeHover(cell* selectedCell){
+void removeHover(cell* selectedCell) {
     //Fonction permettant qu'une celllule ne soit plus en surbrillance
 
     printRect(selectedCell, &SDL_white);
 }
 
-void updateHover(cell* position){
+void updateHover(cell* position) {
     //Fonction permettant de mettre à jour la cellule en surbrillance
 
-    if (data->lastHovered==NULL){ //Si la souris était précédemment hors de la grille
-        if (position!=NULL){ //Si la cellule est actuellement dans la grille
+    if (data->lastHovered==NULL) { //Si la souris était précédemment hors de la grille
+        if (position!=NULL) { //Si la cellule est actuellement dans la grille
             printHover(position); //Mets en surbrillance la cellule survolée (en terme graphique)
             position->isHovered = 1; //Mets en surbrillance la cellule survolée (en terme de donnée)
             data->lastHovered=position;
         }
     }
     else{ //Si la souris était précédemment dans la grille
-        if (!data->lastHovered->isClicked){ //Si la cellule en surbrillance n'est pas sélectionnée
-            if (position!=data->lastHovered){ //Si la souris ne survole pas la case en surbrillance
-                if (position==NULL){ //Si la souris est hors de la grille
+        if (!data->lastHovered->isClicked) { //Si la cellule en surbrillance n'est pas sélectionnée
+            if (position!=data->lastHovered) { //Si la souris ne survole pas la case en surbrillance
+                if (position==NULL) { //Si la souris est hors de la grille
                     removeHover(data->lastHovered); //La cellule dernièrement en surbrillance ne l'est plus
                     data->lastHovered->isHovered=0;
                     data->lastHovered=position;
@@ -80,7 +80,7 @@ void updateHover(cell* position){
 void drawNumberAtPosition(cell *number) {
     //Fonction permettant d'afficher un nombre dans une cellule
 
-    if(number->number != EMPTY_VALUE) { //Si la case contient un nombre
+    if (number->number != EMPTY_VALUE) { //Si la case contient un nombre
         SDL_Rect rect;
 
         SDL_Surface *surfaceText = NULL; //Création de la surface
@@ -91,7 +91,7 @@ void drawNumberAtPosition(cell *number) {
 
         surfaceText = TTF_RenderText_Solid(data->font, string, (number->isReadOnly) ? SDL_grey : SDL_black); //Dessin du nombre (en gris si c'est une donnée et noir si il est écrit par le joueur)
 
-        if(surfaceText != NULL) { //Si le texte à réussit à être rendu
+        if (surfaceText != NULL) { //Si le texte à réussit à être rendu
 
             SDL_Texture *texture = SDL_CreateTextureFromSurface(data->renderer, surfaceText); //Création de la surface associée
 
@@ -130,8 +130,8 @@ int hasPencilMark(cell *selectedCell) {
     //Fonction indiquant la présence d'annotation sur une cellule
 
     int i = 0;
-    for(i = 0; i < 9; i++) { //Boucle parcourant le tableau des annotations
-        if(selectedCell->rules[i] != NULL) { //Si il y a une annotation
+    for (i = 0; i < 9; i++) { //Boucle parcourant le tableau des annotations
+        if (selectedCell->rules[i] != NULL) { //Si il y a une annotation
             return 1; //Retourne vrai
         }
     }
@@ -156,7 +156,7 @@ void drawAvailableNumbers() {
     SDL_Texture *texture;
 
     int i;
-    for(i = 0; i < 9; i++) {
+    for (i = 0; i < 9; i++) {
 
         char *number = convertInt(i+1); //Conversion des nombres en chaine de caractère
         surface = TTF_RenderText_Solid(data->font, number, (data->lastClicked->rules[i]==NULL) ? SDL_black : SDL_white); //Affichage en blanc pour les nombres interdits et en noir pour ceux autorisés
@@ -189,13 +189,13 @@ void drawNumberBackground(cell* selectedCell) {
     SDL_RenderFillRect(data->renderer, &rect); //Affichage
 }
 
-void getMousePosition(cell **c,char click){
+void getMousePosition(cell **c,char click) {
     //Fonction permettant d'obtenir la postion de la souris
 
     int x, y;
     SDL_GetMouseState(&x, &y); //Obtention des coordonés
 
-    if(x > GRID_MARGIN && x < GRID_MARGIN + GRID_SIZE && y > GRID_MARGIN && y < GRID_MARGIN + GRID_SIZE){ //Si la souris est dans la grille
+    if (x > GRID_MARGIN && x < GRID_MARGIN + GRID_SIZE && y > GRID_MARGIN && y < GRID_MARGIN + GRID_SIZE) { //Si la souris est dans la grille
 
         //Calcul de la cellule survolée
         int xcells = (x-(x>=381) - GRID_MARGIN)/(GRID_CELL_SIZE+1);
@@ -203,7 +203,7 @@ void getMousePosition(cell **c,char click){
         *c = data->cells[xcells][ycells]; //Stockage dans une variable extérieur (contournement de la restriction d'une seule variable retournée par une fonction)
     }
 
-    if(click && x > GRID_MARGIN + 5 && x < GRID_MARGIN + GRID_SIZE - 5 && y > GRID_MARGIN*2 + GRID_SIZE && y < GRID_MARGIN*2 + GRID_SIZE + GRID_CELL_SIZE) { //Si le joueur à cliqué dans la zone avec les restrictions affichée
+    if (click && x > GRID_MARGIN + 5 && x < GRID_MARGIN + GRID_SIZE - 5 && y > GRID_MARGIN*2 + GRID_SIZE && y < GRID_MARGIN*2 + GRID_SIZE + GRID_CELL_SIZE) { //Si le joueur à cliqué dans la zone avec les restrictions affichée
         int l =  (x-GRID_MARGIN - 5)/GRID_CELL_SIZE + 1; //Calcul du nombre survolé
         *c = data->lastClicked; //Instruction permettant de ne pas déselectionner la cellule actuellement sélectionnée
         data->typedNumber = l; //Indication que le joueur à saisie le nombre survolé

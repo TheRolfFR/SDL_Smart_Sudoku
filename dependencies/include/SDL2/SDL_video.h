@@ -926,7 +926,7 @@ extern DECLSPEC int SDLCALL SDL_GetWindowOpacity(SDL_Window * window, float * ou
  *
  *  \return 0 on success, or -1 otherwise.
  */
-extern DECLSPEC int SDLCALL SDL_SetWindowModalFor(SDL_Window * modal_window, SDL_Window * parent_window);
+extern DECLSPEC int SDLCALL SDL_SetWindowModalfor (SDL_Window * modal_window, SDL_Window * parent_window);
 
 /**
  *  \brief Explicitly sets input focus to the window.

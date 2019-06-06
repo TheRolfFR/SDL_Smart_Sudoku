@@ -20,11 +20,11 @@ int main(int argc, char **argv)
         data = &g;
 
         //Initialisation des données
-        if(!initializeSudoku())
+        if (!initializeSudoku())
             return -1;
 
         //Chargement d'une grille aléatoire
-        if(loadGrid("../grids/", 2))
+        if (loadGrid("../grids/", 2))
             return -1;
 
         initRules(); //Initialisation des restrictions
@@ -33,8 +33,8 @@ int main(int argc, char **argv)
 
         //Dessin des chiffres
         int a, b;
-        for(a = 0; a < 9; a++) {
-            for(b = 0; b < 9; b++) {
+        for (a = 0; a < 9; a++) {
+            for (b = 0; b < 9; b++) {
                 cell *c = data->cells[a][b];
                 drawNumberAtPosition(c);
             }
@@ -47,7 +47,7 @@ int main(int argc, char **argv)
         SDL_DestroyRenderer(data->renderer); //Destruction de l'affichage
 
         destroyAndQuit(&data->window); //Fermeture de la fenêtre
-    } while(data->difficultyChanged);
+    } while (data->difficultyChanged);
 
     freeMemory(); //Libération de la mémoire
 

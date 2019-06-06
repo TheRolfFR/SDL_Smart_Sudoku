@@ -16,7 +16,7 @@ extern SDL_Color SDL_grey;
 void tryInitGridFont() {
     //Fonction permetant d'initialiser la police
 
-    if(data->font == NULL) { //Si il n'y a pas de police
+    if (data->font == NULL) { //Si il n'y a pas de police
         TTF_Font *Sans = TTF_OpenFont("../Sans.ttf", GRID_FONT_SIZE); //Initialisation de la police
         data->font = Sans;
     }
@@ -34,11 +34,11 @@ int loadGrid(char *path, int numberOfFiles) {
     char diff[TAILLE_MAX];
 
     memset(diff, 0, TAILLE_MAX); //Création d'une chaine de caractère vide
-    if(diffFile != NULL) {
+    if (diffFile != NULL) {
         fgets(diff, TAILLE_MAX, diffFile); //Récupération du contenu du fichier difficulté
     }
 
-    if(diffFile == NULL || strcmp(diff, "easy") < 0 || strcmp(diff, "normal") < 0 || strcmp(diff, "hard") < 0) { //Si le fichier ne contient pas une difficulté connue
+    if (diffFile == NULL || strcmp(diff, "easy") < 0 || strcmp(diff, "normal") < 0 || strcmp(diff, "hard") < 0) { //Si le fichier ne contient pas une difficulté connue
         strcpy(diff, "easy"); //Mets la difficulté sur facile
     }
 
@@ -57,21 +57,21 @@ int loadGrid(char *path, int numberOfFiles) {
     file = fopen(totalpath, "r"); //Ouverture du fichier
 
     cell *myCell;
-    if(file != NULL) { //Si le fichier à été ouvert
+    if (file != NULL) { //Si le fichier à été ouvert
         char line[TAILLE_MAX] = "";
         int l = 0, c;
-        while(fgets(line, TAILLE_MAX, file)) { //Tant qu'il y a des ligne dans le fichier
+        while (fgets(line, TAILLE_MAX, file)) { //Tant qu'il y a des ligne dans le fichier
             c = 0;
 
             //Initialisaion des données de base
-            while(line[c*2] != 0 && c < 9) {
+            while (line[c*2] != 0 && c < 9) {
                 data->cells[l][c] = initCell(l, c, (line[c*2] != ' ') ? line[c*2] - '0' : -1);
                 c++;
             }
 
             //Ajout de cellule vide si la ligne n'était pas complète
-            if(c < 9) {
-                for(c = c; c < 9; c++) {
+            if (c < 9) {
+                for (c = c; c < 9; c++) {
                     myCell = initCell(l, c, EMPTY_VALUE);
                     data->cells[l][c] = myCell;
                 }
@@ -105,7 +105,7 @@ void drawSudokuGrid()  {
     //Affichage des séparateur de cellules de la grille
     SDL_SetRenderDrawColorStruct(data->renderer, &SDL_grey);
     int i, offset;
-    for(i = 0; i < 6; i++) {
+    for (i = 0; i < 6; i++) {
         offset = (i+ 1 + i / 2)*GRID_CELL_SIZE + i*GRID_THIN_BORDER + i/2*GRID_THICK_BORDER + GRID_MARGIN;
 
         //Séparateur verticaux
@@ -118,7 +118,7 @@ void drawSudokuGrid()  {
     //Affichage des séparateur de régions de la grille
     SDL_SetRenderDrawColorStruct(data->renderer, &SDL_grey);
     SDL_Rect vert = {0, GRID_MARGIN, GRID_THICK_BORDER, GRID_SIZE}, hori = {GRID_MARGIN, 0, GRID_SIZE, GRID_THICK_BORDER};
-    for(i = 0; i < 2; i++) {
+    for (i = 0; i < 2; i++) {
         offset = 3*(1+i)*GRID_CELL_SIZE + 2*(i+1)*GRID_THIN_BORDER + GRID_MARGIN + i * GRID_THICK_BORDER;
         vert.x = offset;
         hori.y = offset;

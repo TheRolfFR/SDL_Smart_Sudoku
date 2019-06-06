@@ -65,23 +65,23 @@ int handleDifficultyButtons() {
     int x, y;
     SDL_GetMouseState(&x, &y); //Obtention de la position de la souris
 
-    if(x > data->easy->x && x < GRID_MARGIN + GRID_SIZE && y > BUTTON_Y_OFFSET && y < BUTTON_Y_OFFSET + BUTTON_HEIGHT) {
-        if(isInButton(data->easy, x, y)) { //Si la souris survole le bouton "facile"
-            if(data->easy->previouslyClicked) { //Si le bouton à déjà été cliqué
+    if (x > data->easy->x && x < GRID_MARGIN + GRID_SIZE && y > BUTTON_Y_OFFSET && y < BUTTON_Y_OFFSET + BUTTON_HEIGHT) {
+        if (isInButton(data->easy, x, y)) { //Si la souris survole le bouton "facile"
+            if (data->easy->previouslyClicked) { //Si le bouton à déjà été cliqué
                 return changeDifficulty("easy"); //Mets la difficulté sur facile
             } else { //Sinon
                 clickButton(data->easy); //Indique que le bouton à été cliqué
             }
         }
-        if(isInButton(data->normal, x, y)) {
-            if(data->normal->previouslyClicked) {
+        if (isInButton(data->normal, x, y)) {
+            if (data->normal->previouslyClicked) {
                 return changeDifficulty("normal");
             } else {
                 clickButton(data->normal);
             }
         }
-        if(isInButton(data->hard, x, y)) {
-            if(data->hard->previouslyClicked) {
+        if (isInButton(data->hard, x, y)) {
+            if (data->hard->previouslyClicked) {
                 return changeDifficulty("hard");
             } else {
                 clickButton(data->hard);
@@ -93,13 +93,13 @@ int handleDifficultyButtons() {
         strcat(title, " (RECLIQUER POUR CONFIRMER)"); //Ajout de la mention "(RECLIQUER POUR CONFIRMER)"
         SDL_SetWindowTitle(data->window, title); //Mise en place du titre
     } else { //Si auncun bouton n'a été cliqué
-        if(data->easy->previouslyClicked) {
+        if (data->easy->previouslyClicked) {
             data->easy->previouslyClicked = 0; // Réinitialisation du bouton facile
         }
-        if(data->normal->previouslyClicked) {
+        if (data->normal->previouslyClicked) {
             data->normal->previouslyClicked = 0; // Réinitialisation du bouton normal
         }
-        if(data->hard->previouslyClicked) {
+        if (data->hard->previouslyClicked) {
             data->hard->previouslyClicked = 0; // Réinitialisation du bouton difficile
         }
         ChangeTitleMode(); //Réinitialisation du titre
@@ -117,7 +117,7 @@ int changeDifficulty(char dif[]) {
     FILE* file = NULL;
     file = fopen("difficulte.txt", "w"); //Ouverture du fichier de difficulté
 
-    if(file != NULL) {
+    if (file != NULL) {
 
         fputs(dif, file); //Ecriture de la difficulté
 

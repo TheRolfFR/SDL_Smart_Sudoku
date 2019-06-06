@@ -17,11 +17,11 @@ void freeMemory() {
     int a, b, c;
     cellList *rule;
     cellList *nextRule;
-    for(a = 0; a < 9; a++) {
-        for(b = 0; b < 9; b++) {
-            for(c = 0; c < 9; c++) {
+    for (a = 0; a < 9; a++) {
+        for (b = 0; b < 9; b++) {
+            for (c = 0; c < 9; c++) {
                 rule = data->cells[a][b]->rules[c];
-                while(rule != NULL) {
+                while (rule != NULL) {
                     nextRule = rule->next;
                     free(rule);
                     rule = nextRule;
@@ -36,8 +36,8 @@ void freeMemory() {
     free(data->hard);
 
     //Libération de la liste de sauvegarde des actions
-    while(data->save != NULL) {
-        while(data->save->actionList != NULL) {
+    while (data->save != NULL) {
+        while (data->save->actionList != NULL) {
             actionDone();
         }
 

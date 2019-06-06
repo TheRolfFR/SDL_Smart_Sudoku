@@ -7,7 +7,7 @@ int loadMedia(SDL_Surface **surface, char *location) {
     int success = 1;
 
     *surface = SDL_LoadBMP(location);
-    if(*surface == NULL) {
+    if (*surface == NULL) {
         fprintf(stderr, "Unable to open %s : SDL error : %s", location, SDL_GetError());
         success = 0;
     }
@@ -26,7 +26,7 @@ void destroyAndQuit(SDL_Window **window) {
 }
 
 void SDL_RectPrint(SDL_Rect *rect) {
-    if(rect != NULL) {
+    if (rect != NULL) {
         printf("w : %d\n", rect->w);
         printf("h : %d\n", rect->h);
         printf("x : %d\n", rect->x);
@@ -39,7 +39,7 @@ void SDL_RectPrint(SDL_Rect *rect) {
 SDL_Rect *SDL_RectFit(SDL_Rect *rect, SDL_Surface *surface) {
     SDL_Rect *surfaceRect = &(surface->clip_rect);
 
-    if((float) surfaceRect->w == 0 || (float) surfaceRect->h == 0) {
+    if ((float) surfaceRect->w == 0 || (float) surfaceRect->h == 0) {
         fprintf(stderr, "rect with null dim");
         return rect;
     }
@@ -49,7 +49,7 @@ SDL_Rect *SDL_RectFit(SDL_Rect *rect, SDL_Surface *surface) {
 
     // choose the bigger one
     SDL_Rect *newRect = malloc(sizeof(SDL_Rect));
-    if(widthRatio < heightRatio) {
+    if (widthRatio < heightRatio) {
         //resize to width ratio
         newRect->w = rect->w;
         newRect->h = surfaceRect->h * widthRatio;

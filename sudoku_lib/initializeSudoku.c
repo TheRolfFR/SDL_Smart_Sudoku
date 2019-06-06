@@ -21,7 +21,7 @@ int initializeSudoku() {
     int succes = 1;
 
     //Initialision de SDL
-    if( SDL_Init( SDL_INIT_EVERYTHING ) < 0 ) {
+    if ( SDL_Init( SDL_INIT_EVERYTHING ) < 0 ) {
         fprintf(stderr, "SDL n'a pas pu etre initialise ! SDL_Error: %s\n", SDL_GetError() );
         succes = 0;
     }
@@ -30,7 +30,7 @@ int initializeSudoku() {
         data->window = NULL;
         strcpy(data->initialTitle, "Smart Sudoku"); //Initialisation du titre
         data->window = SDL_CreateWindow( data->initialTitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, GRID_SIZE + 2*GRID_MARGIN, GRID_SIZE + 3*GRID_MARGIN + GRID_BOTTOMSPACE, SDL_WINDOW_SHOWN );
-        if( data->window == NULL ) {
+        if ( data->window == NULL ) {
             fprintf(stderr, "La fenetre n'a pas pu etre cree ! SDL_Error: %s\n", SDL_GetError());
             succes = 0;
         }
@@ -86,7 +86,7 @@ int initializeSudoku() {
             data->hard->previouslyClicked = 0;
 
             //Message d'erreur
-            if( data->renderer == NULL ) {
+            if ( data->renderer == NULL ) {
                 fprintf(stderr, "Le renderer n'a pas pu etre cree ! SDL_eror : %s\n", SDL_GetError());
                 succes = 0;
             }

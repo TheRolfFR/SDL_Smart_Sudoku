@@ -165,7 +165,7 @@ extern DECLSPEC void SDLCALL SDL_Vulkan_UnloadLibrary(void);
  *  \code
  *  unsigned int count;
  *  // get count of required extensions
- *  if(!SDL_Vulkan_GetInstanceExtensions(window, &count, NULL))
+ *  if (!SDL_Vulkan_GetInstanceExtensions(window, &count, NULL))
  *      handle_error();
  *
  *  static const char *const additionalExtensions[] =
@@ -175,15 +175,15 @@ extern DECLSPEC void SDLCALL SDL_Vulkan_UnloadLibrary(void);
  *  size_t additionalExtensionsCount = sizeof(additionalExtensions) / sizeof(additionalExtensions[0]);
  *  size_t extensionCount = count + additionalExtensionsCount;
  *  const char **names = malloc(sizeof(const char *) * extensionCount);
- *  if(!names)
+ *  if (!names)
  *      handle_error();
  *
  *  // get names of required extensions
- *  if(!SDL_Vulkan_GetInstanceExtensions(window, &count, names))
+ *  if (!SDL_Vulkan_GetInstanceExtensions(window, &count, names))
  *      handle_error();
  *
  *  // copy additional extensions after required extensions
- *  for(size_t i = 0; i < additionalExtensionsCount; i++)
+ *  for (size_t i = 0; i < additionalExtensionsCount; i++)
  *      names[i + count] = additionalExtensions[i];
  *
  *  VkInstanceCreateInfo instanceCreateInfo = {};
@@ -222,7 +222,7 @@ extern DECLSPEC SDL_bool SDLCALL SDL_Vulkan_GetInstanceExtensions(
  *
  *  // create the Vulkan surface
  *  VkSurfaceKHR surface;
- *  if(!SDL_Vulkan_CreateSurface(window, instance, &surface))
+ *  if (!SDL_Vulkan_CreateSurface(window, instance, &surface))
  *      handle_error();
  *  \endcode
  *

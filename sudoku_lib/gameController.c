@@ -10,7 +10,7 @@
 #define TICKS_FPS 1000/FPS
 
 extern sudokuGrid *data;
-void gameController(){
+void gameController() {
     //Fonction s'occupant du fonctionnement du jeu
 
     int continuer = 1;
@@ -35,7 +35,7 @@ void gameController(){
                 data->lastKeyWasCtrl = 0;
                 getMousePosition(&c,1); //Obtention de la position de la souris
                 selectCell(c); //Selection de la cellule
-                if(data->typedNumber != 0) { //Si la position est un des 9 nombres
+                if (data->typedNumber != 0) { //Si la position est un des 9 nombres
                     updateCellValue(); //Mets à jour la cellule
                 }
                 continuer = handleDifficultyButtons(); //Test de la selection de difficulté
@@ -47,35 +47,35 @@ void gameController(){
         c = NULL;
 
 
-        if(isFinished() == 1){ //Si la grille est complétée
+        if (isFinished() == 1) { //Si la grille est complétée
             win(); //Message de victoire
             continuer = 0; //Arrêt du jeu
         }
 
-        if(event.type != SDL_QUIT) { //Si l'évènement est différent de quitter
+        if (event.type != SDL_QUIT) { //Si l'évènement est différent de quitter
             SDL_RenderPresent(data->renderer); //Rafraichissement du rendu
         }
 
         Uint32 difference = SDL_GetTicks() - tick; //Obtention du temps d'exécution
 
 
-        if(difference < TICKS_FPS) { //Si le temps est inférieur à la durée d'un "tick"
+        if (difference < TICKS_FPS) { //Si le temps est inférieur à la durée d'un "tick"
             SDL_Delay(difference); //Pause du jeu afin de compléter le "tick"
         }
     }
 }
 
-int isFinished(){
+int isFinished() {
     //Fonction indiquant qi la grille est finie
 
     int finished = 1, i = 0, j = 0;
 
-    while (finished == 1 && j != 9){ //Boucle parcourant la grille
-        if (data->cells[i][j]->number == EMPTY_VALUE){ //Si la cellule est vide
+    while (finished == 1 && j != 9) { //Boucle parcourant la grille
+        if (data->cells[i][j]->number == EMPTY_VALUE) { //Si la cellule est vide
             finished = 0; //Le jeu n'est pas fini
         }
         else{ //Si la cellule n'est pas vide
-            if (i != 8){ //Si la colonne n'est pas terminée
+            if (i != 8) { //Si la colonne n'est pas terminée
                 i = i + 1; //Incrémentation
             }
             else{ //Si la colonne est terminée
