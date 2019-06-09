@@ -6,6 +6,7 @@
 #define SDL_SUDOKU_FREEMEMORY_H
 
 #include "sdl_sudoku.h"
+
 void freeMemory();
 
 #endif //SDL_SUDOKU_FREEMEMORY_H

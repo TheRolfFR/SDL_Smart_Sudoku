@@ -7,7 +7,7 @@
 #include "sdl_sudoku.h"
 
 #define FPS 60
-#define TICKS_FPS 1000/FPS
+#define TICKS_FPS (1000/FPS)
 
 extern sudokuGrid *data;
 void gameController() {
@@ -48,7 +48,7 @@ void gameController() {
 
 
         if (isFinished() == 1) { //Si la grille est complétée
-            win(); //Message de victoire
+            victoryWindow(); //Message de victoire
             continuer = 0; //Arrêt du jeu
         }
 

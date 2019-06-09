@@ -6,6 +6,7 @@
 #define SDL_SUDOKU_PRINT_H
 
 #include "sdl_sudoku.h"
+
 void printRed(cell*);
 void drawNumberButtonsBackground(SDL_Color *);
 void drawAvailableNumbers();
@@ -16,4 +17,8 @@ void removeHover(cell*);
 void drawNumberAtPosition(cell*);
 
 void drawNumberBackground(cell*);
+
+void removePencilMark(cell*, int);
+void drawPencilMark(cell*, int);
+
 #endif //SDL_SUDOKU_PRINT_H

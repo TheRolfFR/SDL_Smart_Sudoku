@@ -7,7 +7,7 @@
 extern sudokuGrid *data;
 extern SDL_Color SDL_lightgrey;
 extern SDL_Color SDL_black;
-void win() {
+void victoryWindow() {
     //Fonction affichant un message de victoire
 
     SDL_SetWindowPosition(data->window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED); //Centrage de la fenêtre au milieu de l'écran

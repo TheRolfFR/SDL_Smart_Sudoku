@@ -7,10 +7,6 @@
 
 #include "sdl_sudoku.h"
 
-
-
-
-
 void updateHover(cell*);
 
 void getMousePosition(cell**,char);

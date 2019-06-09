@@ -7,7 +7,16 @@
 
 #include "sdl_sudoku.h"
 
+void initRules();
+
 cellList* addRule(cellList*, cell*);
 cellList* removeRule(cellList*, cell*);
+
+void addRules();
+void removeRules();
+
+
+void showRules(cellList* currentElement);
+void hideRules(cellList* currentElement);
 
 #endif //SDL_SUDOKU_RULES_H
