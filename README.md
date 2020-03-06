@@ -12,6 +12,7 @@ Smart Sudoku coded with C and the SDL2.0 library. Works only on windows.
   * [Hints](#hints)
   * [Deleting the content of a cell](#deleting-the-content-of-a-cell)
   * [Cancel the last actions](#cancel-the-last-actions)
+- [How to build the game](#how-to-build-the-game)
 - [How to launch the game](#how-to-launch-the-game)
 
 ## Tools used
@@ -87,5 +88,8 @@ The user can delete the content of the cell (hints or number) by pressing the <k
 
 The player can restore the previous grid state by pressing <kbd>Ctrl</kbd>+<kbd>Z</kbd>. This action can be repeated until the player has an empty grid.
 
-## How to launch the game
+## How to build the game
 Download or copy this repository. Then launch Clion and select the folder. Build and enjoy!
+
+## How to launch the game
+Download or copy this repository. Then go to the cmake-build-debug folder and launch **untitled.exe**.
